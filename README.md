@@ -1,1 +1,1 @@
-<h1>Alx Specialization Project Team Project</h1>
+<h1>Alx Specialization Team Project</h1>
