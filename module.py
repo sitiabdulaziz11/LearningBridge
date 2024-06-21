@@ -1,4 +1,4 @@
-from sqlalchemy import create_engine, Column, Integer, float, String, ForeignKey, datetime #Q?
+from sqlalchemy import create_engine, Column, Integer, float, String, ForeignKey, datetime, Table #Q?
 from sqlalchemy.exe.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, relationship
 # from datetime import datetime Q?
@@ -13,6 +13,22 @@ engine = create_engine(DATABASE_URL)
 Base = declarative_base() 
 
 
+student_subject = Table('student_subject', Base.metadata,
+     Column('student_id', Integer, ForeignKey('students.id')),
+     Column('subject_id', Integer, ForeignKey('subjects.id')),
+)
+
+Parent_teacher = Table('parent_teacher', Base.metadata,
+    Column('parent_id', Integer, ForeignKey('parents.id')),
+    Column('teacher_id', Integer, ForeignKey('teachers.id')),
+)
+
+student_teacher = Table('student_teacher', Base.metadata,
+    Column('student_id', Integer, ForeignKey('students.id')),
+    Column('teacher_id', Integer, ForeignKey('teachers.id')),
+)
+
+
 class Student(Base):
     """ Student model that represents student's fields/attributes.
     """
@@ -22,8 +38,8 @@ class Student(Base):
     firstname = Column(String(50), nullable=False)
     middilename = Column(String(50), nullable=False)
     lastname = Column(String(50), nullable=False)
-    email = Column(String(50), unique=True)
-    password = Column(String(250), unique=True)
+    email = Column(String(50), nullable=False, unique=True)
+    password = Column(String(250), nullable=False, unique=True)
     birth_date = Column(datetime, nullable=False, default=datetime.now().strftime('%d-%m-%Y')) # Q?
     image_file = Column(String(50), unique=True, default="default.jpg")
     # address = relationship("Address", backref="student", uselist=False)
@@ -31,7 +47,8 @@ class Student(Base):
     phone_no = Column(String(10), unique=True)
     conduct = Column(String(10), nullable=False)#Q?
     section = Column(String(10), nullable=False)#Q?
-    
+    # Define the relationship to students
+    subjects = relationship("Subject", secondary=student_subject, back_populates="students")
 
 class Teacher(Base):
     """ Teacher model that represents teacher's fields/attributes.
@@ -79,24 +96,11 @@ class Parent(Base):
     middlename = Column(String(50), nullable=False)
     lastname = Column(String(50), nullable=False)
     phone_no = Column(String(10), nullable=False, unique=True)
-    email = Column(String(50), unique=True)
-    password = Column(String(250), unique=True)
+    email = Column(String(50), nullable=False, unique=True)
+    password = Column(String(250), nullable=False, unique=True)
     image_file = Column(String(50), nullable=False, unique=True, default="default.jpg")
     Address = Column(String(100), nullable=False)
 
-
-
-class User(Base):
-    """ User model that represents user's fields/attributes.
-    """
-    __tablename__ = "users"
-    id = Column(Integer, primary_key=True)
-    firstname = Column(String(50), nullable=False)
-    lastname = Column(String(50), nullable=False)
-    email = Column(String(100), nullable=False, unique=True)
-    password = Column(String(250), nullable=False, unique=True)
-    image_file = Column(String(50), nullable=False, unique=True, default="default.jpg")
-    
     
 # class Address(Base): is it required?
 #     """ Address model that represents address fields/attributes.
@@ -112,14 +116,15 @@ class User(Base):
 #     country = Column(String(100))
 
 
-class CourseorSubject(Base):#Q?
+class Subject(Base):
     """ Subject model that represents subject's fields/attributes.
     """
     __tablename__ = "subjects"
     
     id = Column(Integer, primary_key=True)
     name = Column(String(100), nullable=False, unique=True)
-
+    # Define the relationship to students
+    students = relationship("Student", secondary=student_subject, back_populates="subjects")
 
 # class ClassorSection(Base):#Q?
 #     """ Section model that represents section's fields/attributes.
