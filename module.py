@@ -29,26 +29,8 @@ student_teacher = Table('student_teacher', Base.metadata,
 )
 
 
-class Student(Base):
-    """ Student model that represents student's fields/attributes.
-    """
-    __tablename__ = "students"
+
     
-    id = Column(Integer, primary_key=True)
-    firstname = Column(String(50), nullable=False)
-    middilename = Column(String(50), nullable=False)
-    lastname = Column(String(50), nullable=False)
-    email = Column(String(50), nullable=False, unique=True)
-    password = Column(String(250), nullable=False, unique=True)
-    birth_date = Column(datetime, nullable=False, default=datetime.now().strftime('%d-%m-%Y')) # Q?
-    image_file = Column(String(50), unique=True, default="default.jpg")
-    # address = relationship("Address", backref="student", uselist=False)
-    # address = Column(String(100), nullable=false)
-    phone_no = Column(String(10), unique=True)
-    conduct = Column(String(10), nullable=False)#Q?
-    section = Column(String(10), nullable=False)#Q?
-    # Define the relationship to students
-    subjects = relationship("Subject", secondary=student_subject, back_populates="students")
 
 class Teacher(Base):
     """ Teacher model that represents teacher's fields/attributes.
@@ -142,13 +124,14 @@ class Result(Base):
     __tablename__ = "results"
     
     id = Column(Integer, primary_key=True)
-    student_id = Column(Integer, ForeignKey("students.id"), nullable=False) # for specific student
+    student_id = Column(Integer, ForeignKey("students.id"), nullable=False) # Each result is linked to one student or for specific student
     teacher_id = Column(Integer, ForeignKey("teachers.id"), nullable=False) # who is the teacher or home room teacher
     # subject_id = Column(Integer, ForeignKey("subjects.id"), nullable=False)
     # score = Column(Integer, nullable=False)
     overall_rank = Column(Integer, nullable=True)
     overall_average = Column(float, nullable=True)
     date = Column(datetime, nullable=False, default=datetime.now().strftime('%d-%m-%Y'))
+    student = relationship("Student", back_populates="results")
     
 
 class Term(Base):
@@ -161,7 +144,7 @@ class Term(Base):
     
 
 
-class Assisgnment(Base):
+class SubjectResultorAssisgnment(Base):
     """ Term model that represents term's fields/attributes.
     """
     __tablename__ = "assigments"
