@@ -4,4 +4,3 @@ from sqlalchemy.orm import sessionmaker, relationship
 
 # Base class for models
 Base = declarative_base()
-
