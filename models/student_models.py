@@ -1,4 +1,11 @@
-from .base import Base, Column, Integer, String, ForeignKey, datetime, relationship
+from .base import Base, Column, Integer, String, ForeignKey, datetime, relationship, Table
+from teacher_models import student_teacher
+
+# Student - Subject many-to-many relationship
+student_subject = Table('student_subject', Base.metadata,
+     Column('student_id', Integer, ForeignKey('students.id')),
+     Column('subject_id', Integer, ForeignKey('subjects.id')),
+)
 
 class Student(Base):
     """ Student model that represents student's fields/attributes.
@@ -18,8 +25,10 @@ class Student(Base):
     phone_no = Column(String(10), unique=True)
     conduct = Column(String(10), nullable=False)#Q?
     section = Column(String(10), nullable=False)#Q?
-    # Define the relationship to students
+    
+    # Define the relationship with other tables
+    teachers = relationship("Teacher", secondary=student_teacher, back_populates="students")
     subjects = relationship("Subject", secondary=student_subject, back_populates="students")
     results = relationship("Result", back_populates="student")
-
-
+    admin_id = Column(Integer, ForeignKey("administrators.id"), nullable=False)
+    parent_id = Column(Integer, ForeignKey("parents.id"), nullable=False)
