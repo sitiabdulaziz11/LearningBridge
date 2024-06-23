@@ -1,11 +1,11 @@
-from .base import Base, Column, Integer, String, ForeignKey, datetime, relationship
+from sqlalchemy import Column, String
+from .base_model import Base, BaseClass
 
 
-class Term(Base):
+class Term(BaseClass, Base):
     """ Term model that represents term's fields/attributes.
     """
     __tablename__ = "terms"
 
-    id = Column(Integer, primary_key=True)
     Termname = Column(String(100), nullable=False,
                       unique=True)  # e.g., "Term 1", "Term 2"

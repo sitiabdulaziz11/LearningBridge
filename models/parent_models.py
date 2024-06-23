@@ -1,22 +1,22 @@
-from .base import Base
-from datetime import datetime
-from sqlalchemy import Column, Integer, String, ForeignKey, Table, relationship
+from .base_model import Base, BaseClass
+from sqlalchemy import Column, String, ForeignKey, Table
+from sqlalchemy.orm import relationship
 
 # Parent - Teacher many-to-many relationship
 
 Parent_teacher = Table('parent_teacher', Base.metadata,
-                       Column('parent_id', Integer, ForeignKey('parents.id')),
-                       Column('teacher_id', Integer,
+                       Column('parent_id', String(20),
+                              ForeignKey('parents.id')),
+                       Column('teacher_id', String(20),
                               ForeignKey('teachers.id')),
                        )
 
 
-class Parent(Base):
+class Parent(BaseClass, Base):
     """ Student's Parent Module
     """
-    __tabelname__ = "parents"
+    __tablename__ = "parents"
 
-    id = Column(Integer, primary_key=True)
     firstname = Column(String(50), nullable=False)
     middlename = Column(String(50), nullable=False)
     lastname = Column(String(50), nullable=False)
@@ -33,4 +33,5 @@ class Parent(Base):
     students = relationship("Student", backref="parent")
 
     # define relation with Administrator model
-    admin_id = Column(Integer, ForeignKey("administrators.id"), nullable=False)
+    admin_id = Column(String(20), ForeignKey(
+        "administrators.id"), nullable=False)

@@ -1,25 +1,27 @@
-from .base import Base, Column, Integer, String, ForeignKey, datetime, relationship
+from .base_model import Base, BaseClass
+from sqlalchemy import Column, Integer, String, \
+    ForeignKey, DateTime, Float
+from sqlalchemy.orm import relationship
+from datetime import datetime
 
 
-class Result(Base):
+class Result(Base, BaseClass):
     """ Result model that represents result's fields/attributes.
     """
     __tablename__ = "results"
 
-    id = Column(Integer, primary_key=True)
-    Total_score = Column(float, nullable=False)
-    Total_average = Column(float, nullable=True)
+    Total_score = Column(Float, nullable=False)
+    Total_average = Column(Float, nullable=True)
     Rank = Column(Integer, nullable=True)
-    date = Column(datetime, nullable=False,
+    date = Column(DateTime, nullable=False,
                   default=datetime.now().strftime('%d-%m-%Y'))
-
+    subject_id = Column(String(20), ForeignKey("subjects.id"), nullable=False)
+    student_id = Column(String(20), ForeignKey("students.id"), nullable=False)
     # relation with other tables
-    subject_result = relationship("SubjectResult", backref="subject")
     # Q?
+    teacher_id = Column(String(20), ForeignKey("teachers.id"), nullable=False)
+    # subject_id = Column(Integer, ForeignKey("subjects.id"), nullable=False)
+    subject_result = relationship("SubjectResult")
     student = relationship("Student", back_populates="results")
     teacher = relationship("Teacher", back_populates="results")
-    # subject = relationship("Subject", back_populates="results")
-    # student_id = Column(Integer, ForeignKey("students.id"), nullable=False) # Each result is linked to one student or for specific student
-    # who is the teacher or home room teacher
-    teacher_id = Column(Integer, ForeignKey("teachers.id"), nullable=False)
-    # subject_id = Column(Integer, ForeignKey("subjects.id"), nullable=False)
+    subject = relationship("Subject", back_populates="results")
