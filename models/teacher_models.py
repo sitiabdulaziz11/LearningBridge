@@ -33,5 +33,3 @@ class Teacher(Base):
     results = relationship("Result", back_populates="teacher")
     subjects = relationship("Subject",back_populates="teacher")
     students = relationship("Student", secondary=student_teacher, back_populates="teachers")
-    
-    

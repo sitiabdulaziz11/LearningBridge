@@ -11,6 +11,7 @@ class Subject(Base):
     name = Column(String(100), nullable=False, unique=True)
     
     # Define the relationship to students
+    
     teacher = relationship("Teacher", back_populates="subjects")
     teacher_id = Column(Integer, ForeignKey("teachers.id"), nullable=False)
     students = relationship("Student", secondary=student_subject, back_populates="subjects")
