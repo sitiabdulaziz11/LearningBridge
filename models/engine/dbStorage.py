@@ -6,7 +6,7 @@ import os
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, scoped_session
 from models.base_model import Base
-from models.admin_models import Adminstrator
+from models.admin_models import Administrator
 from models.student_models import Student
 from models.term import Term
 from models.parent_models import Parent
@@ -16,7 +16,7 @@ from models.teacher_models import Teacher
 from models.sub_result_models import SubjectResult as SubResult
 
 classes = {
-    Adminstrator.__name__: Adminstrator,
+    Administrator.__name__: Administrator,
     Student.__name__: Student,
     Term.__name__: Term,
     SubResult.__name__: SubResult,
@@ -25,11 +25,6 @@ classes = {
     Result.__name__: Result,
     Teacher.__name__: Teacher
 }
-
-
-class DBstorage:
-    """Initialize with the MySQL database"""
-
 
 class DBStorage:
     def __init__(self):
@@ -47,11 +42,16 @@ class DBStorage:
                 ),
                 pool_pre_ping=True,
             )
-        else:
+        elif ENV == 'development':
             self.__engine = create_engine(
                 "mysql+mysqldb://{}:{}@{}/{}".format(
                     LB_USER, LB_PWD, LB_HOST, LB_DB
                 ),
+                pool_pre_ping=True,
+            )
+        else:
+            self.__engine = create_engine(
+                "sqlite:///{}".format(LB_DB),
                 pool_pre_ping=True,
             )
 

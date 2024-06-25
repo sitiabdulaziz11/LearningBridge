@@ -7,7 +7,7 @@ from sqlalchemy.orm import relationship
 # Adminstrator model
 
 
-class Adminstrator(Base, BaseClass):
+class Administrator(Base, BaseClass):
     """ Adminstrator model that represents adminstrator's fields/attributes.
     """
     __tablename__ = "administrators"
