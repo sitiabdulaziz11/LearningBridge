@@ -1,10 +1,11 @@
 from models.parent_models import Parent
 import jwt as pyjwt
 from models import storage
-from views import app_views, token_required, auth
+from views import app_views, auth
 from flask import jsonify, request, session
 from datetime import datetime, timedelta
 from flask import current_app
+from views.utils import token_required, require_user_class
 
 
 @app_views.route('/parent', methods=['POST'], strict_slashes=False)
@@ -58,6 +59,7 @@ def parent_login():
 
 @app_views.route('/parents', methods=['GET'], strict_slashes=False)
 @token_required
+@require_user_class("Parent")
 def get_parents():
     if session.get('logged_in') is None or not session['logged_in']:
         return jsonify({"error": "Unauthorized"}), 401

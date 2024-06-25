@@ -3,10 +3,11 @@
 import jwt as pyjwt
 from models.student_models import Student
 from models import storage
-from views import app_views, token_required, auth
+from views import app_views, auth
 from flask import jsonify, request, session
 from datetime import datetime, timedelta
 from flask import current_app
+from views.utils import token_required
 
 
 @app_views.route('/student', methods=['POST'], strict_slashes=False)
@@ -59,7 +60,7 @@ def create_student():
 # user login
 
 
-@auth.route('/login', methods=['POST'], strict_slashes=False)
+@app_views.route('/login', methods=['POST'], strict_slashes=False)
 def user_login():
     """
     User Login
@@ -98,7 +99,6 @@ def user_login():
     print(secret_key)
     required_fields = ['email', 'password']
     data = request.get_json()
-    print(data)
     if not data:
         return jsonify({"error": "Not a JSON"}), 400
 
@@ -125,9 +125,9 @@ def user_login():
     return jsonify({"error": "Error generating token"}), 500
 
 
-@ app_views.route('/students', methods=['GET'], strict_slashes=False)
+@app_views.route('/students', methods=['GET'], strict_slashes=False)
 @token_required
-def get_students():
+def get_students(user):
     """
     Get all users
     ---

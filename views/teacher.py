@@ -3,11 +3,11 @@ from models.teacher_models import Teacher
 """This module defines all the paths for the user moijdule"""
 import jwt as pyjwt
 from models import storage
-from views import app_views, token_required, auth
+from views import app_views, auth
 from flask import jsonify, request, session
 from datetime import datetime, timedelta
 from flask import current_app
-
+from views.utils import require_user_class, token_required
 
 @app_views.route('/teacher', methods=['POST'], strict_slashes=False)
 def create_teacher():
@@ -61,10 +61,10 @@ def teacher_login():
 
 @app_views.route('/teachers', methods=['GET'], strict_slashes=False)
 @token_required
-def get_teachers(current_user):
-    if session.get('logged_in') is None or not session['logged_in']:
+@require_user_class("Teacher")
+def get_teachers(user):
+    if not session.get('logged_in', False):
         return jsonify({"error": "Unauthorized"}), 401
 
-    teachers = storage.all(Teacher)
-    teachers = [user.to_dict() for user in teachers.values()]
+    teachers = [teacher.to_dict() for teacher in storage.all(Teacher).values()]
     return jsonify(teachers), 200

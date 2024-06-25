@@ -1,13 +1,13 @@
-from models.administrator_models import Administrator
+from models.admin_models import Administrator
 # i want to do authentication for the student
 """This module defines all the paths for the user moijdule"""
 import jwt as pyjwt
 from models import storage
-from views import app_views, token_required, auth
+from views import app_views, auth
 from flask import jsonify, request, session
 from datetime import datetime, timedelta
 from flask import current_app
-
+from views.utils import token_required, require_user_class
 
 @app_views.route('/administrator', methods=['POST'], strict_slashes=False)
 def create_administrator():
@@ -60,7 +60,8 @@ def administrator_login():
 
 @app_views.route('/administrators', methods=['GET'], strict_slashes=False)
 @token_required
-def get_administrators():
+@require_user_class("Administrator")
+def get_administrators(user):
     if session.get('logged_in') is None or not session['logged_in']:
         return jsonify({"error": "Unauthorized"}), 401
 
