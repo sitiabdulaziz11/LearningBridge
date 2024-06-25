@@ -27,10 +27,6 @@ classes = {
 }
 
 
-class DBstorage:
-    """Initialize with the MySQL database"""
-
-
 class DBStorage:
     def __init__(self):
         """Initialize the data storage class"""

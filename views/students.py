@@ -1,33 +1,12 @@
 # i want to do authentication for the student
 """This module defines all the paths for the user moijdule"""
-from werkzeug.security import check_password_hash
 import jwt as pyjwt
 from models.student_models import Student
 from models import storage
-from views import app_views
+from views import app_views, token_required, auth
 from flask import jsonify, request, session
 from datetime import datetime, timedelta
-from functools import wraps
 from flask import current_app
-
-
-def token_required(f):
-    @wraps(f)
-    def decorated(*args, **kwargs):
-        token = request.headers.get('Authorization')
-        secret_key = current_app.config['SECRET_KEY']
-
-        print(token)
-        if not token:
-            return jsonify({"error": "Token is missing"}), 401
-        try:
-            data = pyjwt.decode(token, secret_key, algorithms=["HS256"])
-            print(data)
-            session.setdefault('logged_in', True)
-        except pyjwt.ExpiredSignatureError:
-            return jsonify({"error": "Token is invalid"}), 401
-        return f(*args, **kwargs)  # Add this line
-    return decorated
 
 
 @app_views.route('/student', methods=['POST'], strict_slashes=False)
@@ -80,7 +59,7 @@ def create_student():
 # user login
 
 
-@app_views.route('/login', methods=['POST'], strict_slashes=False)
+@auth.route('/login', methods=['POST'], strict_slashes=False)
 def user_login():
     """
     User Login
@@ -147,7 +126,7 @@ def user_login():
 
 
 @ app_views.route('/students', methods=['GET'], strict_slashes=False)
-@ token_required
+@token_required
 def get_students():
     """
     Get all users
