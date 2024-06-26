@@ -184,3 +184,33 @@ def delete_student(student_id, user):
     storage.save()
 
     return make_response(jsonify({}), 200)
+
+
+@app_views.route('/student/<student_id>', methods=['PUT'],
+                 strict_slashes=False)
+@token_required
+@require_user_class("Student")
+def update_student(student_id, user):
+    """
+    Updates a student
+    """
+    if session.get('logged_in') is  None or not session['logged_in']:
+        return jsonify({"error": "Unauthorized"}), 401
+
+    student = storage.get(Student, student_id)
+
+    if not student:
+        abort(404)
+
+    if not request.get_json():
+        abort(400, description="Not a JSON")
+
+    ignore = ['id', 'email', 'created_at', 'updated_at']
+
+    data = request.get_json()
+    for key, value in data.items():
+        if key not in ignore:
+            setattr(student, key, value)
+    storage.save()
+
+    return make_response(jsonify(student.to_dict()), 200)
