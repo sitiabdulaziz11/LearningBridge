@@ -13,6 +13,25 @@ engine = create_engine(DATABASE_URL)
 Base = declarative_base() 
 
 
+data = request.get_json()
+This line attempts to parse the incoming request data as JSON and store it in the variable data.
+
+data = request.get_json()
+This line retrieves the JSON payload from the request body and converts it into a Python dictionary.
+
+parent = Parent(**data)
+This line creates a new instance of the Parent class, using the data dictionary to provide keyword arguments to the constructor.
+The **data syntax unpacks the dictionary, so it is equivalent to writing Parent(firstname=data['firstname'], middlename=data['middlename'], ...).
+
+parent = Parent(**data)
+parent.save()
+This creates a new Parent object using the data from the JSON payload and saves it to the database.
+
+return jsonify(parent.to_dict()), 201
+This line returns a JSON response with the newly created parent object converted to a dictionary (parent.to_dict()) and a status code 201 (Created).
+
+
+A JSON payload refers to the actual data that is transmitted over a network using JSON (JavaScript Object Notation) format. It's not typically about "stored" information in the sense of being saved permanently in a database or file. Instead, it's about data that is currently being sent from one system (client) to another (server) or between components within a system.
   
 # class Address(Base): is it required?
 #     """ Address model that represents address fields/attributes.
