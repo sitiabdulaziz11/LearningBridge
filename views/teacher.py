@@ -9,7 +9,7 @@ from datetime import datetime, timedelta
 from flask import current_app
 from views.utils import require_user_class, token_required
 
-@app_views.route('/teacher', methods=['POST'], strict_slashes=False)
+@app_views.route('/teachers', methods=['POST'], strict_slashes=False)
 def create_teacher():
     required_fields = ['firstname', 'middilename', 'lastname', 'email',
                        'password', 'birth_date', 'phone_no',
@@ -85,7 +85,7 @@ def get_teacher(teacher_id, user):
     return jsonify(teacher.to_dict())
 
 
-@app_views.route('/teacher/<teacher_id>', methods=['DELETE'],
+@app_views.route('/teachers/<teacher_id>', methods=['DELETE'],
                  strict_slashes=False)
 @token_required
 @require_user_class("Administrator")
@@ -107,7 +107,7 @@ def delete_teacher(teacher_id, user):
     return make_response(jsonify({}), 200)
 
 
-@app_views.route('/teachher/<teacher_id>', methods=['PUT'],
+@app_views.route('/teachers/<teacher_id>', methods=['PUT'],
                  strict_slashes=False)
 @token_required
 @require_user_class("Teacher")
