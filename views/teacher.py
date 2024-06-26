@@ -12,8 +12,8 @@ from views.utils import require_user_class, token_required
 @app_views.route('/teacher', methods=['POST'], strict_slashes=False)
 def create_teacher():
     required_fields = ['firstname', 'middilename', 'lastname', 'email',
-                       'password', 'birth_date', 'image_file', 'phone_no',
-                       'conduct', 'section']
+                       'password', 'birth_date', 'phone_no',
+                       'section']
     data = request.get_json()
 
     if not data:
@@ -68,3 +68,70 @@ def get_teachers(user):
 
     teachers = [teacher.to_dict() for teacher in storage.all(Teacher).values()]
     return jsonify(teachers), 200
+
+
+@app_views.route('/teachers/teacher_id>', methods=['GET'], strict_slashes=False)
+@token_required
+@require_user_class("Teacher")
+def get_teacher(teacher_id, user):
+    """ Retrieves an teacher """
+    if session.get('logged_in') is None or not session['logged_in']:
+        return jsonify({"error": "Unauthorized"}), 401
+
+    teacher = storage.get(Teacher, teacher_id)
+    if not teacher:
+        abort(404)
+
+    return jsonify(teacher.to_dict())
+
+
+@app_views.route('/teacher/<teacher_id>', methods=['DELETE'],
+                 strict_slashes=False)
+@token_required
+@require_user_class("Administrator")
+def delete_teacher(teacher_id, user):
+    """
+    Deletes a teacher Object
+    """
+    if session.get('logged_in') is None or not session['logged_in']:
+        return jsonify({"error": "Unauthorized"}), 401
+
+    teacher = storage.get(teacher, teacher_id)
+
+    if not teacher:
+        abort(404)
+
+    storage.delete(teacher)
+    storage.save()
+
+    return make_response(jsonify({}), 200)
+
+
+@app_views.route('/teachher/<teacher_id>', methods=['PUT'],
+                 strict_slashes=False)
+@token_required
+@require_user_class("Teacher")
+def update_teacher(teacher_id, user):
+    """
+    Updates a teacher profile
+    """
+    if session.get('logged_in') is  None or not session['logged_in']:
+        return jsonify({"error": "Unauthorized"}), 401
+
+    teacher = storage.get(Teacher, teacher_id)
+
+    if not teacher:
+        abort(404)
+
+    if not request.get_json():
+        abort(400, description="Not a JSON")
+
+    ignore = ['id', 'email', 'created_at', 'updated_at']
+
+    data = request.get_json()
+    for key, value in data.items():
+        if key not in ignore:
+            setattr(teacher, key, value)
+    storage.save()
+
+    return make_response(jsonify(teacher.to_dict()), 200)
