@@ -55,7 +55,8 @@ class BaseClass:
         if "updated_at" in new_dict:
             new_dict["updated_at"] = new_dict["updated_at"].strftime(time)
         new_dict["__class__"] = self.__class__.__name__
-        if "_sa_instance_state" in new_dict:
+        if "_sa_instance_state" and "password" in new_dict:
+            del new_dict["password"]
             del new_dict["_sa_instance_state"]
             return new_dict
 
