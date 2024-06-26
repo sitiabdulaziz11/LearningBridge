@@ -1,15 +1,16 @@
-from sqlalchemy import Column, String, ForeignKey, Table, DateTime
+from sqlalchemy import Column, String, ForeignKey, Table, Date
 from sqlalchemy.orm import relationship
 from datetime import datetime
 from .teacher_models import student_teacher
 from .base_model import Base, BaseClass
+
+
 # Student - Subject many-to-many relationship
 student_subject = Table('student_subject', Base.metadata,
                         Column('student_id', String(20),
                                ForeignKey('students.id')),
                         Column('subject_id', String(20),
-                               ForeignKey('subjects.id')),
-                        )
+                               ForeignKey('subjects.id')))
 
 
 class Student(BaseClass, Base):
@@ -18,13 +19,12 @@ class Student(BaseClass, Base):
     __tablename__ = "students"
 
     firstname = Column(String(50), nullable=False)
-    middilename = Column(String(50), nullable=True)
+    middlename = Column(String(50), nullable=True)
     lastname = Column(String(50), nullable=False)
     email = Column(String(50), nullable=False, unique=True)
     password = Column(String(250), nullable=False, unique=True)
-    birth_date = Column(DateTime, nullable=False,
-                        default=datetime.now().strftime('%d-%m-%Y'))  # Q?
-    image_file = Column(String(50), unique=True, default="default.jpg")
+    birth_date = Column(Date, nullable=False)  # Q?
+    image_file = Column(String(50), unique=True)
     # address = relationship("Address", backref="student", uselist=False)
     # address = Column(String(100), nullable=false)
     phone_no = Column(String(10), unique=True)
