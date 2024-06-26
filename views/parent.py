@@ -161,6 +161,3 @@ def delete_parent(parent_id):
     storage.delete(parent)
     storage.save()
     return jsonify({}), 200
-
-
-# updating deleting getting individual parent , signout *898#
