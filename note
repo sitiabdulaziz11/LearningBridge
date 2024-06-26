@@ -144,3 +144,4 @@ Base = declarative_base()
 
 # queried_admin = session.query(Administrator).first()
 # print(queried_admin.parent.name)  # Output: Parent One
+# random
