@@ -41,6 +41,7 @@ class Teacher(BaseClass, Base):
     admin_id = Column(String(20), ForeignKey(
         "administrators.id"), nullable=False)
     results = relationship("Result", back_populates="teacher")
-    subjects = relationship("Subject", back_populates="teacher")
-    students = relationship(
-        "Student", secondary=student_teacher, back_populates="teachers")
+    subjects = relationship("Subject",back_populates="teacher")
+    students = relationship("Student", secondary=student_teacher, back_populates="teachers")
+    
+    

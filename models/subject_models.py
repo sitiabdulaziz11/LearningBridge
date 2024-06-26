@@ -10,6 +10,9 @@ class Subject(Base, BaseClass):
 
     __tablename__ = "subjects"
     name = Column(String(100), nullable=False, unique=True)
+    
+    # Define the relationship to students
+    
     teacher = relationship("Teacher", back_populates="subjects")
     teacher_id = Column(String(20), ForeignKey("teachers.id"), nullable=False)
     students = relationship(
