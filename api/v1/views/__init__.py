@@ -9,6 +9,7 @@ from api.v1.views.admin import *
 from api.v1.views.users import *
 from api.v1.views.parent import *
 from api.v1.views.teacher import *
+from api.v1.views.results import *
 
 
 from models.student_models import Student
