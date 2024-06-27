@@ -27,9 +27,9 @@ class Student(BaseClass, Base):
     image_file = Column(String(50), unique=True)
     # address = relationship("Address", backref="student", uselist=False)
     # address = Column(String(100), nullable=false)
-    phone_no = Column(String(10), unique=True)
-    conduct = Column(String(10), nullable=True)  # Q?
-    section = Column(String(10), nullable=True)  # Q?
+    phone_no = Column(String(60), unique=True)
+    conduct = Column(String(60), nullable=True)  # Q?
+    section = Column(String(60), nullable=True)  # Q?
 
     results = relationship("Result", back_populates="student")
     # Define the relationship with other tables
@@ -37,6 +37,6 @@ class Student(BaseClass, Base):
         "Teacher", secondary=student_teacher, back_populates="students")
     subjects = relationship(
         "Subject", secondary=student_subject, back_populates="students")
-    admin_id = Column(String(20), ForeignKey(
+    admin_id = Column(String(60), ForeignKey(
         "administrators.id"), nullable=True)
-    parent_id = Column(String(20), ForeignKey("parents.id"), nullable=True)
+    parent_id = Column(String(60), ForeignKey("parents.id"), nullable=True)
