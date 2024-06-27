@@ -20,18 +20,17 @@ class Parent(BaseClass, Base):
     firstname = Column(String(50), nullable=False)
     middlename = Column(String(50), nullable=False)
     lastname = Column(String(50), nullable=False)
-    phone_no = Column(String(10), nullable=False, unique=True)
+    phone_no = Column(String(60), nullable=False, unique=True)
     email = Column(String(50), nullable=False, unique=True)
     password = Column(String(250), nullable=False, unique=True)
-    image_file = Column(String(50), nullable=False,
-                        unique=True, default="default.jpg")
-    Address = Column(String(100), nullable=False)
+    image_file = Column(String(50), unique=True)
+    address = Column(String(100), nullable=False)
 
     # define relation
-    teachers = relationship(
-        "Teacher", secondary=Parent_teacher, back_populates="parents")
+    teachers = relationship("Teacher", secondary=Parent_teacher,
+                            back_populates="parents")
     students = relationship("Student", backref="parent")
 
     # define relation with Administrator model
-    admin_id = Column(String(20), ForeignKey(
-        "administrators.id"), nullable=False)
+    admin_id = Column(String(20), ForeignKey("administrators.id"),
+                      nullable=True)
