@@ -7,7 +7,7 @@ from sqlalchemy.orm import relationship
 # Adminstrator model
 
 
-class Administrator(Base, BaseClass):
+class Administrator(BaseClass, Base):
     """ Adminstrator model that represents adminstrator's fields/attributes.
     """
     __tablename__ = "administrators"
@@ -18,8 +18,7 @@ class Administrator(Base, BaseClass):
     phone_no = Column(String(50), nullable=False, unique=True)
     email = Column(String(100), nullable=False, unique=True)
     password = Column(String(250), nullable=False, unique=True)
-    image_file = Column(String(50), nullable=False,
-                        unique=True, default="default.jpg")
+    image_file = Column(String(50), unique=True)
     address = Column(String(100), nullable=False)
 
     # defin the relationship
