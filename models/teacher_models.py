@@ -4,7 +4,7 @@ from datetime import datetime
 from sqlalchemy.orm import relationship
 
 # Parent - Teacher many-to-many relationship
-student_teacher = Table('student_teacher', Base.metadata,
+students_teachers = Table('students_teachers', Base.metadata,
                         Column('student_id', String(20),
                                ForeignKey('students.id')),
                         Column('teacher_id', String(20),
@@ -42,6 +42,5 @@ class Teacher(BaseClass, Base):
         "administrators.id"), nullable=False)
     results = relationship("Result", back_populates="teacher")
     subjects = relationship("Subject",back_populates="teacher")
-    students = relationship("Student", secondary=student_teacher, back_populates="teachers")
-    
-    
+    students = relationship("Student", secondary=students_teachers,
+                            back_populates="teachers") 
