@@ -54,10 +54,10 @@ def create_student():
 
     student = Student(**data)
     student.save()
-    return jsonify(student.to_dict()), 201
+    return make_response(jsonify(student.to_dict()), 201)
 
 # user login
-@app_views.route('/login', methods=['POST'], strict_slashes=False)
+@auth.route('/login', methods=['POST'], strict_slashes=False)
 def user_login():
     """
     User Login
@@ -148,7 +148,9 @@ def get_students(user):
 
     students = storage.all(Student)
     students = [user.to_dict() for user in students.values()]
-    return jsonify(students), 200
+
+    return make_response(jsonify(students), 200)
+
 
 @app_views.route('/students/<student_id>', methods=['GET'], strict_slashes=False)
 @token_required
@@ -161,7 +163,7 @@ def get_student(student_id, user):
     if not student:
         abort(404)
 
-    return jsonify(student.to_dict())
+    return make_response(jsonify(student.to_dict()), 200)
 
 
 @app_views.route('/students/<student_id>', methods=['DELETE'],
