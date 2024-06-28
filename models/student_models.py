@@ -1,7 +1,7 @@
 from sqlalchemy import Column, String, ForeignKey, Table, Date
 from sqlalchemy.orm import relationship
 from datetime import datetime
-from .teacher_models import student_teacher
+from .teacher_models import students_teachers
 from .base_model import Base, BaseClass
 
 
@@ -33,10 +33,10 @@ class Student(BaseClass, Base):
 
     results = relationship("Result", back_populates="student")
     # Define the relationship with other tables
-    teachers = relationship(
-        "Teacher", secondary=student_teacher, back_populates="students")
-    subjects = relationship(
-        "Subject", secondary=student_subject, back_populates="students")
-    admin_id = Column(String(60), ForeignKey(
-        "administrators.id"), nullable=True)
+    teachers = relationship("Teacher", secondary=students_teachers,
+                            back_populates="students")
+    subjects = relationship("Subject", secondary=student_subject,
+                            back_populates="students")
+    admin_id = Column(String(60), ForeignKey("administrators.id"),
+                      nullable=True)
     parent_id = Column(String(60), ForeignKey("parents.id"), nullable=True)
