@@ -1,41 +1,41 @@
 #!/usr/bin/env python3
-""" objects that handle RestFul API actions for Parent - Students"""
+""" objects that handle RestFul API actions for Teacher - Students"""
 from models.student_models import Student
-from models.parent_models import Parent
+from models.teacher_models import Teacher
 from models import storage
 from api.v1.views import app_views
 from flask import abort, jsonify, make_response, request
 from api.v1.views.utils import token_required, require_user_class
 
 
-@app_views.route('/parents/<parent_id>/students', methods=['GET'],
+@app_views.route('/teachers/<teacher_id>/students', methods=['GET'],
                  strict_slashes=False)
 @token_required
-def get_parent_students(parent_id, user):
+def get_teacher_students(teacher_id, user):
     """
-    Retrieves the list of all Student objects of a Parent
+    Retrieves the list of all Student objects of a Teacher
     """
-    parent = storage.get(Parent, parent_id)
+    teacher = storage.get(Teacher, teacher_id)
 
     if not parent:
         abort(404)
 
-    students = [student.to_dict() for student in parent.students]
+    students = [student.to_dict() for student in teacher.students]
 
     return make_response(jsonify(students), 200)
 
 
-@app_views.route('/parents/<parent_id>/students/<student_id>',
+@app_views.route('/teachers/<teacher_id>/students/<student_id>',
                  methods=['POST'], strict_slashes=False)
 @token_required
-@require_user_class("Administrator")
-def link_parent_student(parent_id, student_id, user):
+@require_user_class("Teacher")
+def link_student_teacher(teacher_id, student_id, user):
     """
-    Links a Student object to a Parent
+    Links a Student object to a Teacher
     """
-    parent = storage.get(Parent, parent_id)
+    teacher = storage.get(Teacher, teacher_id)
 
-    if not parent:
+    if not teacher:
         abort(404)
 
     student = storage.get(Student, student_id)
@@ -43,27 +43,26 @@ def link_parent_student(parent_id, student_id, user):
     if not student:
         abort(404)
 
-    if student in parent.students:
+    if student in teacher.students:
         return make_response(jsonify(student.to_dict()), 200)
     else:
-        parent.students.append(student)
-        student.parent_id = parent_id
+        teacher.students.append(student)
 
     storage.save()
     return make_response(jsonify(student.to_dict()), 201)
 
 
-@app_views.route('/parents/<parent_id>/students/<students_id>',
+@app_views.route('/teachers/<teacher_id>/students/<students_id>',
                  methods=['DELETE'], strict_slashes=False)
 @token_required
 @require_user_class("Administrator")
-def unlink_parent_student(parent_id, student_id, user):
+def unlink_student_teacher(teacher_id, student_id, user):
     """
-    Unlinks a Student object from a Parent
+    Unlinks a Student object from a Teacher
     """
-    parent = storage.get(Parent, parent_id)
+    teacher = storage.get(Teacher, teacher_id)
 
-    if not parent:
+    if not teacher:
         abort(404)
 
     student = storage.get(Student, student_id)
@@ -71,9 +70,9 @@ def unlink_parent_student(parent_id, student_id, user):
     if not student:
         abort(404)
 
-    if student not in parent.students:
+    if student not in teacher.students:
         abort(404)
-    parent.students.remove(student)
+    teacher.students.remove(student)
 
     storage.save()
     return make_response(jsonify({}), 200)

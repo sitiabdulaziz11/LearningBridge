@@ -7,9 +7,11 @@ auth = Blueprint("auth", __name__, url_prefix="/auth")
 from api.v1.views.students import *
 from api.v1.views.admin import *
 from api.v1.views.users import *
-from api.v1.views.parent import *
-from api.v1.views.teacher import *
+from api.v1.views.parents import *
+from api.v1.views.teachers import *
 from api.v1.views.results import *
+from api.v1.views.parent_students import *
+from api.v1.views.students_teachers import *
 
 
 from models.student_models import Student
