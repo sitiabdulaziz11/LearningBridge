@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-""" objects that handle all default RestFul API actions for Reviews """
+""" objects that handle all default RestFul API actions for Parent - Students"""
 from models.student import Student
 from models.parent import Parent
 from models import storage
