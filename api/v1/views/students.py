@@ -3,14 +3,14 @@
 import jwt as pyjwt
 from models.student_models import Student
 from models import storage
-from views import app_views, auth
-from flask import jsonify, request, session
+from api.v1.views import app_views, auth
+from flask import jsonify, request, session, make_response, abort
 from datetime import datetime, timedelta
 from flask import current_app
-from views.utils import token_required
+from api.v1.views.utils import token_required, require_user_class
 
 
-@app_views.route('/student', methods=['POST'], strict_slashes=False)
+@app_views.route('/students', methods=['POST'], strict_slashes=False)
 def create_student():
     """
     Create a new student
@@ -41,10 +41,8 @@ def create_student():
                 error:
                   type: string
     """
-    required_fields = ['firstname', 'middilename', 'lastname', 'email',
-                       'password', 'birth_date', 'image_file', 'phone_no',
-                       'conduct',
-                       'section']
+    required_fields = ['firstname', 'middlename', 'lastname', 'email',
+                       'password', 'birth_date']
     data = request.get_json()
 
     if not data:
@@ -56,11 +54,10 @@ def create_student():
 
     student = Student(**data)
     student.save()
-    return jsonify(student.to_dict()), 201
+    return make_response(jsonify(student.to_dict()), 201)
+
 # user login
-
-
-@app_views.route('/login', methods=['POST'], strict_slashes=False)
+@auth.route('/login', methods=['POST'], strict_slashes=False)
 def user_login():
     """
     User Login
@@ -151,4 +148,71 @@ def get_students(user):
 
     students = storage.all(Student)
     students = [user.to_dict() for user in students.values()]
-    return jsonify(students), 200
+
+    return make_response(jsonify(students), 200)
+
+
+@app_views.route('/students/<student_id>', methods=['GET'], strict_slashes=False)
+@token_required
+def get_student(student_id, user):
+    """ Retrieves an student """
+    if session.get('logged_in') is None or not session['logged_in']:
+        return jsonify({"error": "Unauthorized"}), 401
+
+    student = storage.get(Student, student_id)
+    if not student:
+        abort(404)
+
+    return make_response(jsonify(student.to_dict()), 200)
+
+
+@app_views.route('/students/<student_id>', methods=['DELETE'],
+                 strict_slashes=False)
+@token_required
+@require_user_class("Administrator")
+def delete_student(student_id, user):
+    """
+    Deletes a user Object
+    """
+    if session.get('logged_in') is None or not session['logged_in']:
+        return jsonify({"error": "Unauthorized"}), 401
+
+    student = storage.get(Student, student_id)
+
+    if not student:
+        abort(404)
+
+    storage.delete(student)
+    storage.save()
+
+    return make_response(jsonify({}), 200)
+
+
+@app_views.route('/student/<student_id>', methods=['PUT'],
+                 strict_slashes=False)
+@token_required
+@require_user_class("Student")
+def update_student(student_id, user):
+    """
+    Updates a student
+    """
+    if session.get('logged_in') is  None or not session['logged_in']:
+        return jsonify({"error": "Unauthorized"}), 401
+
+    student = storage.get(Student, student_id)
+
+    if not student:
+        abort(404)
+
+    if not request.get_json():
+        abort(400, description="Not a JSON")
+
+    ignore = ['id', 'email', 'created_at', 'updated_at']
+
+    data = request.get_json()
+    for key, value in data.items():
+        if key not in ignore:
+            setattr(student, key, value)
+    storage.save()
+
+    return make_response(jsonify(student.to_dict()), 200)

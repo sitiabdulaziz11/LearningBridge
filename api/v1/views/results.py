@@ -2,9 +2,9 @@ from models.result_models import Result
 from models.student_models import Student
 from models.parent_models import Parent
 from flask import jsonify, request
-from views import app_views
+from api.v1.views import app_views
 from sqlalchemy.exc import SQLAlchemyError
-from views.utils import token_required, require_user_class
+from api.v1.views.utils import token_required, require_user_class
 from models import storage
 
 
