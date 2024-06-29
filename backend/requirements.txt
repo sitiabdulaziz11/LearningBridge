@@ -1,0 +1,11 @@
+python-dotenv
+flask
+flask_cors
+sqlalchemy
+flask
+Flask-SQLAlchemy
+mysqlclient
+jwt
+flask_swagger_ui
+flask_swagger
+flask_sqlalchemy
