@@ -145,3 +145,10 @@ Base = declarative_base()
 # queried_admin = session.query(Administrator).first()
 # print(queried_admin.parent.name)  # Output: Parent One
 # random
+
+
+curl -X POST http://127.0.0.1:5000/api/v1/administrators -H "Content-Type: application/json" -d @admin.json -v
+
+curl -X POST http://127.0.0.1:5000/auth/administrator_login -H "Content-Type: application/json" -d @admin_login.json -v
+
+admin_login.json === email and password.

@@ -5,7 +5,7 @@ import os
 from flask import Flask, jsonify
 from flask_cors import CORS
 from models import storage
-from views import app_views
+from api.v1.views import app_views
 from flask_swagger_ui import get_swaggerui_blueprint
 from flask_swagger import swagger
 
