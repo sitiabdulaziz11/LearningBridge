@@ -3,7 +3,7 @@ import {FaHome} from 'react-icons/fa'
 
 const Sidebar = () => {
   return (
-    <div className='w-40 bg-gray-950 fixed h-full px-4 py-2'>
+    <div className='w-80 bg-gray-950 fixed h-full px-4 py-2'>
       <div className='my-2 mb-4'>
         <h1 className='text-2xl text-white font-bold'>Dashboard</h1>
       </div>
