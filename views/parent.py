@@ -58,8 +58,8 @@ def parent_login():
 
 
 @app_views.route('/parents', methods=['GET'], strict_slashes=False)
-@token_required
-@require_user_class("Parent")
+# @token_required
+# @require_user_class("Parent")
 def get_parents():
     if session.get('logged_in') is None or not session['logged_in']:
         return jsonify({"error": "Unauthorized"}), 401
