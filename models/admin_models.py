@@ -17,7 +17,7 @@ class Administrator(BaseClass, Base):
     lastname = Column(String(50), nullable=False)
     phone_no = Column(String(50), nullable=False, unique=True)
     email = Column(String(100), nullable=False, unique=True)
-    password = Column(String(250), nullable=False, unique=True)
+    password = Column(String(250), nullable=False)
     image_file = Column(String(50), unique=True)
     address = Column(String(100), nullable=False)
 
