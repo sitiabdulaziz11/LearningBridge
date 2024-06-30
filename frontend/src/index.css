@@ -1,3 +1,12 @@
+/* Import Tailwind's base, components, and utilities styles */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+/* Customize the body background color*/
+@layer base {
+    body {
+      @apply bg-black;
+    }
+  }
