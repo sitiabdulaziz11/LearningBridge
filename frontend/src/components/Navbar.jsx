@@ -1,12 +1,12 @@
 import React from 'react'
 import { FaBars, FaBell, FaSearch, FaUserCircle } from 'react-icons/fa'
 
-const Navbar = () => {
+const Navbar = ({sidebarTgl, setSidebarTglD}) => {
   return (
-    <nav className=' bg-gray-950 px-4 py-7 flex justify-between ml-37'>
+    <nav className='px-4 py-7 flex justify-between'>
       <div className='flex items-center text-xl'>
-        <FaBars className='text-white h-7 w-7 ml-80 cursor-pointer '/>
-        <span className='text-white sm:2xl lg:text-3xl ml-5 font-bold '>Learning Bridge</span>
+        <FaBars className='text-white sm:h-5 sm:w-5 lg:h-7 lg:w-7 me-4 cursor-pointer' onClick={() => setSidebarTglD(!sidebarTgl)}/>
+        <span className='text-white sm:2xl lg:text-3xl lg:ml-3 font-bold '>Learning Bridge</span>
       </div>
       <div className='flex items-center gap-x-5'>
         <div className='relative md:w-65'>
