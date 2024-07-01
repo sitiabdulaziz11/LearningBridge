@@ -8,6 +8,14 @@ const Navbar = ({sidebarTgl, setSidebarTglD}) => {
         <FaBars className='text-white sm:h-5 sm:w-5 lg:h-7 lg:w-7 me-4 cursor-pointer' onClick={() => setSidebarTglD(!sidebarTgl)}/>
         <span className='text-white sm:2xl lg:text-3xl lg:ml-3 font-bold '>Learning Bridge</span>
       </div>
+
+      <div>
+        <ul className='navbar-menu'>
+          <li><a href="/home">Home</a></li>
+          <li><a href="/about">About</a></li>
+        </ul>
+      </div>
+
       <div className='flex items-center gap-x-5'>
         <div className='relative md:w-65'>
           <span className='relative md:absolute inset-y-0 left-0 flex items-center pl-2'><button className='p-1 focus:outline-none text-white md:text-black'><FaSearch /></button></span>
