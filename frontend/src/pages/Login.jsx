@@ -1,9 +1,12 @@
+
 import MainLayout from "../Layout/MainLayout";
 
-export default function Home() {
+const Login = () => {
     return (
         <MainLayout>
-            <h2>Home page</h2>
+            <h2>Login page</h2>
         </MainLayout>
     )
 }
+
+export default Login

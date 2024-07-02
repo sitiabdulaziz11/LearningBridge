@@ -1,14 +1,15 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import About from './pages/About.jsx';
-import Home from './pages/Home.jsx';
+
 import Dashboard from './components/Dashboard.jsx';
 import Sidebar from './components/Sidebar.jsx';
 import { useState } from 'react';
+
+import Nav from './components/Nav.jsx';
 
 export default function App() {
   const [sidebarToggle, setSidebarToggle] = useState(false)
   return (
     <>
+      {/* <Nav /> */}
       <div className='flex bg-gray-950'>
         <Sidebar isSidebarOpen={sidebarToggle}/>
         <Dashboard 
@@ -16,16 +17,6 @@ export default function App() {
         setSidebarTgl={setSidebarToggle}/>
       </div>
 
-      {/* <div>
-        <BrowserRouter>
-          <Routes>
-            <Route index element={<Home />} />
-            <Route path="/home" element={<Home />} />
-            <Route path="/about" element={<About />} />
-          </Routes>
-        </BrowserRouter>
-      </div>*/}
     </>
-    
   );
 }

@@ -1,13 +1,12 @@
-import Header from "../components/Header";
-import Navbar from "../components/Navbar";
+import React from 'react'
+import MainLayout from "../Layout/MainLayout";
 
 export default function About() {
     return (
         <>
-        <Header />
-        {/*<Navbar /> */}
+        <MainLayout>
         <h2>About page</h2>
-        
+        </MainLayout> 
         </>
     )
 }
