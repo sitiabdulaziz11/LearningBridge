@@ -4,7 +4,10 @@ import App from './App.jsx';
 import Home from './pages/Home.jsx';  
 import About from './pages/About.jsx'; 
 import Login from './pages/Login.jsx';
+import Dashboards from './pages/Dashboards.jsx';
+
 import Nopages from './pages/Nopages.jsx';
+
 import './index.css';
 
 import {
@@ -21,6 +24,10 @@ const router = createBrowserRouter([
   {
     path: "/home",
     element: <Home/>,
+  },
+  {
+    path: "/dashboards",
+    element: <Dashboards/>,
   },
   {
     path: "/about",
