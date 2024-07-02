@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """This module defines all the paths for the user moijdule"""
+
 import jwt as pyjwt
 from models import storage
 from api.v1.views import app_views, auth
@@ -10,10 +11,17 @@ from api.v1.views.utils import token_required, require_user_class
 from models.admin_models import Administrator
 
 
-@app_views.route('/administrators', methods=['POST'], strict_slashes=False)
+@app_views.route("/administrators", methods=["POST"], strict_slashes=False)
 def create_administrator():
-    required_fields = ['firstname', 'middlename', 'lastname', 'email',
-                       'password', 'phone_no', 'address']
+    required_fields = [
+        "firstname",
+        "middlename",
+        "lastname",
+        "email",
+        "password",
+        "phone_no",
+        "address",
+    ]
     data = request.get_json()
 
     if not data:
@@ -28,10 +36,10 @@ def create_administrator():
     return jsonify(administrator.to_dict()), 201
 
 
-@auth.route('/administrator_login', methods=['POST'], strict_slashes=False)
+@auth.route("/administrator_login", methods=["POST"], strict_slashes=False)
 def administrator_login():
-    secret_key = current_app.config['SECRET_KEY']
-    required_fields = ['email', 'password']
+    secret_key = current_app.config["SECRET_KEY"]
+    required_fields = ["email", "password"]
     data = request.get_json()
 
     if not data:
@@ -41,7 +49,7 @@ def administrator_login():
     if missing_fields:
         return jsonify({"error": f"Missing {', '.join(missing_fields)}"}), 400
 
-    email, password = data['email'], data['password']
+    email, password = data["email"], data["password"]
     if not email or not password:
         return jsonify({"error": "Missing email or password"}), 400
 
@@ -51,19 +59,19 @@ def administrator_login():
 
     token_payload = {
         "user_name": administrator.firstname,
-        'email': email,
-        'exp': datetime.utcnow() + timedelta(minutes=30)
+        "email": email,
+        "exp": datetime.utcnow() + timedelta(minutes=30),
     }
     token = pyjwt.encode(token_payload, secret_key)
-    session['logged_in'] = True
+    session["logged_in"] = True
     return jsonify({"token": token})
 
 
-@app_views.route('/administrators', methods=['GET'], strict_slashes=False)
+@app_views.route("/administrators", methods=["GET"], strict_slashes=False)
 @token_required
 @require_user_class("Administrator")
 def get_administrators(user):
-    if session.get('logged_in') is None or not session['logged_in']:
+    if session.get("logged_in") is None or not session["logged_in"]:
         return jsonify({"error": "Unauthorized"}), 401
 
     administrators = storage.all(Administrator)

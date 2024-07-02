@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """App to register blueprint and start Flask"""
+
 from dotenv import load_dotenv
 import os
 from flask import Flask, jsonify
@@ -16,10 +17,10 @@ def create_app():
     load_dotenv()
 
     # Configuration settings
-    app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
+    app.config["SECRET_KEY"] = os.getenv("SECRET_KEY")
     app.config["SESSION_TYPE"] = "sqlalchemy"
-    app.config['SESSION_SQLALCHEMY'] = None
-    secret = os.getenv('SECRET_KEY')
+    app.config["SESSION_SQLALCHEMY"] = None
+    secret = os.getenv("SECRET_KEY")
     print(secret)
     # Enable CORS
     CORS(app, origin="0.0.0.0")
@@ -29,12 +30,12 @@ def create_app():
     app.register_blueprint(auth)
 
     # Swagger UI blueprint
-    SWAGGER_URL = '/api/docs'
-    API_URL = '/api/spec'
+    SWAGGER_URL = "/api/docs"
+    API_URL = "/api/spec"
     swaggerui_blueprint = get_swaggerui_blueprint(
         SWAGGER_URL,
         API_URL,
-        config={'app_name': "LEARNERSBRIDGE API"},
+        config={"app_name": "LEARNERSBRIDGE API"},
     )
     app.register_blueprint(swaggerui_blueprint, url_prefix=SWAGGER_URL)
 
@@ -56,8 +57,8 @@ def create_app():
     @app.route(API_URL)
     def spec():
         swag = swagger(app)
-        swag['info']['version'] = "1.0"
-        swag['info']['title'] = "LEARNERSBRIDGE API"
+        swag["info"]["version"] = "1.0"
+        swag["info"]["title"] = "LEARNERSBRIDGE API"
         return jsonify(swag)
 
     return app

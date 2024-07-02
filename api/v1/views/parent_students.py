@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-""" objects that handle RestFul API actions for Parent - Students"""
+"""objects that handle RestFul API actions for Parent - Students"""
+
 from models.student_models import Student
 from models.parent_models import Parent
 from models import storage
@@ -8,8 +9,7 @@ from flask import abort, jsonify, make_response, request
 from api.v1.views.utils import token_required, require_user_class
 
 
-@app_views.route('/parents/<parent_id>/students', methods=['GET'],
-                 strict_slashes=False)
+@app_views.route("/parents/<parent_id>/students", methods=["GET"], strict_slashes=False)
 @token_required
 def get_parent_students(parent_id, user):
     """
@@ -25,8 +25,9 @@ def get_parent_students(parent_id, user):
     return make_response(jsonify(students), 200)
 
 
-@app_views.route('/parents/<parent_id>/students/<student_id>',
-                 methods=['POST'], strict_slashes=False)
+@app_views.route(
+    "/parents/<parent_id>/students/<student_id>", methods=["POST"], strict_slashes=False
+)
 @token_required
 @require_user_class("Administrator")
 def link_parent_student(parent_id, student_id, user):
@@ -53,8 +54,11 @@ def link_parent_student(parent_id, student_id, user):
     return make_response(jsonify(student.to_dict()), 201)
 
 
-@app_views.route('/parents/<parent_id>/students/<students_id>',
-                 methods=['DELETE'], strict_slashes=False)
+@app_views.route(
+    "/parents/<parent_id>/students/<students_id>",
+    methods=["DELETE"],
+    strict_slashes=False,
+)
 @token_required
 @require_user_class("Administrator")
 def unlink_parent_student(parent_id, student_id, user):
