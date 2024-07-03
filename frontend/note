@@ -1,1 +1,139 @@
 <hr /> {/* horizontal line */}
+
+<!-- <li className='mb-2 rounded hover:shadow hover:bg-blue-500 py-2'>
+          <a href='' className='px-3'>
+            <FaHome className='inline-block w-6 h-6 mr-2 -mt-2'></FaHome>
+            Home
+          </a>
+        </li> -->
+
+        <li><link to="/home">Home</link></li>
+        <li><a href="/about">About</a></li>
+
+      <!-- <div>
+          <BrowserRouter>
+            <Routes>
+              <Route index element={<Home />} />
+              <Route path="/home" element={<Home />} />
+              <Route path="/about" element={<About />} />
+            </Routes>
+          </BrowserRouter>
+        </div> -->
+     
+      
+<!-- ReactDOM.createRoot(document.getElementById('root')).render(
+    <React.StrictMode>
+       <App />
+     </React.StrictMode>
+  ); -->
+  
+  <!-- 
+  
+  2. Implementing Error Boundaries
+React provides a way to handle errors gracefully using Error Boundaries. You can create a custom Error Boundary component to catch and display errors in a user-friendly manner.
+
+Here’s an example of how you can implement an Error Boundary:
+
+Create the Error Boundary Component
+jsx
+Copy code
+import React from 'react';
+
+class ErrorBoundary extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { hasError: false };
+  }
+
+  static getDerivedStateFromError(error) {
+    // Update state so the next render will show the fallback UI.
+    return { hasError: true };
+  }
+
+  componentDidCatch(error, errorInfo) {
+    // You can also log the error to an error reporting service
+    console.log(error, errorInfo);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      // You can render any custom fallback UI
+      return <h1>Something went wrong.</h1>;
+    }
+
+    return this.props.children; 
+  }
+}
+
+export default ErrorBoundary;
+  
+  import React from 'react';
+  import ReactDOM from 'react-dom/client';
+  import { createBrowserRouter, RouterProvider, Route } from 'react-router-dom';
+  import App from './App.jsx';
+  import Home from './Home.jsx';  
+  import About from './About.jsx';
+  import './index.css';
+  
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <App />,
+      children: [
+        {
+          path: "/home",
+          element: <Home />,
+        },
+        {
+          path: "/about",
+          element: <About />,
+        },
+      ],
+    },
+  ]);
+  ReactDOM.createRoot(document.getElementById('root')).render(
+    <React.StrictMode>
+      <RouterProvider router={router} />
+    </React.StrictMode>
+  ); -->
+
+  <!-- 
+  
+  Use the Error Boundary in Your App
+Wrap your components with the Error Boundary component:
+
+jsx
+Copy code
+import React from 'react';
+import ReactDOM from 'react-dom';
+import App from './App';
+import ErrorBoundary from './ErrorBoundary';
+
+ReactDOM.render(
+  <ErrorBoundary>
+    <App />
+  </ErrorBoundary>,
+  document.getElementById('root')
+);
+
+  3. Using errorElement Prop in React Router
+  If you are using React Router v6 or above, you can also define an error element for routes. Here’s how you can set it up:
+  
+  jsx
+  Copy code
+  import { BrowserRouter, Routes, Route } from 'react-router-dom';
+  import App from './App';
+  import ErrorPage from './ErrorPage';
+  
+  function AppRouter() {
+    return (
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<App />} />
+          <Route path="*" element={<ErrorPage />} />
+        </Routes>
+      </BrowserRouter>
+    );
+  }
+  
+  export default AppRouter; -->

@@ -1,17 +1,17 @@
 from models.parent_models import Parent
 import jwt as pyjwt
 from models import storage
-from views import app_views, auth
+from api.v1.views import app_views, auth
 from flask import jsonify, request, session
 from datetime import datetime, timedelta
 from flask import current_app
-from views.utils import token_required, require_user_class
+from api.v1.views.utils import token_required, require_user_class
 
 
-@app_views.route('/parent', methods=['POST'], strict_slashes=False)
+@app_views.route('/parents', methods=['POST'], strict_slashes=False)
 def create_parent():
     required_fields = ['firstname', 'middlename', 'lastname', 'email',
-                       'password', 'phone_no', 'image_file', 'Address']
+                       'password', 'phone_no', 'address']
     data = request.get_json()
 
     if not data:
@@ -90,8 +90,8 @@ def parent_login():
 
 @app_views.route('/parents', methods=['GET'], strict_slashes=False)
 @token_required
-@require_user_class("Parent")
-def get_parents():
+@require_user_class("Administrator")
+def get_parents(user):
     """To get all parents
     """
     
@@ -103,10 +103,10 @@ def get_parents():
     return jsonify(parents), 200
 
 
-@app_views.route('/parent/<int:parent_id>', methods=['GET'], strict_slashes=False)
+@app_views.route('/parents/<int:parent_id>', methods=['GET'], strict_slashes=False)
 @token_required
 @require_user_class("Parent")
-def get_individual_parent(parent_id):
+def get_individual_parent(parent_id, user):
     """To get an individual parent
     """
     
@@ -119,10 +119,10 @@ def get_individual_parent(parent_id):
     return jsonify(parent.to_dict()), 200
 
 
-@app_views.route('/parent/<int:parent_id>', methods=['PUT'], strict_slashes=False)
+@app_views.route('/parents/<int:parent_id>', methods=['PUT'], strict_slashes=False)
 @token_required
 @require_user_class("Parent")
-def update_parent(parent_id):
+def update_parent(parent_id, user):
     """To update an individual parent
     """
     
@@ -146,8 +146,8 @@ def update_parent(parent_id):
 
 @app_views.route('/parent/<int:parent_id>', methods=['DELETE'], strict_slashes=False)
 @token_required
-@require_user_class("Parent")
-def delete_parent(parent_id):
+@require_user_class("Administrator")
+def delete_parent(parent_id, user):
     """delete an individual parent
     """
     

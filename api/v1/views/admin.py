@@ -1,19 +1,19 @@
-from models.teacher_models import Teacher
-# i want to do authentication for the student
+#!/usr/bin/env python3
 """This module defines all the paths for the user moijdule"""
 import jwt as pyjwt
 from models import storage
-from views import app_views, auth
+from api.v1.views import app_views, auth
 from flask import jsonify, request, session
 from datetime import datetime, timedelta
 from flask import current_app
-from views.utils import require_user_class, token_required
+from api.v1.views.utils import token_required, require_user_class
+from models.admin_models import Administrator
 
-@app_views.route('/teacher', methods=['POST'], strict_slashes=False)
-def create_teacher():
-    required_fields = ['firstname', 'middilename', 'lastname', 'email',
-                       'password', 'birth_date', 'image_file', 'phone_no',
-                       'conduct', 'section']
+
+@app_views.route('/administrators', methods=['POST'], strict_slashes=False)
+def create_administrator():
+    required_fields = ['firstname', 'middlename', 'lastname', 'email',
+                       'password', 'phone_no', 'address']
     data = request.get_json()
 
     if not data:
@@ -23,13 +23,13 @@ def create_teacher():
         if field not in data:
             return jsonify({"error": f"Missing {field}"}), 400
 
-    teacher = Teacher(**data)
-    teacher.save()
-    return jsonify(teacher.to_dict()), 201
+    administrator = Administrator(**data)
+    administrator.save()
+    return jsonify(administrator.to_dict()), 201
 
 
-@auth.route('/teacher_login', methods=['POST'], strict_slashes=False)
-def teacher_login():
+@auth.route('/administrator_login', methods=['POST'], strict_slashes=False)
+def administrator_login():
     secret_key = current_app.config['SECRET_KEY']
     required_fields = ['email', 'password']
     data = request.get_json()
@@ -45,12 +45,12 @@ def teacher_login():
     if not email or not password:
         return jsonify({"error": "Missing email or password"}), 400
 
-    teacher = storage.get_by_email(Teacher, email)
-    if not teacher:
-        return jsonify({"error": "Teacher not found or Invalid password"}), 400
+    administrator = storage.get_by_email(Administrator, email)
+    if not administrator:
+        return jsonify({"error": "User not found or Invalid password"}), 400
 
     token_payload = {
-        "user_name": teacher.firstname,
+        "user_name": administrator.firstname,
         'email': email,
         'exp': datetime.utcnow() + timedelta(minutes=30)
     }
@@ -59,12 +59,13 @@ def teacher_login():
     return jsonify({"token": token})
 
 
-@app_views.route('/teachers', methods=['GET'], strict_slashes=False)
+@app_views.route('/administrators', methods=['GET'], strict_slashes=False)
 @token_required
-@require_user_class("Teacher")
-def get_teachers(user):
-    if not session.get('logged_in', False):
+@require_user_class("Administrator")
+def get_administrators(user):
+    if session.get('logged_in') is None or not session['logged_in']:
         return jsonify({"error": "Unauthorized"}), 401
 
-    teachers = [teacher.to_dict() for teacher in storage.all(Teacher).values()]
-    return jsonify(teachers), 200
+    administrators = storage.all(Administrator)
+    administrators = [user.to_dict() for user in administrators.values()]
+    return jsonify(administrators), 200
