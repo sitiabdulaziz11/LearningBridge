@@ -1,20 +1,18 @@
 from .base_model import Base, BaseClass
-from sqlalchemy import Column, Integer, String, \
-    ForeignKey, DateTime, Float
+from sqlalchemy import Column, Integer, String, ForeignKey, DateTime, Float
 from sqlalchemy.orm import relationship
 from datetime import datetime
 
 
 class Result(Base, BaseClass):
-    """ Result model that represents result's fields/attributes.
-    """
+    """Result model that represents result's fields/attributes."""
+
     __tablename__ = "results"
 
     Total_score = Column(Float, nullable=False)
     Total_average = Column(Float, nullable=True)
     Rank = Column(Integer, nullable=True)
-    date = Column(DateTime, nullable=False,
-                  default=datetime.now().strftime('%d-%m-%Y'))
+    date = Column(DateTime, nullable=False, default=datetime.now().strftime("%d-%m-%Y"))
     subject_id = Column(String(20), ForeignKey("subjects.id"), nullable=False)
     student_id = Column(String(20), ForeignKey("students.id"), nullable=False)
     # relation with other tables

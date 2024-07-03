@@ -1,6 +1,6 @@
 from .base_model import Base, BaseClass
-from sqlalchemy import Column, \
-    Integer, String, ForeignKey
+from sqlalchemy import Column, Integer, String, ForeignKey
+
 # import relationship
 from sqlalchemy.orm import relationship
 
@@ -8,8 +8,8 @@ from sqlalchemy.orm import relationship
 
 
 class Administrator(BaseClass, Base):
-    """ Adminstrator model that represents adminstrator's fields/attributes.
-    """
+    """Adminstrator model that represents adminstrator's fields/attributes."""
+
     __tablename__ = "administrators"
 
     firstname = Column(String(50), nullable=False)

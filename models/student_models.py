@@ -6,16 +6,17 @@ from .base_model import Base, BaseClass
 
 
 # Student - Subject many-to-many relationship
-student_subject = Table('student_subject', Base.metadata,
-                        Column('student_id', String(20),
-                               ForeignKey('students.id')),
-                        Column('subject_id', String(20),
-                               ForeignKey('subjects.id')))
+student_subject = Table(
+    "student_subject",
+    Base.metadata,
+    Column("student_id", String(20), ForeignKey("students.id")),
+    Column("subject_id", String(20), ForeignKey("subjects.id")),
+)
 
 
 class Student(BaseClass, Base):
-    """ Student model that represents student's fields/attributes.
-    """
+    """Student model that represents student's fields/attributes."""
+
     __tablename__ = "students"
 
     firstname = Column(String(50), nullable=False)
@@ -33,10 +34,11 @@ class Student(BaseClass, Base):
 
     results = relationship("Result", back_populates="student")
     # Define the relationship with other tables
-    teachers = relationship("Teacher", secondary=students_teachers,
-                            back_populates="students")
-    subjects = relationship("Subject", secondary=student_subject,
-                            back_populates="students")
-    admin_id = Column(String(60), ForeignKey("administrators.id"),
-                      nullable=True)
+    teachers = relationship(
+        "Teacher", secondary=students_teachers, back_populates="students"
+    )
+    subjects = relationship(
+        "Subject", secondary=student_subject, back_populates="students"
+    )
+    admin_id = Column(String(60), ForeignKey("administrators.id"), nullable=True)
     parent_id = Column(String(60), ForeignKey("parents.id"), nullable=True)

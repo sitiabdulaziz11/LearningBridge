@@ -4,17 +4,17 @@ from sqlalchemy.orm import relationship
 
 # Parent - Teacher many-to-many relationship
 
-Parent_teacher = Table('parent_teacher', Base.metadata,
-                       Column('parent_id', String(20),
-                              ForeignKey('parents.id')),
-                       Column('teacher_id', String(20),
-                              ForeignKey('teachers.id')),
-                       )
+Parent_teacher = Table(
+    "parent_teacher",
+    Base.metadata,
+    Column("parent_id", String(20), ForeignKey("parents.id")),
+    Column("teacher_id", String(20), ForeignKey("teachers.id")),
+)
 
 
 class Parent(BaseClass, Base):
-    """ Student's Parent Module
-    """
+    """Student's Parent Module"""
+
     __tablename__ = "parents"
 
     firstname = Column(String(50), nullable=False)
@@ -27,10 +27,10 @@ class Parent(BaseClass, Base):
     address = Column(String(100), nullable=False)
 
     # define relation
-    teachers = relationship("Teacher", secondary=Parent_teacher,
-                            back_populates="parents")
+    teachers = relationship(
+        "Teacher", secondary=Parent_teacher, back_populates="parents"
+    )
     students = relationship("Student", backref="parent")
 
     # define relation with Administrator model
-    admin_id = Column(String(20), ForeignKey("administrators.id"),
-                      nullable=True)
+    admin_id = Column(String(20), ForeignKey("administrators.id"), nullable=True)

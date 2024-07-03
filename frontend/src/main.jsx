@@ -1,20 +1,16 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import App from './App.jsx';
-import Home from './pages/Home.jsx';  
-import About from './pages/About.jsx'; 
-import Login from './pages/Login.jsx';
-import Dashboards from './pages/Dashboards.jsx';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import App from "./App.jsx";
+import Home from "./pages/Home.jsx";
+import About from "./pages/About.jsx";
+import Login from "./pages/Login.jsx";
+import Dashboards from "./pages/Dashboards.jsx";
 
-import Nopages from './pages/Nopages.jsx';
+import Nopages from "./pages/Nopages.jsx";
 
-import './index.css';
+import "./index.css";
 
-import {
-    createBrowserRouter,    
-    RouterProvider,
-} from 'react-router-dom';
-
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 const router = createBrowserRouter([
   {
@@ -23,24 +19,26 @@ const router = createBrowserRouter([
   },
   {
     path: "/home",
-    element: <Home/>,
+    element: <Home />,
   },
   {
     path: "/dashboards",
-    element: <Dashboards/>,
+    element: <Dashboards />,
   },
   {
     path: "/about",
-    element: <About/>,
+    element: <About />,
   },
   {
     path: "/login",
-    element: <Login/>,
+    element: <Login />,
   },
   {
     path: "*",
-    element: <Nopages/>,
+    element: <Nopages />,
   },
 ]);
 
-ReactDOM.createRoot(document.getElementById('root')).render(<RouterProvider router={router} />);
+ReactDOM.createRoot(document.getElementById("root")).render(
+  <RouterProvider router={router} />,
+);
