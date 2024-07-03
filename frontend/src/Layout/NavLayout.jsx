@@ -20,6 +20,7 @@ const NavLayout = () => {
                             <li className='py-2 px-6'><Link to="/dashboards/*">Dashboards</Link></li>
                             <li className='py-2 px-6'><Link to="/about">About</Link></li>
                             <li className='py-2 px-6'><Link to="/login">Login</Link></li>
+                            <li className='py-2 px-6'><Link to="/signup">Signup</Link></li>
                         </ul>
                     </div>
 
