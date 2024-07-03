@@ -5,7 +5,7 @@ from api.v1.views import app_views, auth
 from flask import jsonify, request, session
 from datetime import datetime, timedelta
 from flask import current_app
-from api.v1.views.utils import token_required, require_user_class
+from api.v1.views.utils import token_required, require_user_class, blacklist
 
 
 @app_views.route("/parents", methods=["POST"], strict_slashes=False)
@@ -34,7 +34,7 @@ def create_parent():
     return jsonify(parent.to_dict()), 201
 
 
-@auth.route("/parent_login", methods=["POST"], strict_slashes=False)
+@auth.route("/login/parent", methods=["POST"], strict_slashes=False)
 def parent_login():
     """
     Login a parent.
@@ -93,6 +93,21 @@ def parent_login():
 
     # Return a JSON response containing the token
     return jsonify({"token": token})
+
+
+@auth.route("/logout/parent", methods=["POST"], strict_slashes=False)
+@token_required
+@require_user_class("Parent")
+def parent_logout(user):
+    """
+    Logout a user
+    """
+    token = request.headers.get("Authorization")
+    if token is None:
+        return jsonify({"error": "Token is missing"}), 401
+    blacklist.add(token)
+    session["logged_in"] = False
+    return jsonify({"message": f"{user.firstname} Logged out"})
 
 
 @app_views.route("/parents", methods=["GET"], strict_slashes=False)

@@ -8,7 +8,7 @@ from api.v1.views import app_views, auth
 from flask import jsonify, request, session, make_response, abort
 from datetime import datetime, timedelta
 from flask import current_app
-from api.v1.views.utils import token_required, require_user_class
+from api.v1.views.utils import token_required, require_user_class, blacklist
 
 
 @app_views.route("/students", methods=["POST"], strict_slashes=False)
@@ -63,8 +63,7 @@ def create_student():
     student.save()
 
 
-# user login
-@app_views.route("/login", methods=["POST"], strict_slashes=False)
+@auth.route("/login", methods=["POST"], strict_slashes=False)
 def user_login():
     """
     User Login
@@ -100,7 +99,6 @@ def user_login():
                   type: string
     """
     secret_key = current_app.config["SECRET_KEY"]
-    print(secret_key)
     required_fields = ["email", "password"]
     data = request.get_json()
     if not data:
@@ -129,6 +127,7 @@ def user_login():
     # convert bytes to string
     session["logged_in"] = True
     session["user"] = student.to_dict()
+    print(session)
     return jsonify({"token": token})
 
 
@@ -153,7 +152,11 @@ def get_students(user):
                   items:
                     $ref: '#/components/schemas/User'
     """
-    if session.get("logged_in") is None or not session["logged_in"]:
+    if (
+        session.get("logged_in") is None
+        or not session["logged_in"]
+        or session.get("logged_in") is False
+    ):
         return jsonify({"error": "Unauthorized"}), 401
 
     students = storage.all(Student)
@@ -162,11 +165,28 @@ def get_students(user):
     return make_response(jsonify(students), 200)
 
 
+@auth.route("/logout/students", methods=["POST"], strict_slashes=False)
+@token_required
+@require_user_class("Student")
+def logout(user):
+    """
+    Logout a user
+    """
+    # expire the token immediately
+    token = request.headers.get("Authorization")
+    if token is None:
+        return jsonify({"error": "Token is missing"}), 401
+    blacklist.add(token)
+    session["logged_in"] = False
+    return jsonify({"message": f"{user.firstname} Logged out"})
+
+
 @app_views.route("/students/<student_id>", methods=["GET"], strict_slashes=False)
 @token_required
 def get_student(student_id, user):
     """Retrieves an student"""
-    if session.get("logged_in") is None or not session["logged_in"]:
+    print(session)
+    if session.get("logged_in") is True or not session["logged_in"]:
         return jsonify({"error": "Unauthorized"}), 401
 
     student = storage.get(Student, student_id)
@@ -204,6 +224,7 @@ def update_student(student_id, user):
     """
     Updates a student
     """
+    print(user)
     if session.get("logged_in") is None or not session["logged_in"]:
         return jsonify({"error": "Unauthorized"}), 401
 

@@ -7,7 +7,7 @@ from api.v1.views import app_views, auth
 from flask import jsonify, request, session
 from datetime import datetime, timedelta
 from flask import current_app
-from api.v1.views.utils import token_required, require_user_class
+from api.v1.views.utils import token_required, require_user_class, blacklist
 from models.admin_models import Administrator
 
 
@@ -36,7 +36,7 @@ def create_administrator():
     return jsonify(administrator.to_dict()), 201
 
 
-@auth.route("/administrator_login", methods=["POST"], strict_slashes=False)
+@auth.route("/login/admin", methods=["POST"], strict_slashes=False)
 def administrator_login():
     secret_key = current_app.config["SECRET_KEY"]
     required_fields = ["email", "password"]
@@ -65,6 +65,22 @@ def administrator_login():
     token = pyjwt.encode(token_payload, secret_key)
     session["logged_in"] = True
     return jsonify({"token": token})
+
+
+@auth.route("/logout/admin", methods=["POST"], strict_slashes=False)
+@token_required
+@require_user_class("Administrator")
+def admin_logout(user):
+    """
+    Logout a user
+    """
+    # expire the token immediately
+    token = request.headers.get("Authorization")
+    if token is None:
+        return jsonify({"error": "Token is missing"}), 401
+    blacklist.add(token)
+    session["logged_in"] = False
+    return jsonify({"message": f"{user.firstname} Logged out"})
 
 
 @app_views.route("/administrators", methods=["GET"], strict_slashes=False)

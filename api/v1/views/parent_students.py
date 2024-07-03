@@ -11,17 +11,12 @@ from api.v1.views.utils import token_required, require_user_class
 
 @app_views.route("/parents/<parent_id>/students", methods=["GET"], strict_slashes=False)
 @token_required
+@require_user_class("Parent")
 def get_parent_students(parent_id, user):
     """
     Retrieves the list of all Student objects of a Parent
     """
-    parent = storage.get(Parent, parent_id)
-
-    if not parent:
-        abort(404)
-
-    students = [student.to_dict() for student in parent.students]
-
+    students = [student.to_dict() for student in user.students]
     return make_response(jsonify(students), 200)
 
 

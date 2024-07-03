@@ -7,6 +7,8 @@ from models.teacher_models import Teacher
 from models.parent_models import Parent
 from models.admin_models import Administrator
 
+blacklist = set()
+
 
 def get_current_user():
     token = request.headers.get("Authorization")
@@ -29,12 +31,12 @@ def token_required(f):
     def decorated(*args, **kwargs):
         token = request.headers.get("Authorization")
         secret_key = current_app.config["SECRET_KEY"]
-        print(secret_key)
+        if token in blacklist:
+            return jsonify({"error": "Token has been revoked"}), 401
         if not token:
             return jsonify({"error": "Token is missing"}), 401
         try:
             data = pyjwt.decode(token, secret_key, algorithms=["HS256"])
-            print(data)
             session.setdefault("logged_in", True)
             student = storage.get_by_email(Student, data["email"])
             teacher = storage.get_by_email(Teacher, data["email"])
@@ -43,7 +45,7 @@ def token_required(f):
             if not student and not teacher and not parent and not admin:
                 return jsonify({"error": "User not found"}), 401
             else:
-                session["logged_in"] = True
+                print(session)
                 kwargs["user"] = student or teacher or parent or admin
         except:
             return jsonify({"error": "Token is invalid"}), 401
