@@ -10,6 +10,7 @@ import Dashboard from "./components/Dashboard.jsx";
 import { Login } from "./components/Login.jsx";
 import MainLayout from "./components/MainLayout.jsx";
 
+<<<<<<< HEAD
 const App = () => {
   return (
     <Router>
@@ -28,6 +29,27 @@ const App = () => {
         </Route>
       </Routes>
     </Router>
+=======
+import Dashboard from './components/Dashboard.jsx';
+import Sidebar from './components/Sidebar.jsx';
+import { useState } from 'react';
+
+import Nav from './components/Nav.jsx';
+
+export default function App() {
+  const [sidebarToggle, setSidebarToggle] = useState(false)
+  return (
+    <>
+      {/* <Nav /> */}
+      <div className='flex bg-gray-950'>
+        <Sidebar isSidebarOpen={sidebarToggle}/>
+        <Dashboard 
+        isSidebarOpen={sidebarToggle}
+        setSidebarTgl={setSidebarToggle}/>
+      </div>
+
+    </>
+>>>>>>> 8dbcca62d84bd0c3a7b66c5f008b0e9f6f7e0716
   );
 };
 
