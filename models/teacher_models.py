@@ -4,17 +4,17 @@ from datetime import datetime
 from sqlalchemy.orm import relationship
 
 # Parent - Teacher many-to-many relationship
-students_teachers = Table('students_teachers', Base.metadata,
-                        Column('student_id', String(20),
-                               ForeignKey('students.id')),
-                        Column('teacher_id', String(20),
-                               ForeignKey('teachers.id')),
-                        )
+students_teachers = Table(
+    "students_teachers",
+    Base.metadata,
+    Column("student_id", String(20), ForeignKey("students.id")),
+    Column("teacher_id", String(20), ForeignKey("teachers.id")),
+)
 
 
 class Teacher(BaseClass, Base):
-    """ Teacher model that represents teacher's fields/attributes.
-    """
+    """Teacher model that represents teacher's fields/attributes."""
+
     __tablename__ = "teachers"
 
     firstname = Column(String(50), nullable=False)
@@ -22,11 +22,11 @@ class Teacher(BaseClass, Base):
     lastname = Column(String(50), nullable=False)
     email = Column(String(100), nullable=False, unique=True)
     password = Column(String(250), nullable=False, unique=True)
-    hire_date = Column(DateTime, nullable=False,
-                       default=datetime.now().strftime('%d-%m-%Y'))  # Q?
+    hire_date = Column(
+        DateTime, nullable=False, default=datetime.now().strftime("%d-%m-%Y")
+    )  # Q?
 
-    image_file = Column(String(50), nullable=False,
-                        unique=True, default="default.jpg")
+    image_file = Column(String(50), nullable=False, unique=True, default="default.jpg")
     # address = relationship("Address", ?backref="teacher", uselist=False)?
     # address = Column(String(100), nullable=false)
     phone_no = Column(String(10), nullable=False, unique=True)
@@ -37,10 +37,11 @@ class Teacher(BaseClass, Base):
 
     # define the relationship
     parents = relationship(
-        "Parent", secondary="parent_teacher", back_populates="teachers")
-    admin_id = Column(String(20), ForeignKey(
-        "administrators.id"), nullable=False)
+        "Parent", secondary="parent_teacher", back_populates="teachers"
+    )
+    admin_id = Column(String(20), ForeignKey("administrators.id"), nullable=False)
     results = relationship("Result", back_populates="teacher")
-    subjects = relationship("Subject",back_populates="teacher")
-    students = relationship("Student", secondary=students_teachers,
-                            back_populates="teachers") 
+    subjects = relationship("Subject", back_populates="teacher")
+    students = relationship(
+        "Student", secondary=students_teachers, back_populates="teachers"
+    )

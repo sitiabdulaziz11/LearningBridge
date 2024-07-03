@@ -3,8 +3,8 @@ from .base_model import BaseClass, Base
 
 
 class SubjectResult(Base, BaseClass):
-    """ Term model that represents term's fields/attributes.
-    """
+    """Term model that represents term's fields/attributes."""
+
     __tablename__ = "subjectResults"
 
     test1_score = Column(Float(20), nullable=False)
