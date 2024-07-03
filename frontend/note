@@ -7,8 +7,8 @@
           </a>
         </li> -->
 
-        <li><link to="/home">Home</link></li>
-        <li><a href="/about">About</a></li>
+        <li><link to="/home">Home</link></li> used for not to refresh the page
+        <li><a href="/about">About</a></li> this refresh the page
 
       <!-- <div>
           <BrowserRouter>

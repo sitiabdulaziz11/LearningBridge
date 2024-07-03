@@ -6,6 +6,7 @@ import Home from './pages/Home.jsx';
 import About from './pages/About.jsx'; 
 import Login from './pages/Login.jsx';
 import Dashboards from './pages/Dashboards.jsx';
+import TeacherDashboard from './pages/TeacherDashboard.jsx';
 import Nopages from './pages/Nopages.jsx';
 
 import {
@@ -24,8 +25,12 @@ const router = createBrowserRouter([
     element: <Home/>,
   },
   {
-    path: "/dashboards",
+    path: "/dashboards/*",
     element: <Dashboards/>,
+  },
+  {
+    path: "/teacherdashboard",
+    element: <TeacherDashboard/>,
   },
   {
     path: "/about",
