@@ -11,8 +11,8 @@ const NavLayout = () => {
 
     return (
         <>
-            <nav className='p-4'>
-                <div className='flex justify-between px-4 py-5'>
+            <nav className='w-full p-4  bg-gray-950'>
+                <div className='flex justify-between px-4 py-6'>
                     {/* Navbar links for medium and larger devices */}
                     <div>
                         <ul className='hidden md:flex space-x-7 text-zinc-200 font-bold text-2xl'>

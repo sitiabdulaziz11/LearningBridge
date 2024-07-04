@@ -6,9 +6,9 @@
 /* Customize the body background color*/
 @layer base {
   body {
-    @apply bg-yellow-50;
+    @apply bg-black;
   }
   button {
-    @apply bg-yellow-500 text-white font-bold py-2 px-4 rounded;
+    @apply bg-yellow-500;
   }
 }

@@ -35,36 +35,40 @@ const StudentResultForm = ({ selectedResult, onSave }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div>
-        <label>Student Name:</label>
-        <input 
+    <>
+    <form  onSubmit={handleSubmit} className="bg-green-500 py-7 p-4 rounded-lg">
+      <div className="mb-4">
+        <label className="block text-black">Student Name:</label>
+        <input
           type="text" 
           value={studentName} 
           onChange={(e) => setStudentName(e.target.value)} 
           required 
         />
       </div>
-      <div>
-        <label>Subject:</label>
+      <div className="mb-4">
+        <label className="block text-white">Subject:</label>
         <input 
           type="text" 
           value={subject} 
           onChange={(e) => setSubject(e.target.value)} 
-          required 
+          required
+           
         />
       </div>
-      <div>
-        <label>Score:</label>
+      <div className="mb-4">
+        <label className="block text-white">Score:</label>
         <input 
           type="number" 
           value={score} 
           onChange={(e) => setScore(e.target.value)} 
-          required 
+          required
+          
         />
       </div>
       <button type="submit">Save</button>
     </form>
+    </>
   );
 };
 

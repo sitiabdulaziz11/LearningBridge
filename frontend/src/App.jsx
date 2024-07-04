@@ -6,7 +6,7 @@ export default function App() {
   const [sidebarToggle, setSidebarToggle] = useState(false);
   return (
     <>
-      <div className='flex justify-between bg-gray-950'>
+      <div className='flex justify-between'>
         <Navbar
           sidebarTgl={sidebarToggle}
           setSidebarTglD={setSidebarToggle} />
