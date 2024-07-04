@@ -1,0 +1,34 @@
+    creates a new student object
+    ---
+    tags:
+      - Students
+    parameters:
+      - name: student_and_password
+        in: body
+        required: true
+        requires:
+          - email:
+          - password:
+          - firstname:
+          - middlename:
+          - lastname:
+          - birth_date:
+        properties:
+          email:
+            type: string
+          password:
+            type: string
+          firstname:
+            type: string
+          middlename:
+            type: string
+          lastname:
+            type: string
+          birth_date:
+            type: date
+
+    responses:
+      400:
+        description: Missing data or not a JSON
+      201:
+        description: successfully created a student

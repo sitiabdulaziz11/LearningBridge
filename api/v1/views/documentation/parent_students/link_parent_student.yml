@@ -1,0 +1,24 @@
+    Links a Student to a Parent
+    ---
+    tags:
+      - Parent_Students
+    parameters:
+      - name: parent_id
+        in: path
+        type: string
+        required: true
+        description: The id of the parent
+      - name: student_id
+        in: path
+        type: string
+        required: true
+        description: The id of the student to link
+
+
+    responses:
+      404:
+        description: resource not found!
+      201:
+        description: Successful request
+      200:
+        description: Student already linked to Parent

@@ -7,8 +7,7 @@ from flask import Flask, jsonify
 from flask_cors import CORS
 from models import storage
 from api.v1.views import app_views, auth
-from flask_swagger_ui import get_swaggerui_blueprint
-from flask_swagger import swagger
+from flasgger import Swagger
 
 
 def create_app():
@@ -17,6 +16,7 @@ def create_app():
     load_dotenv()
 
     # Configuration settings
+    app.config["JSONIFY_PRETTYPRINT_REGULAR"] = True
     app.config["SECRET_KEY"] = os.getenv("SECRET_KEY")
     app.config["SESSION_TYPE"] = "sqlalchemy"
     app.config["SESSION_SQLALCHEMY"] = None
@@ -29,15 +29,13 @@ def create_app():
     app.register_blueprint(app_views)
     app.register_blueprint(auth)
 
-    # Swagger UI blueprint
-    SWAGGER_URL = "/api/docs"
-    API_URL = "/api/spec"
-    swaggerui_blueprint = get_swaggerui_blueprint(
-        SWAGGER_URL,
-        API_URL,
-        config={"app_name": "LEARNERSBRIDGE API"},
-    )
-    app.register_blueprint(swaggerui_blueprint, url_prefix=SWAGGER_URL)
+    # Swagger config
+    app.config['SWAGGER'] = {
+        'title': 'LEARNINGBRIDGE RESTful API',
+        'version': 1.0
+    }
+
+    Swagger(app)
 
     # Error handlers
     @app.errorhandler(404)
@@ -52,13 +50,5 @@ def create_app():
     @app.teardown_appcontext
     def teardown_db(exception):
         storage.close()
-
-    # API spec
-    @app.route(API_URL)
-    def spec():
-        swag = swagger(app)
-        swag["info"]["version"] = "1.0"
-        swag["info"]["title"] = "LEARNERSBRIDGE API"
-        return jsonify(swag)
 
     return app

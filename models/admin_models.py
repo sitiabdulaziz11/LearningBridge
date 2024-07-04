@@ -19,9 +19,9 @@ class Administrator(BaseClass, Base):
     email = Column(String(100), nullable=False, unique=True)
     password = Column(String(250), nullable=False)
     image_file = Column(String(50), unique=True)
-    address = Column(String(100), nullable=False)
+    address = Column(String(300))
 
-    # defin the relationship
+    # define relationships
 
     students = relationship("Student", backref="admin")
     teachers = relationship("Teacher", backref="admin")

@@ -9,9 +9,11 @@ from datetime import datetime, timedelta
 from flask import current_app
 from api.v1.views.utils import token_required, require_user_class, blacklist
 from models.admin_models import Administrator
+from flasgger.utils import swag_from
 
 
 @app_views.route("/administrators", methods=["POST"], strict_slashes=False)
+@swag_from('documentation/admin/create_admin.yml', methods=['POST'])
 def create_administrator():
     required_fields = [
         "firstname",
@@ -19,8 +21,7 @@ def create_administrator():
         "lastname",
         "email",
         "password",
-        "phone_no",
-        "address",
+        "phone_no"
     ]
     data = request.get_json()
 
@@ -36,7 +37,8 @@ def create_administrator():
     return jsonify(administrator.to_dict()), 201
 
 
-@auth.route("/login/admin", methods=["POST"], strict_slashes=False)
+@auth.route("/login/administrator", methods=["POST"], strict_slashes=False)
+@swag_from('documentation/admin/admin_login.yml', methods=['POST'])
 def administrator_login():
     secret_key = current_app.config["SECRET_KEY"]
     required_fields = ["email", "password"]
@@ -84,6 +86,7 @@ def admin_logout(user):
 
 
 @app_views.route("/administrators", methods=["GET"], strict_slashes=False)
+@swag_from('documentation/admin/all_admins.yml', methods=['GET'])
 @token_required
 @require_user_class("Administrator")
 def get_administrators(user):

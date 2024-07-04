@@ -1,0 +1,19 @@
+    updates teacher's information
+    ---
+    tags:
+      - Teachers
+    parameters:
+      - name: teacher_id
+        in: path
+        type: string
+        required: true
+        description: The id of the teacher to update
+      - name: update_request
+        in: body
+        required: true
+
+    responses:
+      404:
+        description: teacher not found!
+      200:
+        description: request executed successfully

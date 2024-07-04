@@ -1,0 +1,19 @@
+    updates parent information
+    ---
+    tags:
+      - Parents
+    parameters:
+      - name: parent_id
+        in: path
+        type: string
+        required: true
+        description: The id of the parent to update
+      - name: update_request
+        in: body
+        required: true
+
+    responses:
+      404:
+        description: parent not found!
+      200:
+        description: request executed successfully

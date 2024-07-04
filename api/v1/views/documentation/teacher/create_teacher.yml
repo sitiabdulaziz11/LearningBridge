@@ -1,0 +1,40 @@
+    creates a new teacher object
+    ---
+    tags:
+      - Teachers
+    parameters:
+      - name: teacher_and_password
+        in: body
+        required: true
+        requires:
+          - email:
+          - password:
+          - firstname:
+          - middlename:
+          - lastname:
+          - birth_date:
+          - phone_no:
+          - section:
+        properties:
+          email:
+            type: string
+          password:
+            type: string
+          firstname:
+            type: string
+          middlename:
+            type: string
+          lastname:
+            type: string
+          phone_no:
+            type: string
+          birth_date:
+            type: date
+          section:
+            type: string
+
+    responses:
+      400:
+        description: Missing data or not a JSON
+      201:
+        description: successfully created teacher

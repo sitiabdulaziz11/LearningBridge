@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 """objects that handle RestFul API actions for Teacher - Students"""
-
 from models.student_models import Student
 from models.teacher_models import Teacher
 from models.parent_models import Parent
@@ -8,15 +7,18 @@ from models import storage
 from api.v1.views import app_views
 from flask import abort, jsonify, make_response, request
 from api.v1.views.utils import token_required, require_user_class
+from flasgger.utils import swag_from
 
 
 @app_views.route(
     "/teachers/<teacher_id>/students", methods=["GET"], strict_slashes=False
 )
+@swag_from('documentation/students_teachers/get_teacher_students.yml',
+           methods=['GET'])
 @token_required
 def get_teacher_students(teacher_id, user):
     """
-    Retrieves the list of all Student objects of a Teacher
+    Retrieves the list of all Students of a Teacher
     """
     teacher = storage.get(Teacher, teacher_id)
 
@@ -31,8 +33,10 @@ def get_teacher_students(teacher_id, user):
 @app_views.route(
     "/teachers/<teacher_id>/students/<student_id>",
     methods=["POST"],
-    strict_slashes=False,
+    strict_slashes=False
 )
+@swag_from('documentation/students_teachers/link_student_teacher.yml',
+           methods=['POST'])
 @token_required
 @require_user_class("Teacher")
 def link_student_teacher(teacher_id, student_id, user):
@@ -63,6 +67,8 @@ def link_student_teacher(teacher_id, student_id, user):
     methods=["DELETE"],
     strict_slashes=False,
 )
+@swag_from('documentation/students_teachers/unlink_student_teacher.yml',
+           methods=['DELETE'])
 @token_required
 @require_user_class("Administrator")
 def unlink_student_teacher(teacher_id, student_id, user):

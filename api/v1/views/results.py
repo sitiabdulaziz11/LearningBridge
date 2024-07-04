@@ -6,46 +6,16 @@ from api.v1.views import app_views
 from sqlalchemy.exc import SQLAlchemyError
 from api.v1.views.utils import token_required, require_user_class
 from models import storage
+from flasgger.utils import swag_from
 
 
-@app_views.route("/results", methods=["POST"])
+@app_views.route("/results", methods=["POST"], strict_slashes=False)
+@swag_from('documentation/result/add_result.yml', methods=['POST'])
 @token_required
 @require_user_class("Teacher")
 def add_result():
     """
     Add a new result for a student
-    ---
-    tags:
-      - Results
-    operations:
-      - httpMethod: POST
-        summary: Add a new result for a student
-        requestBody:
-          description: Data to add a new result
-          required: true
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  student_id:
-                    type: integer
-                    description: ID of the student
-                  subject:
-                    type: string
-                    description: Subject of the result
-                  score:
-                    type: integer
-                    description: Score of the result
-        responses:
-          '201':
-            description: Result added successfully
-          '400':
-            description: Missing data
-          '404':
-            description: Student not found
-          '500':
-            description: Internal server error
     """
     data = request.get_json()
     student_id = data.get("student_id")
@@ -70,43 +40,11 @@ def add_result():
 
 
 @app_views.route("/results/<int:student_id>", methods=["GET"])
+@swag_from('documentation/result/get_student_results.yml', methods=['GET'])
 @token_required
 def get_results(student_id):
     """
     Retrieve all results for a student
-    ---
-    tags:
-      - Results
-    operations:
-      - httpMethod: GET
-        summary: Get all results for a student
-        parameters:
-          - name: student_id
-            in: path
-            required: true
-            description: ID of the student
-            schema:
-              type: integer
-        responses:
-          '200':
-            description: List of results for the student
-            content:
-              application/json:
-                schema:
-                  type: array
-                  items:
-                    type: object
-                    properties:
-                      subject:
-                        type: string
-                        description: Subject of the result
-                      score:
-                        type: integer
-                        description: Score of the result
-          '404':
-            description: Student not found
-          '500':
-            description: Internal server error
     """
     try:
         student = Student.query.get(student_id)
@@ -124,48 +62,14 @@ def get_results(student_id):
         return jsonify({"error": str(e)}), 500
 
 
-@app_views.route("/results/<int:result_id>", methods=["PUT"])
+@app_views.route("/results/<int:result_id>", methods=["PUT"],
+                 strict_slashes=False)
+@swag_from('documentation/result/update_result.yml', methods=['PUT'])
 @token_required
 @require_user_class("Teacher")
 def update_result(result_id):
     """
     Update a specific result for a student
-    ---
-    tags:
-      - Results
-    operations:
-      - httpMethod: PUT
-        summary: Update a result for a student
-        parameters:
-          - name: result_id
-            in: path
-            required: true
-            description: ID of the result
-            schema:
-              type: integer
-        requestBody:
-          description: Data to update the result
-          required: true
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  subject:
-                    type: string
-                    description: Subject of the result
-                  score:
-                    type: integer
-                    description: Score of the result
-        responses:
-          '200':
-            description: Result updated successfully
-          '400':
-            description: Missing data
-          '404':
-            description: Result not found
-          '500':
-            description: Internal server error
     """
     data = request.get_json()
     subject = data.get("subject")
@@ -191,30 +95,12 @@ def update_result(result_id):
 
 @token_required
 @require_user_class("Teacher")
-@app_views.route("/results/<int:result_id>", methods=["DELETE"])
+@app_views.route("/results/<int:result_id>", methods=["DELETE"],
+                 strict_slashes=False)
+@swag_from('documentation/result/delete_result.yml', methods=['DELETE'])
 def delete_result(result_id):
     """
     Delete a specific result for a student
-    ---
-    tags:
-      - Results
-    operations:
-      - httpMethod: DELETE
-        summary: Delete a result for a student
-        parameters:
-          - name: result_id
-            in: path
-            required: true
-            description: ID of the result
-            schema:
-              type: integer
-        responses:
-          '200':
-            description: Result deleted successfully
-          '404':
-            description: Result not found
-          '500':
-            description: Internal server error
     """
     try:
         result = Result.query.get(result_id)
@@ -233,55 +119,13 @@ def delete_result(result_id):
 from flask import jsonify, request
 
 
-@app_views.route("/parent/<int:parent_id>/results", methods=["GET"])
+@app_views.route("/parent/<int:parent_id>/results", methods=["GET"],
+                 strict_slashes=False)
+@swag_from('documentation/result/parent_students_results.yml', methods=['GET'])
 @token_required
 def get_results_for_parent(parent_id):
     """
     Get all results for all children of a parent
-    ---
-    tags:
-      - Results
-    operations:
-      - httpMethod: GET
-        summary: Retrieve results for all children of a parent
-        parameters:
-          - name: parent_id
-            in: path
-            required: true
-            description: ID of the parent
-            schema:
-              type: integer
-        responses:
-          '200':
-            description: List of results for all children of the parent
-            content:
-              application/json:
-                schema:
-                  type: array
-                  items:
-                    type: object
-                    properties:
-                      student_id:
-                        type: integer
-                        description: ID of the student
-                      student_name:
-                        type: string
-                        description: Name of the student
-                      results:
-                        type: array
-                        items:
-                          type: object
-                          properties:
-                            subject:
-                              type: string
-                              description: Subject of the result
-                            grade:
-                              type: string
-                              description: Grade of the result
-          '404':
-            description: Parent not found
-          '500':
-            description: Internal server error
     """
     parent = Parent.query.get_or_404(parent_id)
     results = []

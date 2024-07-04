@@ -1,0 +1,24 @@
+Updates a specific result for a student
+---
+tags:
+  - Results
+parameters:
+  - name: result_id
+    in: path
+    required: true
+    description: ID of the result
+    type: integer
+  - name: update request data
+    in: body
+    description: Data to update the result
+    required: true
+
+responses:
+  200:
+    description: Result updated successfully
+  400:
+    description: Missing data
+  404:
+    description: Result not found
+  500:
+    description: Internal server error

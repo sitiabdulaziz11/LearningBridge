@@ -6,9 +6,11 @@ from flask import jsonify, request, session
 from datetime import datetime, timedelta
 from flask import current_app
 from api.v1.views.utils import token_required, require_user_class, blacklist
+from flasgger.utils import swag_from
 
 
 @app_views.route("/parents", methods=["POST"], strict_slashes=False)
+@swag_from('documentation/parent/create_parent.yml', methods=['POST'])
 def create_parent():
     required_fields = [
         "firstname",
@@ -35,6 +37,7 @@ def create_parent():
 
 
 @auth.route("/login/parent", methods=["POST"], strict_slashes=False)
+@swag_from('documentation/parent/parent_login.yml', methods=['POST'])
 def parent_login():
     """
     Login a parent.
@@ -111,6 +114,7 @@ def parent_logout(user):
 
 
 @app_views.route("/parents", methods=["GET"], strict_slashes=False)
+@swag_from('documentation/parent/all_parents.yml', methods=['GET'])
 @token_required
 @require_user_class("Administrator")
 def get_parents(user):
@@ -124,7 +128,9 @@ def get_parents(user):
     return jsonify(parents), 200
 
 
-@app_views.route("/parents/<int:parent_id>", methods=["GET"], strict_slashes=False)
+@app_views.route("/parents/<int:parent_id>", methods=["GET"],
+                 strict_slashes=False)
+@swag_from('documentation/parent/get_parent.yml', methods=['GET'])
 @token_required
 @require_user_class("Parent")
 def get_individual_parent(parent_id, user):
@@ -139,7 +145,9 @@ def get_individual_parent(parent_id, user):
     return jsonify(parent.to_dict()), 200
 
 
-@app_views.route("/parents/<int:parent_id>", methods=["PUT"], strict_slashes=False)
+@app_views.route("/parents/<int:parent_id>", methods=["PUT"],
+                 strict_slashes=False)
+@swag_from('documentation/parent/update_parent.yml', methods=['PUT'])
 @token_required
 @require_user_class("Parent")
 def update_parent(parent_id, user):
@@ -163,7 +171,9 @@ def update_parent(parent_id, user):
     return jsonify(parent.to_dict()), 200
 
 
-@app_views.route("/parent/<int:parent_id>", methods=["DELETE"], strict_slashes=False)
+@app_views.route("/parent/<int:parent_id>", methods=["DELETE"],
+                 strict_slashes=False)
+@swag_from('documentation/parent/delete_parent.yml', methods=['DELETE'])
 @token_required
 @require_user_class("Administrator")
 def delete_parent(parent_id, user):
