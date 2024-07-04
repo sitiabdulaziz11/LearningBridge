@@ -1,0 +1,49 @@
+Get all results for all children of a parent
+---
+tags:
+  - Results
+parameters:
+  - name: parent_id
+    in: path
+    required: true
+    description: ID of the parent
+    type: string
+
+responses:
+  200:
+    description: List of results for all children of the parent
+    schema:
+      type: array
+      items:
+        properties:
+          __class__:
+            type: string
+          created_at:
+            type: string
+            description: time of creation of the instance
+          updated_at:
+            type: string
+            description: time of last update of the instance
+          id:
+            type: string
+            description: the uuid of the instance
+          student_id:
+            type: integer
+            description: ID of the student
+          student_name:
+            type: string
+            description: Name of the student
+          results:
+            type: array
+            items:
+              properties:
+                subject:
+                  type: string
+                  description: Subject of the result
+                grade:
+                  type: string
+                  description: Grade of the result
+  404:
+    description: Parent not found
+  500:
+    description: Internal server error

@@ -1,0 +1,18 @@
+Delete a specific result for a student
+---
+tags:
+  - Results
+parameters:
+  - name: result_id
+    in: path
+    type: string
+    required: true
+    description: ID of the result
+
+responses:
+  200:
+    description: Result deleted successfully
+  404:
+    description: Result not found
+  500:
+    description: Internal server error

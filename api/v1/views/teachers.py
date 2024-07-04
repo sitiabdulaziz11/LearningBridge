@@ -6,9 +6,11 @@ from flask import jsonify, request, session, abort, make_response
 from datetime import datetime, timedelta
 from flask import current_app
 from api.v1.views.utils import require_user_class, token_required
+from flasgger.utils import swag_from
 
 
 @app_views.route("/teachers", methods=["POST"], strict_slashes=False)
+@swag_from('documentation/teacher/create_teacher.yml', methods=['POST'])
 def create_teacher():
     required_fields = [
         "firstname",
@@ -34,7 +36,8 @@ def create_teacher():
     return jsonify(teacher.to_dict()), 201
 
 
-@auth.route("/teacher_login", methods=["POST"], strict_slashes=False)
+@auth.route("/login/teacher", methods=["POST"], strict_slashes=False)
+@swag_from('documentation/teacher/teacher_login.yml', methods=['POST'])
 def teacher_login():
     secret_key = current_app.config["SECRET_KEY"]
     required_fields = ["email", "password"]
@@ -66,6 +69,7 @@ def teacher_login():
 
 
 @app_views.route("/teachers", methods=["GET"], strict_slashes=False)
+@swag_from('documentation/teacher/all_teachers.yml', methods=['GET'])
 @token_required
 @require_user_class("Administrator")
 def get_teachers(user):
@@ -77,7 +81,9 @@ def get_teachers(user):
     return jsonify(teachers), 200
 
 
-@app_views.route("/teachers/teacher_id>", methods=["GET"], strict_slashes=False)
+@app_views.route("/teachers/teacher_id>", methods=["GET"],
+                 strict_slashes=False)
+@swag_from('documentation/teacher/get_teacher.yml', methods=['GET'])
 @token_required
 @require_user_class("Teacher")
 def get_teacher(teacher_id, user):
@@ -92,7 +98,9 @@ def get_teacher(teacher_id, user):
     return jsonify(teacher.to_dict())
 
 
-@app_views.route("/teachers/<teacher_id>", methods=["DELETE"], strict_slashes=False)
+@app_views.route("/teachers/<teacher_id>", methods=["DELETE"],
+                 strict_slashes=False)
+@swag_from('documentation/teacher/delete_teacher.yml', methods=['DELETE'])
 @token_required
 @require_user_class("Administrator")
 def delete_teacher(teacher_id, user):
@@ -113,7 +121,9 @@ def delete_teacher(teacher_id, user):
     return make_response(jsonify({}), 200)
 
 
-@app_views.route("/teachers/<teacher_id>", methods=["PUT"], strict_slashes=False)
+@app_views.route("/teachers/<teacher_id>", methods=["PUT"],
+                 strict_slashes=False)
+@swag_from('documentation/teacher/update_teacher.yml', methods=['PUT'])
 @token_required
 @require_user_class("Teacher")
 def update_teacher(teacher_id, user):

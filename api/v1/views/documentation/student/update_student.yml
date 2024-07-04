@@ -1,0 +1,19 @@
+    updates student information
+    ---
+    tags:
+      - Students
+    parameters:
+      - name: student_id
+        in: path
+        type: string
+        required: true
+        description: The id of the student to update
+      - name: update_request
+        in: body
+        required: true
+
+    responses:
+      404:
+        description: student not found!
+      200:
+        description: request executed successfully

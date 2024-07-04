@@ -1,0 +1,39 @@
+Retrieve all results for a student
+---
+tags:
+  - Results
+parameters:
+  - name: student_id
+    in: path
+    required: true
+    description: ID of the student
+    type: string
+
+responses:
+  200:
+    description: List of results for the student
+    schema:
+      type: array
+      items:
+        properties:
+          __class__:
+            type: string
+          created_at:
+            type: string
+            description: time of creation of the instance
+          updated_at:
+            type: string
+            description: time of last update of the instance
+          id:
+            type: string
+            description: the uuid of the instance
+          subject:
+            type: string
+            description: Subject of the result
+          score:
+            type: integer
+            description: Score of the result
+  404:
+    description: Student not found
+  500:
+    description: Internal server error

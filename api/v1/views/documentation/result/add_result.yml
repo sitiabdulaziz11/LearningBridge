@@ -1,0 +1,32 @@
+Add a new result for a student
+---
+tags:
+  - Results
+parameters:
+  - name: data
+    in: body
+    required: true
+    requires:
+      - student_id:
+      - subject:
+      - score:
+    properties:
+      student_id:
+        type: string
+        description: ID of the student
+      subject:
+        type: string
+        description: Subject of the result
+      score:
+        type: integer
+        description: Score of the result
+      
+responses:
+  201:
+    description: Result added successfully
+  400:
+    description: Missing data
+  404:
+    description: Student not found
+  500:
+    description: Internal server error

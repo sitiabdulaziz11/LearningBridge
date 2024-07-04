@@ -1,0 +1,15 @@
+    Deletes a teacher
+    ---
+    tags:
+      - Teachers
+    parameters:
+      - name: teacher_id
+        in: path
+        type: string
+        required: false
+        description: The unique id of the teacher
+    responses:
+      404:
+        description: teacher not found!
+      200:
+        description: request executed successfully

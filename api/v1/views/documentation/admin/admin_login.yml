@@ -1,0 +1,24 @@
+    logs an admin in a session
+    ---
+    tags:
+      - Administrators
+    parameters:
+      - name: data
+        in: body
+        required: true
+        requires:
+          - email:
+          - password:
+        properties:
+          email:
+            type: string
+          password:
+            type: string
+
+    responses:
+      400:
+        description: Missing data or not a JSON
+      500:
+        description: Error generating token
+      201:
+        description: successfully logs in an Administrator

@@ -1,0 +1,37 @@
+    creates a new parent object
+    ---
+    tags:
+      - Parents
+    parameters:
+      - name: parent_and_password
+        in: body
+        required: true
+        requires:
+          - email:
+          - password:
+          - firstname:
+          - middlename:
+          - lastname:
+          - phone_no:
+          - address:
+        properties:
+          email:
+            type: string
+          password:
+            type: string
+          firstname:
+            type: string
+          middlename:
+            type: string
+          lastname:
+            type: string
+          phone_no:
+            type: string
+          address:
+            type: string
+
+    responses:
+      400:
+        description: Missing data or not a JSON
+      201:
+        description: successfully created parent

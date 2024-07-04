@@ -9,38 +9,14 @@ from flask import jsonify, request, session, make_response, abort
 from datetime import datetime, timedelta
 from flask import current_app
 from api.v1.views.utils import token_required, require_user_class, blacklist
+from flasgger.utils import swag_from
 
 
 @app_views.route("/students", methods=["POST"], strict_slashes=False)
+@swag_from('documentation/student/create_student.yml', methods=['POST'])
 def create_student():
     """
     Create a new student
-    ---
-    tags:
-      - Users
-    summary: Create a new student
-    requestBody:
-      description: User object that needs to be added
-      required: true
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Student'
-    responses:
-      '201':
-        description: User created
-        content:
-          application/json:
-            schema:
-      '400':
-        description: Invalid input
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                error:
-                  type: string
     """
     required_fields = [
         "firstname",
@@ -64,39 +40,9 @@ def create_student():
 
 
 @auth.route("/login", methods=["POST"], strict_slashes=False)
+@swag_from('documentation/student/student_login.yml', methods=['POST'])
 def user_login():
     """
-    User Login
-    ---
-    tags:
-      - Users
-    summary: User Login
-    requestBody:
-      description: User object that needs to be added
-      required: true
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/User'
-    responses:
-      '201':
-        description: User logged in
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                token:
-                  type: string
-      '400':
-        description: Invalid input
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                error:
-                  type: string
     """
     secret_key = current_app.config["SECRET_KEY"]
     required_fields = ["email", "password"]
@@ -132,25 +78,11 @@ def user_login():
 
 
 @app_views.route("/students", methods=["GET"], strict_slashes=False)
+@swag_from('documentation/student/all_students.yml', methods=['GET'])
 @token_required
 def get_students(user):
     """
     Get all users
-    ---
-    tags:
-      - Users
-    operations:
-      - httpMethod: GET
-        summary: Retrieve all users
-        responses:
-          '200':
-            description: List of all users
-            content:
-              application/json:
-                schema:
-                  type: array
-                  items:
-                    $ref: '#/components/schemas/User'
     """
     if (
         session.get("logged_in") is None
@@ -181,10 +113,12 @@ def logout(user):
     return jsonify({"message": f"{user.firstname} Logged out"})
 
 
-@app_views.route("/students/<student_id>", methods=["GET"], strict_slashes=False)
+@app_views.route("/students/<student_id>", methods=["GET"],
+                 strict_slashes=False)
+@swag_from('documentation/student/get_student.yml', methods=['GET'])
 @token_required
 def get_student(student_id, user):
-    """Retrieves an student"""
+    """Retrieves a student"""
     print(session)
     if session.get("logged_in") is True or not session["logged_in"]:
         return jsonify({"error": "Unauthorized"}), 401
@@ -196,7 +130,9 @@ def get_student(student_id, user):
     return make_response(jsonify(student.to_dict()), 200)
 
 
-@app_views.route("/students/<student_id>", methods=["DELETE"], strict_slashes=False)
+@app_views.route("/students/<student_id>", methods=["DELETE"],
+                 strict_slashes=False)
+@swag_from('documentation/student/delete_student.yml', methods=['DELETE'])
 @token_required
 @require_user_class("Administrator")
 def delete_student(student_id, user):
@@ -217,7 +153,9 @@ def delete_student(student_id, user):
     return make_response(jsonify({}), 200)
 
 
-@app_views.route("/student/<student_id>", methods=["PUT"], strict_slashes=False)
+@app_views.route("/student/<student_id>", methods=["PUT"],
+                 strict_slashes=False)
+@swag_from('documentation/student/update_student.yml', methods=['PUT'])
 @token_required
 @require_user_class("Student")
 def update_student(student_id, user):

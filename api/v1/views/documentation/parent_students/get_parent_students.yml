@@ -1,0 +1,55 @@
+Get all students of a parent
+---
+tags:
+  - Parent_Students
+parameters:
+  - name: parent_id
+    in: path
+    required: true
+    description: the unique id of the parent
+    type: string
+
+responses:
+  200:
+    description: List of students of a parent
+    schema:
+      type: array
+      items:
+        properties:
+          __class__:
+            type: string
+          created_at:
+            type: string
+            description: time of creation of the instance
+          updated_at:
+            type: string
+            description: time of last update of the instance
+          id:
+            type: string
+            description: the uuid of the instance
+          firstname:
+            type: string
+            description: first name of the student
+          lastname:
+            type: string
+            description: student's last name
+          birth_date:
+            type: string
+            description: student's date of birth
+          section:
+            type: string
+            description: section which the student belongs to
+          results:
+            type: array
+            items:
+              properties:
+                subject:
+                  type: string
+                  description: Subject of the result
+                grade:
+                  type: string
+                  description: Grade of the result
+  404:
+    description: Parent not found
+  500:
+    description: Internal server error

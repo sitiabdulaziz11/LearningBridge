@@ -1,0 +1,21 @@
+    Unlinks a student from a teacher based on the ids provided
+    ---
+    tags:
+      - Teacher_Students
+    parameters:
+      - name: teacher_id
+        in: path
+        type: string
+        required: true
+        description: The uuid of the teacher
+      - name: student_id
+        in: path
+        type: string
+        required: true
+        description: The uuid of the student to unlink
+
+    responses:
+      404:
+        description: Teacher or Student not found!
+      200:
+        description: sucessfully unlinked student

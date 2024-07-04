@@ -1,0 +1,24 @@
+    logs a parent in a session
+    ---
+    tags:
+      - Parents
+    parameters:
+      - name: email_and_password
+        in: body
+        required: true
+        requires:
+          - email:
+          - password:
+        properties:
+          email:
+            type: string
+          password:
+            type: string
+
+    responses:
+      400:
+        description: Missing email/password or not a JSON
+      500:
+        description: Error generating token
+      201:
+        description: successfully logs in a parent

@@ -1,0 +1,44 @@
+retrieves a list of all teachers.
+---
+tags:
+  - Teachers
+
+responses:
+  200:
+    description: request executed successfully
+    schema:
+      type: array
+      items:
+        properties:
+          __class__:
+            type: string
+          created_at:
+            type: string
+            description: time of creation of the instance
+          updated_at:
+             type: string
+             description: time of last update of the instance
+          id:
+            type: string
+            description: The uuid of the instance
+          email:
+             type: string
+             description: teacher's email
+          firstname:
+             type: string
+             description: teacher's first name
+          middlename:
+             type: string
+             description: teacher's middle name
+          lastname:
+             type: string
+             description: teacher's last name
+          birth_date:
+            type: string
+            description: teacher's date of birth
+          phone_no:
+             type: string
+             description: teacher's phone number
+          section:
+             type: string
+             description: teacher's section in school
