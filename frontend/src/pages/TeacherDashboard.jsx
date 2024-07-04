@@ -1,7 +1,8 @@
 import React from 'react'
 import NavLayout from '../Layout/NavLayout'
 import Navbar from '../components/Navbar'
-import StudentResultForm from '../components/TopSide.jsx'
+import StudentResultForm from '../components/StudentResultForm.jsx'
+
 
 
 const TeacherDashboard = () => {
@@ -12,7 +13,7 @@ const TeacherDashboard = () => {
                 <NavLayout />
             </div>
 
-            <div className='m-10 p-20 text-gray-50 '>
+            <div className=' '>
                <StudentResultForm /> 
             </div>     
         </>

@@ -36,17 +36,17 @@ const StudentResultForm = ({ selectedResult, onSave }) => {
 
   return (
     <>
-    <form  onSubmit={handleSubmit} className="bg-green-500 py-7 p-4 rounded-lg">
-      <div className="mb-4">
-        <label className="block text-black">Student Name:</label>
-        <input
+    <form  onSubmit={handleSubmit} className="m-20 pl-20 ">
+      <div className="mb-11">
+        <label className="p-2 block text-2xl text-zinc-300">Student Name:</label>
+        <input className='w-1/3 p-2 text-3xl text-black bg-slate-400 border rounded'
           type="text" 
           value={studentName} 
           onChange={(e) => setStudentName(e.target.value)} 
           required 
         />
       </div>
-      <div className="mb-4">
+      <div className="mb-14">
         <label className="block text-white">Subject:</label>
         <input 
           type="text" 
@@ -56,7 +56,7 @@ const StudentResultForm = ({ selectedResult, onSave }) => {
            
         />
       </div>
-      <div className="mb-4">
+      <div className="mb-14">
         <label className="block text-white">Score:</label>
         <input 
           type="number" 
