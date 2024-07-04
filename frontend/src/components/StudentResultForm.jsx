@@ -36,19 +36,19 @@ const StudentResultForm = ({ selectedResult, onSave }) => {
 
   return (
     <>
-    <form  onSubmit={handleSubmit} className="m-20 pl-20 ">
-      <div className="mb-11">
+    <form  onSubmit={handleSubmit} className="m-10 ml-60 pl-20 ">
+      <div className="mb-9">
         <label className="p-2 block text-2xl text-zinc-300">Student Name:</label>
-        <input className='w-1/3 p-2 text-3xl text-black bg-slate-400 border rounded'
+        <input className='w-1/3 p-2 text-3xl text-black bg-slate-400 border rounded-2xl'
           type="text" 
           value={studentName} 
           onChange={(e) => setStudentName(e.target.value)} 
           required 
         />
       </div>
-      <div className="mb-14">
-        <label className="block text-white">Subject:</label>
-        <input 
+      <div className="mb-9">
+        <label className="p-2 block text-2xl text-zinc-300">Subject:</label>
+        <input className='w-1/3 p-2 text-3xl text-black bg-slate-400 border rounded-2xl'
           type="text" 
           value={subject} 
           onChange={(e) => setSubject(e.target.value)} 
@@ -56,9 +56,9 @@ const StudentResultForm = ({ selectedResult, onSave }) => {
            
         />
       </div>
-      <div className="mb-14">
-        <label className="block text-white">Score:</label>
-        <input 
+      <div className="mb-9">
+        <label className="p-2 block text-2xl text-zinc-300">Score:</label>
+        <input className='w-1/3 p-2 text-3xl text-black bg-slate-400 border rounded-2xl'
           type="number" 
           value={score} 
           onChange={(e) => setScore(e.target.value)} 
@@ -66,7 +66,7 @@ const StudentResultForm = ({ selectedResult, onSave }) => {
           
         />
       </div>
-      <button type="submit">Save</button>
+      <button className='text-3xl p-4 m-3 ml-10 w-100 hover:bg-pink-800 bg-green-800 rounded-2xl' type="submit">Save</button>
     </form>
     </>
   );

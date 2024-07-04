@@ -6,7 +6,7 @@
 /* Customize the body background color*/
 @layer base {
   body {
-    @apply bg-black;
+    @apply bg-gray-900;
   }
   button {
     @apply bg-yellow-500;
