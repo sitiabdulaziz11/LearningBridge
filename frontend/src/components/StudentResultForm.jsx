@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
+// This function is used to handle the form submission.
+//  It makes POST request to the backend API to save the result.
 const StudentResultForm = ({ selectedResult, onSave }) => {
   const [studentName, setStudentName] = useState('');
   const [subject, setSubject] = useState('');
   const [score, setScore] = useState('');
+  // const [message, setMessage] = useState('Result uploaded successfully');
 
   useEffect(() => {
     if (selectedResult) {
-      setStudentName(selectedResult.studentName);
+      setStudentName(selectedResult.studentName); // this maybe stud id
       setSubject(selectedResult.subject);
       setScore(selectedResult.score);
     } else {
@@ -25,17 +28,20 @@ const StudentResultForm = ({ selectedResult, onSave }) => {
     axios.post('/api/results', result)
       .then(response => {
         onSave(response.data);
+        // setMessage('Result uploaded successfully');
         setStudentName(''); // this part clears the form fields after saving it.
         setSubject('');
         setScore('');
       })
       .catch(error => {
         console.error('Error uploading result', error);
+        setMessage('Error uploading result');
       });
   };
 
   return (
     <>
+     {/* {message && <div className="mb-4 m-10 ml-60 pl-20 text-xl text-red-500">{message}</div>} */}
     <form  onSubmit={handleSubmit} className="m-10 ml-60 pl-20 ">
       <div className="mb-9">
         <label className="p-2 block text-2xl text-zinc-300">Student Name:</label>

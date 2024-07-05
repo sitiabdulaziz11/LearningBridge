@@ -13,15 +13,28 @@ const Sidebar = ({ isSidebarOpen }) => {
       <hr />
       <ul className='mt-3 text-2xl text-zinc-300 font-bold'>
         <li className='mb-2 hover:bg-blue-950 py-2'>
-          <Link to='/teacherdashboard' className='px-3'>
+          <Link to='/teacherdashboard' className=''>
             Teacher Dashboard
           </Link>
         </li>
         <li className='mb-2 hover:bg-blue-950 py-2'>
-          <a href='' className='px-3'>
+          <Link to='/studentdashboard' className=''>
             Student Dashboard
-          </a>
+          </Link>
         </li>
+        <li className='mb-2 hover:bg-blue-950 py-2'>
+          <Link to='' className=''>
+            Parent Dashboard
+          </Link>
+        </li>
+        <li className='mb-2 hover:bg-blue-950 py-2'>
+          <Link to='' className=''>
+            Admin Dashboard
+          </Link>
+        </li>
+        <li className='mb-2 hover:bg-blue-950 py-2 '><Link to="/results">Results Dashboard</Link></li>
+        <li className='mb-2 hover:bg-blue-950 py-2 '><Link to="">Announcement Dashboard</Link></li>
+        <li className='mb-2 hover:bg-blue-950 py-2'><Link to="">Registration Dashboard</Link></li>
       </ul>
 
     </div>

@@ -71,6 +71,7 @@ const NavLayout = () => {
                         <li className='py-6 '><Link to="/dashboards">Dashboards</Link></li>
                         <li className='py-6 '><Link to="/about">About</Link></li>
                         <li className='py-6 '><Link to="/login">Login</Link></li>
+                        <li className='py-6 '><Link to="/result">Resu</Link></li>
                     </ul>
                 ) : null}
             </nav>
