@@ -11,7 +11,7 @@ const Sidebar = ({ isSidebarOpen }) => {
         <h1 className='text-2xl text-white font-bold'>Dashboard</h1>
       </div>
       <hr />
-      <ul className='mt-3 text-2xl text-zinc-300 font-bold'>
+      <ul className='mt-3 text-xl text-zinc-300 font-semibold'>
         <li className='mb-2 hover:bg-blue-950 py-2'>
           <Link to='/teacherdashboard' className=''>
             Teacher Dashboard

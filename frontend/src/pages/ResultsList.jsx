@@ -33,7 +33,7 @@ const ResultsList = () => {
               <th className="py-2 px-6 w-40 " style={{ border: 'solid black' }}>Test1</th>
               <th className="py-2 px-6 w-40 " style={{ border: 'solid black' }}>Test2</th>
               <th className="py-2 px-6 w-40 " style={{ border: 'solid black' }}>Mid</th>
-              <th className="py-2 px-6 w-40 bg-gray-900 " style={{ border: 'solid black' }}>Assignment</th>
+              <th className="py-2 px-6 w-40 " style={{ border: 'solid black' }}>Assignment</th>
               <th className=" py-2 px-6 w-40 " style={{ border: 'solid black' }}>Exercise book</th>
               <th className=" py-2 px-6 w-40 " style={{ border: 'solid black' }}>Final</th>
               <th className=" py-2 px-6 w-40 " style={{ border: 'solid black' }}>Total Score</th>

@@ -42,7 +42,7 @@ const StudentResultForm = ({ selectedResult, onSave }) => {
   return (
     <>
      {/* {message && <div className="mb-4 m-10 ml-60 pl-20 text-xl text-red-500">{message}</div>} */}
-    <form  onSubmit={handleSubmit} className="m-10 ml-60 pl-20 ">
+    <form  onSubmit={handleSubmit} className="m-10 bg-black ml-60 mr-80 pl-20 ">
       <div className="mb-9">
         <label className="p-2 block text-2xl text-zinc-300">Student Name:</label>
         <input className='w-1/3 p-2 text-3xl text-black bg-slate-400 border rounded-2xl'
