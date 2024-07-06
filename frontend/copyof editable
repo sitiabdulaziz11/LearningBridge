@@ -1,0 +1,18 @@
+
+  const handleScoreChange = (studentId, subject, scoreType, newScore) => {
+    const updatedResults = results.map(result => {
+      if (result.studentId === studentId && result.subject === subject) {
+        if (scoreType === 'test1') {
+          return { ...result, test1: newScore };
+        } else if (scoreType === 'test2') {
+          return { ...result, test2: newScore };
+        } else if (scoreType === 'mid') {
+          return { ...result, mid: newScore };
+        } else if (scoreType === 'final') {
+          return { ...result, final: newScore };
+        }
+      }
+      return result;
+    });
+    setResults(updatedResults);
+  }
