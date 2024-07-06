@@ -1,7 +1,7 @@
 import Navbar from './components/Navbar.jsx';
 import NavLayout from './Layout/NavLayout.jsx';
 import { React, useState } from 'react';
-import desi from '../public/desi.PNG'
+import desi from './assets/desi.PNG'
 
 export default function App() {
   const [sidebarToggle, setSidebarToggle] = useState(false);

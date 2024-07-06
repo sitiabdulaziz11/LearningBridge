@@ -59,7 +59,7 @@ const ResultsList = () => {
 
       <div className="mx-80 mt-4 text-white fixed w-3/4 h-full bg-gray-900 py-4">
         {results.length === 0 ? (
-          <p className="text-center text-white">No results available</p> // This part Display message if no results
+          <p className="text-center text-white">No results available</p>
         ) : (
           <table className="table-auto w-full">
             <thead>

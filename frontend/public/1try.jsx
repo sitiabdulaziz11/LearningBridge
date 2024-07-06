@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import calculateTotalScoreAndRank from '../components/calculateTotalScoreAndRank.jsx';
 import StudentDashboard from './StudentDashboard';
 
-// This component needs to fetch and display data.
 const ResultsList = () => {
   const [results, setResults] = useState([]);
 
@@ -23,7 +21,6 @@ const ResultsList = () => {
       });
   }, []);
 
-  // to make the result editable or Function to handle score changes
   const handleScoreChange = (studentId, subject, scoreType, newScore) => {
     setResults(prevResults => {
       const updatedResults = prevResults.map(result => result.id === studentId ? {
@@ -57,9 +54,9 @@ const ResultsList = () => {
         <StudentDashboard />
       </div>
 
-      <div className="mx-80 mt-4 text-white fixed w-3/4 h-full bg-gray-900 py-4">
+      <div className="mx-80 mt-2 text-white fixed w-1/2 h-full bg-gray-900 py-4">
         {results.length === 0 ? (
-          <p className="text-center text-white">No results available</p> // This part Display message if no results
+          <p className="text-center text-white">No results available</p>
         ) : (
           <table className="table-auto w-full">
             <thead>
@@ -150,6 +147,70 @@ const ResultsList = () => {
       </div>
     </>
   );
+};
+
+const calculateTotalScoreAndRank = (results) => {
+  // Calculate total scores
+  const updatedResults = results.map(result => {
+    let totalScore = 0;
+
+    // Function to check if a value is a valid number
+    const addScore = (score) => {
+      if (!isNaN(score) && Number.isInteger(Number(score))) {
+        totalScore += Number(score);
+      } else {
+        console.warn(`Invalid score: ${score} for student ${result.studentName}`);
+      }
+    };
+
+    // Sum up relevant scores
+    addScore(result.results.test1);
+    addScore(result.results.test2);
+    addScore(result.results.midExam);
+    addScore(result.results.assignment);
+    addScore(result.results.exerciseBook);
+    addScore(result.results.finalExam);
+
+    return {
+      ...result,
+      results: {
+        ...result.results,
+        totalScore: totalScore,
+      },
+    };
+  });
+
+  // Sort by totalScore in descending order
+  const clonedResults = [...updatedResults];
+  clonedResults.sort((a, b) => b.results.totalScore - a.results.totalScore);
+
+  // Assign ranks
+  let currentRank = 1;
+  let lastScore = null;
+  let lastRank = 1;
+
+  clonedResults.forEach((result, index) => {
+    if (lastScore === result.results.totalScore) {
+      result.results.rank = lastRank;
+    } else {
+      result.results.rank = currentRank;
+      lastRank = currentRank;
+    }
+    lastScore = result.results.totalScore;
+    currentRank++;
+  });
+
+  // Update the original results with ranks
+  return updatedResults.map(result => {
+    const clonedResult = clonedResults.find(r => r.id === result.id);
+    return {
+      ...result,
+      results: {
+        ...result.results,
+        rank: clonedResult.results.rank,
+      },
+    };
+  });
 };
 
 export default ResultsList;
