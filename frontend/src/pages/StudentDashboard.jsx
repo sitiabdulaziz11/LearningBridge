@@ -13,9 +13,11 @@ const StudentDashboard = () => {
 
     return (
         <>
-            <div className={`${isOpen ? "hidden" : "block"} sm:w-[13.5rem] lg:w-[19.25rem] bg-gray-950 fixed h-full px-4 py-2`}>
+            <div className={`${isOpen ? "hidden" : ""} sm:w-[13.5rem] lg:w-[19.25rem] bg-gray-950 fixed h-full px-4 py-2`}>
                 <div className='my-2 mb-4'>
-                    <h1 className='text-2xl mt-6 text-white font-bold'>Student Dashboard</h1>
+                    <Link to='/studentdashboard' className=''>
+                        <h1 className='text-2xl mt-12 text-white font-bold' >Student Dashboard</h1>
+                    </Link>
                 </div>
                 <hr />
                 <ul className='mt-3 text-2xl text-zinc-300 font-bold'>

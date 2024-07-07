@@ -8,7 +8,7 @@ const ResultsList = () => {
   const [results, setResults] = useState([]);
 
   useEffect(() => {
-    axios.get('/api/results')
+    axios.get('/api/v1/results')
       .then(response => {
         console.log('Fetched results:', response.data); // Debugging log
         if (response.data.length > 0) {
@@ -57,7 +57,7 @@ const ResultsList = () => {
         <StudentDashboard />
       </div>
 
-      <div className="mx-80 mt-4 text-white fixed w-3/4 h-full bg-gray-900 py-4">
+      <div className="md:mx-80 mt-4 text-white fixed w-3/4 h-full bg-gray-900 py-4 sm:mx-20">
         {results.length === 0 ? (
           <p className="text-center text-white">No results available</p> // This part Display message if no results
         ) : (

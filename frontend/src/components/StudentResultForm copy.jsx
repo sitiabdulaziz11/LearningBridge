@@ -52,7 +52,7 @@ const StudentResultForm = ({ selectedResult, onSave }) => {
       [formData.resultType.toLowerCase().replace(' ', '')]: formData.resultValue
     };
 
-    axios.post('/api/v1/results', dataToSend)
+    axios.post('/api/results', dataToSend)
       .then(response => {
         setSuccessMessage('Result uploaded successfully');
         onSave(response.data);
@@ -72,10 +72,9 @@ const StudentResultForm = ({ selectedResult, onSave }) => {
 
   return (
     <>
-      {successMessage && <div className="mb-4 m-10 ml-60 pl-20 text-xl text-green-500">{successMessage}</div>}
-      {errorMessage && <div className="mb-4 m-10 ml-60 pl-20 text-xl text-red-500">{errorMessage}</div>}
-
-      <form onSubmit={handleSubmit} className="sm:w- md:ml-60 md:w-1/2 m-10 bg-gray-950 md:pl-20">
+    {successMessage && <div className="mb-4 m-10 ml-60 pl-20 text-xl text-green-500">{successMessage}</div>}
+    {errorMessage && <div className="mb-4 m-10 ml-60 pl-20 text-xl text-red-500">{errorMessage}</div>}
+      <form onSubmit={handleSubmit} className="m-10 bg-black ml-60 mr-80 pl-20">
         <div className="mb-8">
           <label className="p-2 block text-2xl text-zinc-300">ID Number:</label>
           <input
