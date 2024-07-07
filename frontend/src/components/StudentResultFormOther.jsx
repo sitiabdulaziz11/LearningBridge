@@ -6,8 +6,12 @@ const StudentResultForm = ({ selectedResult, onSave }) => {
     id: '',
     studentName: '',
     subject: '',
-    resultType: '',
-    resultValue: ''
+    test1: '',
+    test2: '',
+    midExam: '',
+    assignment: '',
+    exerciseBook: '',
+    finalExam: ''
   });
 
   const subjects = ['English', 'Math', 'Science', 'History', 'Geography'];
@@ -19,16 +23,24 @@ const StudentResultForm = ({ selectedResult, onSave }) => {
         id: selectedResult.id,
         studentName: selectedResult.studentName,
         subject: selectedResult.subject,
-        resultType: '',
-        resultValue: ''
+        test1: selectedResult.test1,
+        test2: selectedResult.test2,
+        midExam: selectedResult.midExam,
+        assignment: selectedResult.assignment,
+        exerciseBook: selectedResult.exerciseBook,
+        finalExam: selectedResult.finalExam
       });
     } else {
       setFormData({
         id: '',
         studentName: '',
         subject: '',
-        resultType: '',
-        resultValue: ''
+        test1: '',
+        test2: '',
+        midExam: '',
+        assignment: '',
+        exerciseBook: '',
+        finalExam: ''
       });
     }
   }, [selectedResult]);
@@ -44,20 +56,19 @@ const StudentResultForm = ({ selectedResult, onSave }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const dataToSend = {
-      ...formData,
-      [formData.resultType.toLowerCase().replace(' ', '')]: formData.resultValue
-    };
-
-    axios.post('/api/results', dataToSend)
+    axios.post('/api/results', formData)
       .then(response => {
         onSave(response.data);
         setFormData({
           id: '',
           studentName: '',
           subject: '',
-          resultType: '',
-          resultValue: ''
+          test1: '',
+          test2: '',
+          midExam: '',
+          assignment: '',
+          exerciseBook: '',
+          finalExam: ''
         }); // clear form fields
       })
       .catch(error => {
@@ -72,7 +83,7 @@ const StudentResultForm = ({ selectedResult, onSave }) => {
           <label className="p-2 block text-2xl text-zinc-300">ID Number:</label>
           <input
             className='w-1/3 p-2 text-3xl text-black bg-slate-400 border rounded-2xl'
-            type="number"
+            type="text"
             name="id"
             value={formData.id}
             onChange={handleChange}
@@ -105,33 +116,19 @@ const StudentResultForm = ({ selectedResult, onSave }) => {
             ))}
           </select>
         </div>
-        <div className="mb-8">
-          <label className="p-2 block text-2xl text-zinc-300">Result Type:</label>
-          <select
-            className='w-1/3 p-2 text-3xl text-black bg-slate-400 border rounded-2xl'
-            name="resultType"
-            value={formData.resultType}
-            onChange={handleChange}
-            required
-          >
-            <option value="">Select Result Type</option>
-            {resultTypes.map((resultType, index) => (
-              <option key={index} value={resultType}>{resultType}</option>
-            ))}
-          </select>
-        </div>
-        <div className="mb-8">
-          <label className="p-2 block text-2xl text-zinc-300">Value:</label>
-          <input
-            className='w-1/3 p-2 text-3xl text-black bg-slate-400 border rounded-2xl'
-            type="number"
-            name="resultValue"
-            value={formData.resultValue}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <button className='text-4xl mb-11 p-2 w-40 hover:bg-green-700 bg-purple-900 rounded-2xl' type="submit">Save</button>
+        {resultTypes.map((type, index) => (
+          <div className="mb-8" key={index}>
+            <label className="p-2 block text-2xl text-zinc-300">{type}:</label>
+            <input
+              className='w-1/3 p-2 text-3xl text-black bg-slate-400 border rounded-2xl'
+              type="number"
+              name={type.toLowerCase().replace(' ', '')}
+              value={formData[type.toLowerCase().replace(' ', '')]}
+              onChange={handleChange}
+            />
+          </div>
+        ))}
+        <button className='text-4xl mb-11 p-2 w-200 hover:bg-green-700 bg-purple-900 rounded-2xl' type="submit">Save</button>
       </form>
     </>
   );
