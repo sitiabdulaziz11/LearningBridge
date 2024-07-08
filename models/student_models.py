@@ -1,4 +1,4 @@
-from sqlalchemy import Column, String, ForeignKey, Table, Date
+from sqlalchemy import Column, String, Integer, ForeignKey, Table, Date
 from sqlalchemy.orm import relationship
 from datetime import datetime
 from .teacher_models import students_teachers
@@ -24,16 +24,17 @@ class Student(BaseClass, Base):
     lastname = Column(String(50), nullable=False)
     email = Column(String(50), nullable=False, unique=True)
     password = Column(String(250), nullable=False, unique=True)
-    birth_date = Column(Date, nullable=False)  # Q?
+    birth_date = Column(Date, nullable=False) # Q?
+    age = Column(Integer(20), nullable=False)
     image_file = Column(String(50), unique=True)
     # address = relationship("Address", backref="student", uselist=False)
-    # address = Column(String(100), nullable=false)
+    address = Column(String(100), nullable=False)
     phone_no = Column(String(60), unique=True)
-    conduct = Column(String(60), nullable=True)  # Q?
+    # conduct = Column(String(60), nullable=True)  # Q?
     section = Column(String(60), nullable=True)  # Q?
-
-    results = relationship("Result", back_populates="student")
+    
     # Define the relationship with other tables
+    results = relationship("Result", back_populates="student")
     teachers = relationship(
         "Teacher", secondary=students_teachers, back_populates="students"
     )

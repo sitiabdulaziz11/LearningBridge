@@ -9,7 +9,7 @@ from models import storage
 from flasgger.utils import swag_from
 
 
-@app_views.route("/results", methods=["POST"], strict_slashes=False)
+@app_views.route('/results', methods=["POST"], strict_slashes=False)
 @swag_from('documentation/result/add_result.yml', methods=['POST'])
 @token_required
 @require_user_class("Teacher")

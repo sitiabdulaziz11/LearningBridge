@@ -21,7 +21,10 @@ def create_administrator():
         "lastname",
         "email",
         "password",
-        "phone_no"
+        "phone_no",
+        "age"
+        "hire_date",
+        "address",
     ]
     data = request.get_json()
 

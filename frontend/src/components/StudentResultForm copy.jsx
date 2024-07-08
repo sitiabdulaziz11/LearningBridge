@@ -52,7 +52,7 @@ const StudentResultForm = ({ selectedResult, onSave }) => {
       [formData.resultType.toLowerCase().replace(' ', '')]: formData.resultValue
     };
 
-    axios.post('/api/results', dataToSend)
+    axios.post('/api/v1/results', dataToSend)
       .then(response => {
         setSuccessMessage('Result uploaded successfully');
         onSave(response.data);

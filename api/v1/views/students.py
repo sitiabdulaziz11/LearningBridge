@@ -25,6 +25,10 @@ def create_student():
         "email",
         "password",
         "birth_date",
+        "age",
+        "address",
+        "phone_no",
+        "section"
     ]
     data = request.get_json()
 
@@ -37,6 +41,15 @@ def create_student():
 
     student = Student(**data)
     student.save()
+    
+@auth.route("/logout", methods=["POST"], strict_slashes=False)
+@swag_from('documentation/student/student_login.yml', methods=['POST'])
+def user_signup():
+    """_summary_
+
+    Returns:
+        _type_: _description_
+    """
 
 
 @auth.route("/login", methods=["POST"], strict_slashes=False)

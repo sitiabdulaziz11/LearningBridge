@@ -17,15 +17,20 @@ class Parent(BaseClass, Base):
 
     __tablename__ = "parents"
 
-    firstname = Column(String(50), nullable=False)
-    middlename = Column(String(50), nullable=False)
-    lastname = Column(String(50), nullable=False)
-    phone_no = Column(String(60), nullable=False, unique=True)
+    father_firstname = Column(String(50), nullable=False)
+    father_middlename = Column(String(50), nullable=False)
+    father_lastname = Column(String(50), nullable=False)
+    mother_firstname = Column(String(50), nullable=False)
+    mother_middlename = Column(String(50), nullable=False)
+    mother_lastname = Column(String(50), nullable=False)
+    fphone_no = Column(String(60), nullable=False, unique=True)
+    mphone_no = Column(String(60), nullable=False, unique=True)
     email = Column(String(50), nullable=False, unique=True)
     password = Column(String(250), nullable=False, unique=True)
-    image_file = Column(String(50), unique=True)
+    image_file = Column(String(50), nullable=False, default='default.jpg')
     address = Column(String(100), nullable=False)
-
+    age = Column(String(20))
+    
     # define relation
     teachers = relationship(
         "Teacher", secondary=Parent_teacher, back_populates="parents"

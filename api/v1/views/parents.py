@@ -13,13 +13,18 @@ from flasgger.utils import swag_from
 @swag_from('documentation/parent/create_parent.yml', methods=['POST'])
 def create_parent():
     required_fields = [
-        "firstname",
-        "middlename",
-        "lastname",
+        "father_firstname"
+        "father_middlename"
+        "father_lastname"
+        "mother_firstname"
+        "mother_middlename"
+        "mother_lastname"
+        "fphone_no"
+        "mphone_no",
         "email",
         "password",
-        "phone_no",
         "address",
+        "age" 
     ]
     data = request.get_json()
 

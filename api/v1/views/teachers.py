@@ -18,8 +18,10 @@ def create_teacher():
         "lastname",
         "email",
         "password",
-        "birth_date",
         "phone_no",
+        "hire_date",
+        "age",
+        "adress",
         "section",
     ]
     data = request.get_json()

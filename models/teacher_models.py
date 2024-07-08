@@ -22,19 +22,18 @@ class Teacher(BaseClass, Base):
     lastname = Column(String(50), nullable=False)
     email = Column(String(100), nullable=False, unique=True)
     password = Column(String(250), nullable=False, unique=True)
+    phone_no = Column(String(10), nullable=False, unique=True)
     hire_date = Column(
         DateTime, nullable=False, default=datetime.now().strftime("%d-%m-%Y")
     )  # Q?
-
+    age = Column(Integer(20))
     image_file = Column(String(50), nullable=False, unique=True, default="default.jpg")
-    # address = relationship("Address", ?backref="teacher", uselist=False)?
-    # address = Column(String(100), nullable=false)
-    phone_no = Column(String(10), nullable=False, unique=True)
+    address = Column(String(100), nullable=False)
+    section = Column(String(150), nullable=False)
     # subject = Column(String(150),
     # nullable=False) # Q?what subject does teacher teach?
     # Q? what section does teacher teach?
-    section = Column(String(150), nullable=False)
-
+    
     # define the relationship
     parents = relationship(
         "Parent", secondary="parent_teacher", back_populates="teachers"

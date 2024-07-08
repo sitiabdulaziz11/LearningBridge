@@ -1,0 +1,17 @@
+Configuration of URL Prefixes
+In your __init__.py file inside the api/v1/views directory, you defined two blueprints (app_views and auth) with specific URL prefixes:
+
+python
+Copy code
+# api/v1/views/__init__.py
+
+from flask import Blueprint
+
+app_views = Blueprint("app_views", __name__, url_prefix="/api/v1")
+auth = Blueprint("auth", __name__, url_prefix="/auth")
+
+# Importing all your views here (example)
+from api.v1.views.students import *
+from api.v1.views.results import *
+# Import other views as needed
+This configuration means that any routes registered under app_views will have /api/v1 as a prefix, and routes under auth will have /auth as a prefix.

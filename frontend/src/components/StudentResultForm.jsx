@@ -47,9 +47,17 @@ const StudentResultForm = ({ selectedResult, onSave }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    // const dataToSend = {
+    //   ...formData,
+    //   [formData.resultType.toLowerCase().replace(' ', '')]: formData.resultValue
+    // };
+
     const dataToSend = {
-      ...formData,
-      [formData.resultType.toLowerCase().replace(' ', '')]: formData.resultValue
+      id: formData.id,
+      studentName: formData.studentName,
+      subject_id: formData.subject,  // Adjust to match your backend structure
+      resultType: formData.resultType,
+      resultValue: formData.resultValue
     };
 
     axios.post('/api/v1/results', dataToSend)
