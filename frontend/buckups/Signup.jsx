@@ -12,6 +12,7 @@ const initialFormData = {
   firstname: "",
   middlename: "",
   lastname: "",
+  mother_first_name: "",
   birthDate: "",
   imageFile: "",
   age: "",
@@ -52,10 +53,14 @@ const Signup = () => {
       section: (formData.userType === "teacher" || formData.userType === "student") ? formData.section : undefined,
       grade: (formData.userType === "student") ? formData.grade : undefined,
       hireDate: (formData.userType === "admin" || formData.userType === "teacher") ? formData.hireDate : undefined,
+      mother_first_name: (formData.userType === "parent") ? formData. mother_first_name : undefined,
+      mother_middle_name: (formData.userType === "parent") ? formData.mother_middle_name : undefined,
+      mother_last_name: (formData.userType === "parent") ? formData.mother_last_name : undefined,
+      motherPhNo: (formData.userType === "parent") ? formData.motherPhNo : undefined,
     };
 
     try {
-      const response = await axios.post("http://127.0.0.1:5000/api/v1/students", userData);
+      const response = await axios.post("/api/v1/students", userData);
       if (response.status === 201) {
         setIsRegistered(true);
       }

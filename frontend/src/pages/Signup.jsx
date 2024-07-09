@@ -12,6 +12,10 @@ const initialFormData = {
   firstname: "",
   middlename: "",
   lastname: "",
+  mother_first_name: "",
+  mother_middle_name: "",
+  mother_last_name: "",
+  motherPhNo: "",
   birthDate: "",
   imageFile: "",
   age: "",
@@ -52,10 +56,14 @@ const Signup = () => {
       section: (formData.userType === "teacher" || formData.userType === "student") ? formData.section : undefined,
       grade: (formData.userType === "student" || formData.userType === "teacher") ? formData.grade : undefined,
       hireDate: (formData.userType === "admin" || formData.userType === "teacher") ? formData.hireDate : undefined,
+      mother_first_name: (formData.userType === "parent") ? formData.mother_first_name : undefined,
+      mother_middle_name: (formData.userType === "parent") ? formData.mother_middle_name : undefined,
+      mother_last_name: (formData.userType === "parent") ? formData.mother_last_name : undefined,
+      motherPhNo: (formData.userType === "parent") ? formData.motherPhNo : undefined,
     };
 
     try {
-      const response = await axios.post("/api/signup", userData);
+      const response = await axios.post("http://localhost:5000/api/v1/students", userData);
       if (response.status === 201) {
         setIsRegistered(true);
       }
@@ -120,7 +128,7 @@ const Signup = () => {
             <option value="student">Student</option>
           </select>
         </label>
-        
+
         <label className="block mb-2">
           Phone Number:
           <input
@@ -143,7 +151,7 @@ const Signup = () => {
             required
           />
         </label>
-        
+
         <label className="block mb-2">
           Birth Date:
           <input
@@ -221,6 +229,54 @@ const Signup = () => {
               value={formData.hireDate}
               onChange={handleChange}
               required
+            />
+          </label>
+        )}
+        {formData.userType === "parent" && (
+          <label className="block mb-2">
+            Mother First Name:
+            <input
+              className="w-full p-2 mt-1 border rounded"
+              type="password"
+              name="password"
+              value={formData.mother_first_name}
+              onChange={handleChange}
+            />
+          </label>
+        )}
+        {formData.userType === "parent" && (
+          <label className="block mb-2">
+            Mother Meddle Name:
+            <input
+              className="w-full p-2 mt-1 border rounded"
+              type="password"
+              name="password"
+              value={formData.mother_middel_name}
+              onChange={handleChange}
+            />
+          </label>
+        )}
+        {formData.userType === "parent" && (
+          <label className="block mb-2">
+            Mother Last Name:
+            <input
+              className="w-full p-2 mt-1 border rounded"
+              type="password"
+              name="password"
+              value={formData.mother_last_name}
+              onChange={handleChange}
+            />
+          </label>
+        )}
+        {formData.userType === "parent" && (
+          <label className="block mb-2">
+            Mother PhoneNo
+            <input
+              className="w-full p-2 mt-1 border rounded"
+              type="password"
+              name="password"
+              value={formData.motherPhNo}
+              onChange={handleChange}
             />
           </label>
         )}

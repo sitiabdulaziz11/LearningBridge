@@ -23,13 +23,15 @@ class Teacher(BaseClass, Base):
     email = Column(String(100), nullable=False, unique=True)
     password = Column(String(250), nullable=False, unique=True)
     phone_no = Column(String(10), nullable=False, unique=True)
+    gender = Column(String(20), nullable=False)
     hire_date = Column(
         DateTime, nullable=False, default=datetime.now().strftime("%d-%m-%Y")
     )  # Q?
-    age = Column(Integer(20))
+    age = Column(Integer, nullable=False)
     image_file = Column(String(50), nullable=False, unique=True, default="default.jpg")
     address = Column(String(100), nullable=False)
-    section = Column(String(150), nullable=False)
+    grade = Column(String(60), nullable=False)
+    section = Column(String(150), nullable=True)
     # subject = Column(String(150),
     # nullable=False) # Q?what subject does teacher teach?
     # Q? what section does teacher teach?

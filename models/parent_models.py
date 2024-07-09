@@ -1,5 +1,5 @@
 from .base_model import Base, BaseClass
-from sqlalchemy import Column, String, ForeignKey, Table
+from sqlalchemy import Column, String, Integer, ForeignKey, Table
 from sqlalchemy.orm import relationship
 
 # Parent - Teacher many-to-many relationship
@@ -29,7 +29,8 @@ class Parent(BaseClass, Base):
     password = Column(String(250), nullable=False, unique=True)
     image_file = Column(String(50), nullable=False, default='default.jpg')
     address = Column(String(100), nullable=False)
-    age = Column(String(20))
+    gender = Column(String(20), nullable=False)
+    age = Column(Integer)
     
     # define relation
     teachers = relationship(

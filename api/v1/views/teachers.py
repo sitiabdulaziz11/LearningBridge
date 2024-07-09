@@ -21,7 +21,9 @@ def create_teacher():
         "phone_no",
         "hire_date",
         "age",
+        "gender",
         "adress",
+        "grade",
         "section",
     ]
     data = request.get_json()

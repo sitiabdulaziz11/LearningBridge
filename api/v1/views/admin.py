@@ -22,7 +22,8 @@ def create_administrator():
         "email",
         "password",
         "phone_no",
-        "age"
+        "gender",
+        "age",
         "hire_date",
         "address",
     ]

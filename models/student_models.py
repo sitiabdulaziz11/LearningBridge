@@ -25,12 +25,14 @@ class Student(BaseClass, Base):
     email = Column(String(50), nullable=False, unique=True)
     password = Column(String(250), nullable=False, unique=True)
     birth_date = Column(Date, nullable=False) # Q?
-    age = Column(Integer(20), nullable=False)
+    age = Column(Integer, nullable=False)
     image_file = Column(String(50), unique=True)
+    gender = Column(String(20), nullable=False)
     # address = relationship("Address", backref="student", uselist=False)
     address = Column(String(100), nullable=False)
     phone_no = Column(String(60), unique=True)
     # conduct = Column(String(60), nullable=True)  # Q?
+    grade = Column(String(60), nullable=False)
     section = Column(String(60), nullable=True)  # Q?
     
     # Define the relationship with other tables

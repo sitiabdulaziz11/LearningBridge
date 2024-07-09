@@ -22,6 +22,7 @@ def create_parent():
         "fphone_no"
         "mphone_no",
         "email",
+        "gender",
         "password",
         "address",
         "age" 
