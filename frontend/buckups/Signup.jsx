@@ -50,12 +50,12 @@ const Signup = () => {
     const userData = {
       ...formData,
       section: (formData.userType === "teacher" || formData.userType === "student") ? formData.section : undefined,
-      grade: (formData.userType === "student" || formData.userType === "teacher") ? formData.grade : undefined,
+      grade: (formData.userType === "student") ? formData.grade : undefined,
       hireDate: (formData.userType === "admin" || formData.userType === "teacher") ? formData.hireDate : undefined,
     };
 
     try {
-      const response = await axios.post("/api/signup", userData);
+      const response = await axios.post("http://127.0.0.1:5000/api/v1/students", userData);
       if (response.status === 201) {
         setIsRegistered(true);
       }
@@ -72,6 +72,51 @@ const Signup = () => {
     <div className="flex items-center w-full justify-center min-h-screen bg-gray-200">
       <form className="m-4 p-6 bg-white rounded shadow-md" onSubmit={handleSignup}>
         <label className="block mb-2">
+          Name:
+          <input
+            className="w-full p-2 mt-1 border rounded"
+            type="text"
+            name="name"
+            value={formData.name}
+            onChange={handleChange}
+          />
+        </label>
+        <label className="block mb-2">
+          User Type:
+          <select
+            className="w-full p-2 mt-1 border rounded"
+            name="userType"
+            value={formData.userType}
+            onChange={handleChange}
+          >
+            <option value="">Select...</option>
+            <option value="admin">Admin</option>
+            <option value="teacher">Teacher</option>
+            <option value="parent">Parent</option>
+            <option value="student">Student</option>
+          </select>
+        </label>
+        <label className="block mb-2">
+          Email:
+          <input
+            className="w-full p-2 mt-1 border rounded"
+            type="text"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+          />
+        </label>
+        <label className="block mb-2">
+          Phone Number:
+          <input
+            className="w-full p-2 mt-1 border rounded"
+            type="text"
+            name="phoneNo"
+            value={formData.phoneNo}
+            onChange={handleChange}
+          />
+        </label>
+        <label className="block mb-2">
           First Name:
           <input
             className="w-full p-2 mt-1 border rounded"
@@ -79,7 +124,6 @@ const Signup = () => {
             name="firstname"
             value={formData.firstname}
             onChange={handleChange}
-            required
           />
         </label>
         <label className="block mb-2">
@@ -90,7 +134,6 @@ const Signup = () => {
             name="middlename"
             value={formData.middlename}
             onChange={handleChange}
-            required
           />
         </label>
         <label className="block mb-2">
@@ -101,49 +144,8 @@ const Signup = () => {
             name="lastname"
             value={formData.lastname}
             onChange={handleChange}
-            required
           />
         </label>
-        <label className="block mb-2">
-          User Type:
-          <select
-            className="w-full p-2 mt-1 border rounded"
-            name="userType"
-            value={formData.userType}
-            onChange={handleChange}
-            required
-          >
-            <option value="">Select...</option>
-            <option value="admin">Admin</option>
-            <option value="teacher">Teacher</option>
-            <option value="parent">Parent</option>
-            <option value="student">Student</option>
-          </select>
-        </label>
-        
-        <label className="block mb-2">
-          Phone Number:
-          <input
-            className="w-full p-2 mt-1 border rounded"
-            type="text"
-            name="phoneNo"
-            value={formData.phoneNo}
-            onChange={handleChange}
-            required
-          />
-        </label>
-        <label className="block mb-2">
-          Email:
-          <input
-            className="w-full p-2 mt-1 border rounded"
-            type="text"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            required
-          />
-        </label>
-        
         <label className="block mb-2">
           Birth Date:
           <input
@@ -161,7 +163,6 @@ const Signup = () => {
             type="file"
             name="imageFile"
             onChange={(e) => setFormData({ ...formData, imageFile: e.target.files[0] })}
-            required
           />
         </label>
         <label className="block mb-2">
@@ -172,7 +173,6 @@ const Signup = () => {
             name="age"
             value={formData.age}
             onChange={handleChange}
-            required
           />
         </label>
         <label className="block mb-2">
@@ -183,7 +183,6 @@ const Signup = () => {
             name="address"
             value={formData.address}
             onChange={handleChange}
-            required
           />
         </label>
         {(formData.userType === "teacher" || formData.userType === "student") && (
@@ -198,7 +197,7 @@ const Signup = () => {
             />
           </label>
         )}
-        {(formData.userType === "student" || formData.userType === "teacher") && (
+        {formData.userType === "student" && (
           <label className="block mb-2">
             Grade:
             <input
@@ -207,7 +206,6 @@ const Signup = () => {
               name="grade"
               value={formData.grade}
               onChange={handleChange}
-              required
             />
           </label>
         )}
@@ -220,7 +218,6 @@ const Signup = () => {
               name="hireDate"
               value={formData.hireDate}
               onChange={handleChange}
-              required
             />
           </label>
         )}

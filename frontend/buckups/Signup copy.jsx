@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
 
 const Signup = () => {
   const [userType, setUserType] = useState("");
@@ -10,24 +9,10 @@ const Signup = () => {
   const [name, setName] = useState("");
   const [isRegistered, setIsRegistered] = useState(false);
 
-
-  const handleSignup = async (event) => {
+  const handleSignup = (event) => {
     event.preventDefault();
-    console.log(name)
-
-    //   try {
-    //     const response = await axios.post("http://localhost:5000/api/v1/login", {
-    //       email,
-    //       password,
-    //     });
-
-    //     localStorage.setItem("token", response.data.token);
-    //     setIsLoggedIn(true); // Set login status to true
-    //   } catch (error) {
-    //     console.error(error);
-    //   }
-    //   // Here you would typically validate the user and set the registration state
-    //   setIsRegistered(true);
+    // Here you would typically validate the user and set the registration state
+    setIsRegistered(true);
   };
 
   if (isRegistered) {
