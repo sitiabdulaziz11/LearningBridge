@@ -42,6 +42,7 @@ def create_student():
             return jsonify({"error": f"Missing {field}"}), 400
 
     student = Student(**data)
+    print(student)
     student.save()
 
 

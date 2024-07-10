@@ -17,7 +17,7 @@ const initialFormData = {
   mother_last_name: "",
   motherPhNo: "",
   birthDate: "",
-  imageFile: null, // Change to null to handle file correctly
+  imageFile: "",
   age: "",
   address: "",
   section: "",
@@ -53,30 +53,17 @@ const Signup = () => {
 
     const userData = {
       ...formData,
-      section: (formData.userType === "teacher" || formData.userType === "student") ? formData.section : null,
-      grade: (formData.userType === "student" || formData.userType === "teacher") ? formData.grade : null,
-      hireDate: (formData.userType === "admin" || formData.userType === "teacher") ? formData.hireDate : null,
-      mother_first_name: (formData.userType === "parent") ? formData.mother_first_name : null,
-      mother_middle_name: (formData.userType === "parent") ? formData.mother_middle_name : null,
-      mother_last_name: (formData.userType === "parent") ? formData.mother_last_name : null,
-      motherPhNo: (formData.userType === "parent") ? formData.motherPhNo : null,
+      section: (formData.userType === "teacher" || formData.userType === "student") ? formData.section : undefined,
+      grade: (formData.userType === "student" || formData.userType === "teacher") ? formData.grade : undefined,
+      hireDate: (formData.userType === "admin" || formData.userType === "teacher") ? formData.hireDate : undefined,
+      mother_first_name: (formData.userType === "parent") ? formData.mother_first_name : undefined,
+      mother_middle_name: (formData.userType === "parent") ? formData.mother_middle_name : undefined,
+      mother_last_name: (formData.userType === "parent") ? formData.mother_last_name : undefined,
+      motherPhNo: (formData.userType === "parent") ? formData.motherPhNo : undefined,
     };
 
-    const formDataToSend = new FormData();
-    for (const key in userData) {
-      formDataToSend.append(key, userData[key]);
-    }
-
-    if (formData.imageFile) {
-      formDataToSend.append('imageFile', formData.imageFile);
-    }
-
     try {
-      const response = await axios.post("http://localhost:5000/api/v1/students", formDataToSend, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
-      });
+      const response = await axios.post("http://localhost:5000/api/v1/students", userData);
       if (response.status === 201) {
         setIsRegistered(true);
       }
@@ -141,6 +128,7 @@ const Signup = () => {
             <option value="student">Student</option>
           </select>
         </label>
+
         <label className="block mb-2">
           Phone Number:
           <input
@@ -156,33 +144,14 @@ const Signup = () => {
           Email:
           <input
             className="w-full p-2 mt-1 border rounded"
-            type="email"
+            type="text"
             name="email"
             value={formData.email}
             onChange={handleChange}
             required
           />
         </label>
-        <label className="block mb-2">
-          Password:
-          <input
-            className="w-full p-2 mt-1 border rounded"
-            type="password"
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
-          />
-        </label>
-        <label className="block mb-2">
-          Confirm Password:
-          <input
-            className="w-full p-2 mt-1 border rounded"
-            type="password"
-            name="confirmPassword"
-            value={formData.confirmPassword}
-            onChange={handleChange}
-          />
-        </label>
+
         <label className="block mb-2">
           Birth Date:
           <input
@@ -258,8 +227,8 @@ const Signup = () => {
             Mother First Name:
             <input
               className="w-full p-2 mt-1 border rounded"
-              type="text"
-              name="mother_first_name"
+              type="password"
+              name="password"
               value={formData.mother_first_name}
               onChange={handleChange}
             />
@@ -267,12 +236,12 @@ const Signup = () => {
         )}
         {formData.userType === "parent" && (
           <label className="block mb-2">
-            Mother Middle Name:
+            Mother Meddle Name:
             <input
               className="w-full p-2 mt-1 border rounded"
-              type="text"
-              name="mother_middle_name"
-              value={formData.mother_middle_name}
+              type="password"
+              name="password"
+              value={formData.mother_middel_name}
               onChange={handleChange}
             />
           </label>
@@ -282,8 +251,8 @@ const Signup = () => {
             Mother Last Name:
             <input
               className="w-full p-2 mt-1 border rounded"
-              type="text"
-              name="mother_last_name"
+              type="password"
+              name="password"
               value={formData.mother_last_name}
               onChange={handleChange}
             />
@@ -291,17 +260,17 @@ const Signup = () => {
         )}
         {formData.userType === "parent" && (
           <label className="block mb-2">
-            Mother Phone No:
+            Mother PhoneNo
             <input
               className="w-full p-2 mt-1 border rounded"
-              type="text"
-              name="motherPhNo"
+              type="password"
+              name="password"
               value={formData.motherPhNo}
               onChange={handleChange}
             />
           </label>
         )}
-
+        
         <label className="block mb-2">
           Image File:
           <input

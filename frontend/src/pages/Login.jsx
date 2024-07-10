@@ -29,11 +29,11 @@ const Login = () => {
       case "admin":
         return <Link to="/admin-dashboard" />;
       case "teacher":
-        return <Link to="/teacher-dashboard" />;
+        return <Link to="/teacherdashboard" />;
       case "parent":
         return <Link to="/parent-dashboard" />;
       case "student":
-        return <Link to="/student-dashboard" />;
+        return <Link to="/studentdashboard" />;
       default:
         return <Link to="/register" />;
     }
