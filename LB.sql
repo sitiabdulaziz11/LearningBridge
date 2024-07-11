@@ -4,6 +4,7 @@ GRANT ALL PRIVILEGES ON `LB`.* TO 'lb'@'localhost';
 GRANT SELECT ON `performance_schema`.* TO 'lb'@'localhost';
 FLUSH PRIVILEGES;
 
+USE LB;
 INSERT INTO students (
     firstname, 
     middlename, 
