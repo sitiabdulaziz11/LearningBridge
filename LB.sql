@@ -65,7 +65,7 @@ INSERT INTO students (
     'john.doe@example.com',
     'hashed_password',
     '2005-05-15',
-    19,
+    '19'
     'default', 
     'Male',
     '123 Main St',
