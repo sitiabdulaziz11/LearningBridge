@@ -9,5 +9,4 @@ jwt
 flask_swagger_ui
 flask_swagger
 flask_sqlalchemy
-flasgger
-LB_USER=lb LB_PWD=Team_Project LB_HOST=localhost  LB_DB=LB ENV=development python3 -m run
+# LB_USER=lb LB_PWD=Team_Project LB_HOST=localhost  LB_DB=LB ENV=development python3 -m run

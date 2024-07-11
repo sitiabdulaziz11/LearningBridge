@@ -2,9 +2,10 @@ from .base_model import Base, BaseClass
 from sqlalchemy import Column, Integer, String, ForeignKey, DateTime, Float
 from sqlalchemy.orm import relationship
 from datetime import datetime
+from flask_login import UserMixin
 
 
-class Result(Base, BaseClass):
+class Result(Base, BaseClass, UserMixin):
     """Result model that represents result's fields/attributes."""
 
     __tablename__ = "results"

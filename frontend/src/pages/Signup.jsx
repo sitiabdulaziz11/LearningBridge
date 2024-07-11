@@ -7,22 +7,16 @@ const initialFormData = {
   password: "",
   confirmPassword: "",
   email: "",
-  name: "",
-  phoneNo: "",
   firstname: "",
   middlename: "",
   lastname: "",
-  mother_first_name: "",
-  mother_middle_name: "",
-  mother_last_name: "",
-  motherPhNo: "",
+  phoneNo: "",
   birthDate: "",
-  imageFile: null, // Change to null to handle file correctly
+  imageFile: "",
   age: "",
   address: "",
   section: "",
   grade: "",
-  hireDate: "",
 };
 
 const Signup = () => {
@@ -43,40 +37,24 @@ const Signup = () => {
       return;
     }
 
-    if (
-      (formData.userType === "admin" || formData.userType === "teacher" || formData.userType === "parent") &&
-      !formData.phoneNo
-    ) {
-      alert("Phone number is mandatory for Admin, Teacher, and Parent");
-      return;
-    }
-
     const userData = {
-      ...formData,
-      section: (formData.userType === "teacher" || formData.userType === "student") ? formData.section : null,
-      grade: (formData.userType === "student" || formData.userType === "teacher") ? formData.grade : null,
-      hireDate: (formData.userType === "admin" || formData.userType === "teacher") ? formData.hireDate : null,
-      mother_first_name: (formData.userType === "parent") ? formData.mother_first_name : null,
-      mother_middle_name: (formData.userType === "parent") ? formData.mother_middle_name : null,
-      mother_last_name: (formData.userType === "parent") ? formData.mother_last_name : null,
-      motherPhNo: (formData.userType === "parent") ? formData.motherPhNo : null,
+      firstname: formData.firstname,
+      middlename: formData.middlename,
+      lastname: formData.lastname,
+      email: formData.email,
+      password: formData.password,
+      birth_date: formData.birthDate,
+      age: parseInt(formData.age),
+      image_file: formData.imageFile,
+      gender: "Male", // Assuming gender is static or handled differently
+      address: formData.address,
+      phone_no: formData.phoneNo,
+      grade: formData.grade,
+      section: formData.section,
     };
 
-    const formDataToSend = new FormData();
-    for (const key in userData) {
-      formDataToSend.append(key, userData[key]);
-    }
-
-    if (formData.imageFile) {
-      formDataToSend.append('imageFile', formData.imageFile);
-    }
-
     try {
-      const response = await axios.post("http://localhost:5000/api/v1/students", formDataToSend, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
-      });
+      const response = await axios.post("http://localhost:5000/api/v1/students", userData);
       if (response.status === 201) {
         setIsRegistered(true);
       }
@@ -86,11 +64,11 @@ const Signup = () => {
   };
 
   if (isRegistered) {
-    return <Link to="/login" />;
+    return <Link to="/login">Go to Login</Link>;
   }
 
   return (
-    <div className="flex items-center w-full justify-center min-h-screen bg-gray-200">
+    <div className="flex items-center justify-center min-h-screen bg-gray-200">
       <form className="m-4 p-6 bg-white rounded shadow-md" onSubmit={handleSignup}>
         <label className="block mb-2">
           First Name:
@@ -126,20 +104,15 @@ const Signup = () => {
           />
         </label>
         <label className="block mb-2">
-          User Type:
-          <select
+          Email:
+          <input
             className="w-full p-2 mt-1 border rounded"
-            name="userType"
-            value={formData.userType}
+            type="text"
+            name="email"
+            value={formData.email}
             onChange={handleChange}
             required
-          >
-            <option value="">Select...</option>
-            <option value="admin">Admin</option>
-            <option value="teacher">Teacher</option>
-            <option value="parent">Parent</option>
-            <option value="student">Student</option>
-          </select>
+          />
         </label>
         <label className="block mb-2">
           Phone Number:
@@ -153,37 +126,6 @@ const Signup = () => {
           />
         </label>
         <label className="block mb-2">
-          Email:
-          <input
-            className="w-full p-2 mt-1 border rounded"
-            type="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            required
-          />
-        </label>
-        <label className="block mb-2">
-          Password:
-          <input
-            className="w-full p-2 mt-1 border rounded"
-            type="password"
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
-          />
-        </label>
-        <label className="block mb-2">
-          Confirm Password:
-          <input
-            className="w-full p-2 mt-1 border rounded"
-            type="password"
-            name="confirmPassword"
-            value={formData.confirmPassword}
-            onChange={handleChange}
-          />
-        </label>
-        <label className="block mb-2">
           Birth Date:
           <input
             className="w-full p-2 mt-1 border rounded"
@@ -191,6 +133,16 @@ const Signup = () => {
             name="birthDate"
             value={formData.birthDate}
             onChange={handleChange}
+          />
+        </label>
+        <label className="block mb-2">
+          Image File:
+          <input
+            className="w-full p-2 mt-1 border rounded"
+            type="file"
+            name="imageFile"
+            onChange={(e) => setFormData({ ...formData, imageFile: e.target.files[0] })}
+            required
           />
         </label>
         <label className="block mb-2">
@@ -215,100 +167,46 @@ const Signup = () => {
             required
           />
         </label>
-        {(formData.userType === "teacher" || formData.userType === "student") && (
-          <label className="block mb-2">
-            Section:
-            <input
-              className="w-full p-2 mt-1 border rounded"
-              type="text"
-              name="section"
-              value={formData.section}
-              onChange={handleChange}
-            />
-          </label>
-        )}
-        {(formData.userType === "student" || formData.userType === "teacher") && (
-          <label className="block mb-2">
-            Grade:
-            <input
-              className="w-full p-2 mt-1 border rounded"
-              type="text"
-              name="grade"
-              value={formData.grade}
-              onChange={handleChange}
-              required
-            />
-          </label>
-        )}
-        {(formData.userType === "admin" || formData.userType === "teacher") && (
-          <label className="block mb-2">
-            Hire Date:
-            <input
-              className="w-full p-2 mt-1 border rounded"
-              type="date"
-              name="hireDate"
-              value={formData.hireDate}
-              onChange={handleChange}
-              required
-            />
-          </label>
-        )}
-        {formData.userType === "parent" && (
-          <label className="block mb-2">
-            Mother First Name:
-            <input
-              className="w-full p-2 mt-1 border rounded"
-              type="text"
-              name="mother_first_name"
-              value={formData.mother_first_name}
-              onChange={handleChange}
-            />
-          </label>
-        )}
-        {formData.userType === "parent" && (
-          <label className="block mb-2">
-            Mother Middle Name:
-            <input
-              className="w-full p-2 mt-1 border rounded"
-              type="text"
-              name="mother_middle_name"
-              value={formData.mother_middle_name}
-              onChange={handleChange}
-            />
-          </label>
-        )}
-        {formData.userType === "parent" && (
-          <label className="block mb-2">
-            Mother Last Name:
-            <input
-              className="w-full p-2 mt-1 border rounded"
-              type="text"
-              name="mother_last_name"
-              value={formData.mother_last_name}
-              onChange={handleChange}
-            />
-          </label>
-        )}
-        {formData.userType === "parent" && (
-          <label className="block mb-2">
-            Mother Phone No:
-            <input
-              className="w-full p-2 mt-1 border rounded"
-              type="text"
-              name="motherPhNo"
-              value={formData.motherPhNo}
-              onChange={handleChange}
-            />
-          </label>
-        )}
-
         <label className="block mb-2">
-          Image File:
+          Grade:
           <input
             className="w-full p-2 mt-1 border rounded"
-            type="file"
-            name="imageFile"
-            onChange={(e) => setFormData({ ...formData, imageFile: e.target.files[0] })}
+            type="text"
+            name="grade"
+            value={formData.grade}
+            onChange={handleChange}
+            required
+          />
+        </label>
+        <label className="block mb-2">
+          Section:
+          <input
+            className="w-full p-2 mt-1 border rounded"
+            type="text"
+            name="section"
+            value={formData.section}
+            onChange={handleChange}
+          />
+        </label>
+        <label className="block mb-2">
+          Password:
+          <input
+            className="w-full p-2 mt-1 border rounded"
+            type="password"
+            name="password"
+            value={formData.password}
+            onChange={handleChange}
+            required
+          />
+        </label>
+        <label className="block mb-2">
+          Confirm Password:
+          <input
+            className="w-full p-2 mt-1 border rounded"
+            type="password"
+            name="confirmPassword"
+            value={formData.confirmPassword}
+            onChange={handleChange}
             required
           />
         </label>

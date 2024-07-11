@@ -16,6 +16,7 @@ const NavLayout = () => {
                     {/* Navbar links for medium and larger devices */}
                     <div>
                         <ul className='hidden md:flex space-x-7 text-zinc-200 font-bold text-2xl'>
+                            <li className='py-2 px-6'><Link to="/home">Home</Link></li>
                             <li className='py-2 px-6'><Link to="/dashboards/*">Dashboards</Link></li>
                             <li className='py-2 px-6'><Link to="/about">About</Link></li>
                             <li className='py-2 px-6'><Link to="/login">Login</Link></li>

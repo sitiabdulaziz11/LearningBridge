@@ -1,8 +1,9 @@
 from sqlalchemy import Column, String, ForeignKey, Float
 from .base_model import BaseClass, Base
+from flask_login import UserMixin
 
 
-class SubjectResult(Base, BaseClass):
+class SubjectResult(Base, BaseClass, UserMixin):
     """Term model that represents term's fields/attributes."""
 
     __tablename__ = "subjectResults"

@@ -1,6 +1,7 @@
 from .base_model import Base, BaseClass
 from sqlalchemy import Column, String, Integer, ForeignKey, Table
 from sqlalchemy.orm import relationship
+from flask_login import UserMixin
 
 # Parent - Teacher many-to-many relationship
 
@@ -12,7 +13,7 @@ Parent_teacher = Table(
 )
 
 
-class Parent(BaseClass, Base):
+class Parent(BaseClass, Base, UserMixin):
     """Student's Parent Module"""
 
     __tablename__ = "parents"

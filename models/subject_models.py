@@ -2,9 +2,10 @@ from sqlalchemy import Column, String, ForeignKey
 from .student_models import student_subject
 from .base_model import Base, BaseClass
 from sqlalchemy.orm import relationship
+from flask_login import UserMixin
 
 
-class Subject(Base, BaseClass):
+class Subject(Base, BaseClass, UserMixin):
     """Subject model that represents subject's fields/attributes."""
 
     __tablename__ = "subjects"

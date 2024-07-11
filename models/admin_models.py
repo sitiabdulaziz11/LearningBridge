@@ -5,11 +5,12 @@ from sqlalchemy import DateTime
 
 # import relationship
 from sqlalchemy.orm import relationship
+from flask_login import UserMixin
 
 # Adminstrator model
 
 
-class Administrator(BaseClass, Base):
+class Administrator(BaseClass, Base, UserMixin):
     """Adminstrator model that represents adminstrator's fields/attributes."""
 
     __tablename__ = "administrators"

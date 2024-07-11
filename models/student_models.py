@@ -3,6 +3,7 @@ from sqlalchemy.orm import relationship
 from datetime import datetime
 from .teacher_models import students_teachers
 from .base_model import Base, BaseClass
+from flask_login import UserMixin
 
 
 # Student - Subject many-to-many relationship
@@ -14,7 +15,7 @@ student_subject = Table(
 )
 
 
-class Student(BaseClass, Base):
+class Student(BaseClass, Base, UserMixin):
     """Student model that represents student's fields/attributes."""
 
     __tablename__ = "students"

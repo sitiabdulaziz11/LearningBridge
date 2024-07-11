@@ -2,6 +2,7 @@ from sqlalchemy import Column, Integer, String, ForeignKey, Table, DateTime
 from .base_model import Base, BaseClass
 from datetime import datetime
 from sqlalchemy.orm import relationship
+from flask_login import UserMixin
 
 # Parent - Teacher many-to-many relationship
 students_teachers = Table(
@@ -12,7 +13,7 @@ students_teachers = Table(
 )
 
 
-class Teacher(BaseClass, Base):
+class Teacher(BaseClass, Base, UserMixin):
     """Teacher model that represents teacher's fields/attributes."""
 
     __tablename__ = "teachers"

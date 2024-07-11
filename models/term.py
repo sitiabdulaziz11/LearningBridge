@@ -1,8 +1,9 @@
 from sqlalchemy import Column, String
 from .base_model import Base, BaseClass
+from flask_login import UserMixin
 
 
-class Term(BaseClass, Base):
+class Term(BaseClass, Base, UserMixin):
     """Term model that represents term's fields/attributes."""
 
     __tablename__ = "terms"

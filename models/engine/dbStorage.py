@@ -29,11 +29,11 @@ classes = {
 class DBStorage:
     def __init__(self):
         """Initialize the data storage class"""
-        LB_USER = os.getenv("LB_USER")
-        LB_PWD = os.getenv("LB_PWD")
-        LB_HOST = os.getenv("LB_HOST")
-        LB_DB = os.getenv("LB_DB")
-        ENV = os.getenv("ENV")
+        LB_USER = os.getenv("LB_USER", "lb")
+        LB_PWD = os.getenv("LB_PWD", "Team_Project")
+        LB_HOST = os.getenv("LB_HOST", "localhost")
+        LB_DB = os.getenv("LB_DB", "LB")
+        ENV = os.getenv("ENV",  "development")
 
         if ENV == 'production':
             self.__engine = create_engine(
@@ -54,6 +54,9 @@ class DBStorage:
                 "sqlite:///{}".format(LB_DB),
                 pool_pre_ping=True,
             )
+        # drop all tables if the TUTORPLAN_ENV is "test"
+        if os.getenv("LearningBridge_ENV") == "test":
+            Base.metadata.drop_all(self.__engine)
 
     def all(self, cls=None):
         """query on the current database session"""
