@@ -6,6 +6,7 @@ from datetime import datetime, timedelta
 from flask import current_app
 from flasgger.utils import swag_from
 from flask_login import login_user, logout_user, current_user
+from functools import wraps
 
 
 
@@ -44,7 +45,7 @@ def logout():
     return jsonify({"message": "logout successful"}), 200
 
 
-@app_views.route('user_status', methods=['GET'])
+@app_views.route('/user_status', methods=['GET'])
 def get_user_status():
     if current_user.is_authenticated:
         return jsonify({
@@ -55,3 +56,15 @@ def get_user_status():
         return jsonify({
             'is_authenticated': False
         })
+    
+def require_user_class(required_classes):
+    def decorator(f):
+        @wraps(f)
+        def decorated_function(*args, **kwargs):
+            if current_user.__class__.__name__ not in required_classes:
+                return jsonify({"error": "Access denied!!"}), 401
+            return f(*args, **kwargs)
+
+        return decorated_function
+
+    return decorator

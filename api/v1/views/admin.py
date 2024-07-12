@@ -15,6 +15,7 @@ from flask_login import login_required, current_user
 
 @app_views.route("/administrators", methods=["POST"], strict_slashes=False)
 @swag_from('documentation/admin/create_admin.yml', methods=['POST'])
+@login_required
 def create_administrator():
     required_fields = [
         "firstname",
@@ -41,6 +42,16 @@ def create_administrator():
     administrator.save()
     return jsonify(administrator.to_dict()), 201
 
+@app_views.route("/administrators", methods=["GET"], strict_slashes=False)
+@swag_from('documentation/admin/all_admins.yml', methods=['GET'])
+@login_required
+def get_administrators():
+    if not (current_user.id.startswith('administrator_')):
+        administrators = storage.all(Administrator)
+        administrators = [user.to_dict() for user in administrators.values()]
+        return jsonify(administrators), 200
+    else:
+        return jsonify({"error": "User is not administrator"}), 400
 
 # @auth.route("/login/administrator", methods=["POST"], strict_slashes=False)
 # @swag_from('documentation/admin/admin_login.yml', methods=['POST'])
@@ -88,16 +99,3 @@ def create_administrator():
 #     blacklist.add(token)
 #     session["logged_in"] = False
 #     return jsonify({"message": f"{user.firstname} Logged out"})
-
-
-@app_views.route("/administrators", methods=["GET"], strict_slashes=False)
-@swag_from('documentation/admin/all_admins.yml', methods=['GET'])
-# @token_required
-# @require_user_class("Administrator")
-def get_administrators():
-    # if session.get("logged_in") is None or not session["logged_in"]:
-    #     return jsonify({"error": "Unauthorized"}), 401
-
-    administrators = storage.all(Administrator)
-    administrators = [user.to_dict() for user in administrators.values()]
-    return jsonify(administrators), 200

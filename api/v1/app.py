@@ -26,6 +26,11 @@ app.config["SECRET_KEY"] = "my_secret_key"
 login_manager = LoginManager()
 login_manager.init_app(app)
 
+@login_manager.unauthorized_handler
+def unauthorized():
+    # Custom JSON response for unauthorized access
+    return jsonify({"error": "Unauthorized"}), 401
+
 
 @login_manager.user_loader
 def load_user(user_id):

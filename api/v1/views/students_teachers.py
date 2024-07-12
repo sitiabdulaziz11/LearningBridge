@@ -6,8 +6,9 @@ from models.parent_models import Parent
 from models import storage
 from api.v1.views import app_views
 from flask import abort, jsonify, make_response, request
-from api.v1.views.utils import token_required, require_user_class
+from api.v1.views.user_auth import require_user_class
 from flasgger.utils import swag_from
+from flask_login import login_required
 
 
 @app_views.route(
@@ -15,8 +16,9 @@ from flasgger.utils import swag_from
 )
 @swag_from('documentation/students_teachers/get_teacher_students.yml',
            methods=['GET'])
-@token_required
-def get_teacher_students(teacher_id, user):
+@login_required
+@require_user_class(['Administrator', 'Teacher'])
+def get_teacher_students(teacher_id):
     """
     Retrieves the list of all Students of a Teacher
     """
@@ -37,9 +39,9 @@ def get_teacher_students(teacher_id, user):
 )
 @swag_from('documentation/students_teachers/link_student_teacher.yml',
            methods=['POST'])
-@token_required
-@require_user_class("Teacher")
-def link_student_teacher(teacher_id, student_id, user):
+@login_required
+@require_user_class(['Administrator'])
+def link_student_teacher(teacher_id, student_id):
     """
     Links a Student object to a Teacher
     """
@@ -69,9 +71,9 @@ def link_student_teacher(teacher_id, student_id, user):
 )
 @swag_from('documentation/students_teachers/unlink_student_teacher.yml',
            methods=['DELETE'])
-@token_required
+@login_required
 @require_user_class("Administrator")
-def unlink_student_teacher(teacher_id, student_id, user):
+def unlink_student_teacher(teacher_id, students_id):
     """
     Unlinks a Student object from a Teacher
     """
@@ -80,7 +82,7 @@ def unlink_student_teacher(teacher_id, student_id, user):
     if not teacher:
         abort(404)
 
-    student = storage.get(Student, student_id)
+    student = storage.get(Student, students_id)
 
     if not student:
         abort(404)

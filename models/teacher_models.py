@@ -8,8 +8,8 @@ from flask_login import UserMixin
 students_teachers = Table(
     "students_teachers",
     Base.metadata,
-    Column("student_id", String(20), ForeignKey("students.id")),
-    Column("teacher_id", String(20), ForeignKey("teachers.id")),
+    Column("student_id", String(90), ForeignKey("students.id")),
+    Column("teacher_id", String(90), ForeignKey("teachers.id")),
 )
 
 
@@ -41,7 +41,7 @@ class Teacher(BaseClass, Base, UserMixin):
     parents = relationship(
         "Parent", secondary="parent_teacher", back_populates="teachers"
     )
-    admin_id = Column(String(20), ForeignKey("administrators.id"), nullable=False)
+    admin_id = Column(String(90), ForeignKey("administrators.id"), nullable=False)
     results = relationship("Result", back_populates="teacher")
     subjects = relationship("Subject", back_populates="teacher")
     students = relationship(

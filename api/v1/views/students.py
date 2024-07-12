@@ -9,10 +9,13 @@ from datetime import datetime, timedelta
 from flask import current_app
 from flasgger.utils import swag_from
 from flask_login import login_required, current_user
+from api.v1.views.user_auth import require_user_class
 
 
 @app_views.route("/students", methods=["POST"], strict_slashes=False)
 @swag_from('documentation/student/create_student.yml', methods=['POST'])
+@login_required
+@require_user_class(['Teacher', 'Administrator'])
 def create_student():
     """
     Create a new student
@@ -48,13 +51,14 @@ def create_student():
 @app_views.route("/students", methods=["GET"], strict_slashes=False)
 @swag_from('documentation/student/all_students.yml', methods=['GET'])
 @login_required
+@require_user_class(['Teacher', 'Administrator'])
 def get_students():
     """
     Get all users
     """
+    print('line 55')
     students = storage.all(Student)
     students = [user.to_dict() for user in students.values()]
-
     return make_response(jsonify(students), 200)
 
 
@@ -64,14 +68,9 @@ def get_students():
 @login_required
 def get_student(student_id):
     """Retrieves a student"""
-    # print(session)
-    # if session.get("logged_in") is True or not session["logged_in"]:
-    #     return jsonify({"error": "Unauthorized"}), 401
-
     student = storage.get(Student, student_id)
     if not student:
         abort(404)
-
     return make_response(jsonify(student.to_dict()), 200)
 
 
@@ -79,14 +78,11 @@ def get_student(student_id):
                  strict_slashes=False)
 @swag_from('documentation/student/delete_student.yml', methods=['DELETE'])
 @login_required
-# @require_user_class("Administrator")
+@require_user_class("Administrator")
 def delete_student(student_id):
     """
     Deletes a user Object
     """
-    # if session.get("logged_in") is None or not session["logged_in"]:
-    #     return jsonify({"error": "Unauthorized"}), 401
-
     student = storage.get(Student, student_id)
 
     if not student:
@@ -102,15 +98,11 @@ def delete_student(student_id):
                  strict_slashes=False)
 @swag_from('documentation/student/update_student.yml', methods=['PUT'])
 @login_required
-# @require_user_class("Student")
+@require_user_class(['Teacher', 'Parent', 'Administrator'])
 def update_student(student_id):
     """
     Updates a student
     """
-    # print(user)
-    # if session.get("logged_in") is None or not session["logged_in"]:
-    #     return jsonify({"error": "Unauthorized"}), 401
-
     student = storage.get(Student, student_id)
 
     if not student:
