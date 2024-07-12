@@ -29,16 +29,12 @@ login_manager.init_app(app)
 
 @login_manager.user_loader
 def load_user(user_id):
-    print(user_id)
     # Check the user type and load the appropriate user model
 
     user_type = user_id.split('_')[0]
-    print(user_id)
-    print("line 36")
     if user_type == 'teacher':
         user = storage.get(Teacher, user_id)
     elif user_type == 'student':
-        print('I got here')
         user = storage.get(Student, user_id)
     elif user_type == 'parent':
         user = storage.get(Parent, user_id)

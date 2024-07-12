@@ -76,51 +76,6 @@ The Student Result Management System is a backend API designed to manage student
 
 ## API Documentation
 
-### User Authentication
-
-- **Register a new user**
-
-    ```http
-    POST /auth/register
-    ```
-
-    Request Body:
-
-    ```json
-    {
-        "username": "user123",
-        "password": "password",
-        "role": "parent"  // or "teacher"
-    }
-    ```
-
-- **Login a user**
-
-    ```http
-    POST /auth/login
-    ```
-
-    Request Body:
-
-    ```json
-    {
-        "username": "user123",
-        "password": "password"
-    }
-    ```
-
-- **Protected route example**
-
-    ```http
-    GET /protected
-    ```
-
-    Headers:
-
-    ```http
-    Authorization: Bearer <JWT_TOKEN>
-    ```
-
 ### Student Management
 
 - **Create a new student**
