@@ -28,15 +28,8 @@ def login():
     student = storage.get_by_email(Student, email)
     if not student:
         return jsonify({"error": "User not found or Invalid password"}), 400
-    # student_id = f'student_{student.id}'
     login_user(student)
     return jsonify({"message": "login successful"}), 200
-    # if request.method == "POST":
-    #     user = Users.query.filter_by(
-    #         username=request.form.get("username")).first()
-    #     if user.password == request.form.get("password"):
-    #         login_user(user)
-    #         return redirect(url_for("home"))
 
 
 @app_views.route("/logout")
@@ -64,7 +57,5 @@ def require_user_class(required_classes):
             if current_user.__class__.__name__ not in required_classes:
                 return jsonify({"error": "Access denied!!"}), 401
             return f(*args, **kwargs)
-
         return decorated_function
-
     return decorator

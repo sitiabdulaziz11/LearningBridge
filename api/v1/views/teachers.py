@@ -76,16 +76,13 @@ def get_teachers():
     return jsonify(teachers), 200
 
 
-@app_views.route("/teachers/teacher_id>", methods=["GET"],
+@app_views.route("/teachers/<teacher_id>", methods=["GET"],
                  strict_slashes=False)
 @swag_from('documentation/teacher/get_teacher.yml', methods=['GET'])
 @login_required
 @require_user_class("Teacher")
 def get_teacher(teacher_id):
     """Retrieves an teacher"""
-    if session.get("logged_in") is None or not session["logged_in"]:
-        return jsonify({"error": "Unauthorized"}), 401
-
     teacher = storage.get(Teacher, teacher_id)
     if not teacher:
         abort(404)
@@ -102,9 +99,6 @@ def delete_teacher(teacher_id):
     """
     Deletes a teacher Object
     """
-    if session.get("logged_in") is None or not session["logged_in"]:
-        return jsonify({"error": "Unauthorized"}), 401
-
     teacher = storage.get("Teacher", teacher_id)
 
     if not teacher:
@@ -125,9 +119,6 @@ def update_teacher(teacher_id):
     """
     Updates a teacher profile
     """
-    if session.get("logged_in") is None or not session["logged_in"]:
-        return jsonify({"error": "Unauthorized"}), 401
-
     teacher = storage.get(Teacher, teacher_id)
 
     if not teacher:
