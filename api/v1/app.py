@@ -16,7 +16,6 @@ from models.teacher_models import Teacher
 # install flask login
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 
-
 app = Flask(__name__)
 CORS(app, origin="0.0.0.0")
 

@@ -15,7 +15,7 @@ from api.v1.views.user_auth import require_user_class
 @app_views.route("/students", methods=["POST"], strict_slashes=False)
 @swag_from('documentation/student/create_student.yml', methods=['POST'])
 @login_required
-@require_user_class(['Teacher', 'Administrator'])
+@require_user_class(['Teacher'])
 def create_student():
     """
     Create a new student
@@ -51,7 +51,7 @@ def create_student():
 @app_views.route("/students", methods=["GET"], strict_slashes=False)
 @swag_from('documentation/student/all_students.yml', methods=['GET'])
 @login_required
-@require_user_class(['Teacher', 'Administrator'])
+@require_user_class(['Teacher'])
 def get_students():
     """
     Get all users
@@ -78,7 +78,7 @@ def get_student(student_id):
                  strict_slashes=False)
 @swag_from('documentation/student/delete_student.yml', methods=['DELETE'])
 @login_required
-@require_user_class("Administrator")
+@require_user_class("Teacher")
 def delete_student(student_id):
     """
     Deletes a user Object
@@ -98,7 +98,7 @@ def delete_student(student_id):
                  strict_slashes=False)
 @swag_from('documentation/student/update_student.yml', methods=['PUT'])
 @login_required
-@require_user_class(['Teacher', 'Parent', 'Administrator'])
+@require_user_class(['Teacher', 'Parent'])
 def update_student(student_id):
     """
     Updates a student

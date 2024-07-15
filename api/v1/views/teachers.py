@@ -13,7 +13,7 @@ from api.v1.views.user_auth import require_user_class
 @app_views.route("/teachers", methods=["POST"], strict_slashes=False)
 @swag_from('documentation/teacher/create_teacher.yml', methods=['POST'])
 @login_required
-@require_user_class("Administrator")
+@require_user_class("Teacher")
 def create_teacher():
     required_fields = [
         "firstname",
@@ -77,7 +77,7 @@ def get_teachers():
 
 
 @app_views.route("/teachers/<teacher_id>", methods=["GET"],
-                 strict_slashes=False)
+                strict_slashes=False)
 @swag_from('documentation/teacher/get_teacher.yml', methods=['GET'])
 @login_required
 @require_user_class("Teacher")
@@ -94,7 +94,7 @@ def get_teacher(teacher_id):
                  strict_slashes=False)
 @swag_from('documentation/teacher/delete_teacher.yml', methods=['DELETE'])
 @login_required
-@require_user_class("Administrator")
+@require_user_class("Teacher")
 def delete_teacher(teacher_id):
     """
     Deletes a teacher Object

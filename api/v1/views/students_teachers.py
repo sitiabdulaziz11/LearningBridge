@@ -40,7 +40,7 @@ def get_teacher_students(teacher_id):
 @swag_from('documentation/students_teachers/link_student_teacher.yml',
            methods=['POST'])
 @login_required
-@require_user_class(['Administrator'])
+@require_user_class(['Teacher'])
 def link_student_teacher(teacher_id, student_id):
     """
     Links a Student object to a Teacher
@@ -72,7 +72,7 @@ def link_student_teacher(teacher_id, student_id):
 @swag_from('documentation/students_teachers/unlink_student_teacher.yml',
            methods=['DELETE'])
 @login_required
-@require_user_class("Administrator")
+@require_user_class("Teacher")
 def unlink_student_teacher(teacher_id, students_id):
     """
     Unlinks a Student object from a Teacher

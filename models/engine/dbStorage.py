@@ -68,6 +68,17 @@ class DBStorage:
                     key = obj.__class__.__name__ + "." + obj.id
                     new_dict[key] = obj
         return new_dict
+    
+    def search_by_foreign_key(self, cls, foreign_key, value):
+        """Query all records from a specific table based on a foreign key value"""
+        new_dict = {}
+        if cls in classes:
+            objs = self.__session.query(classes[cls]).filter(getattr(classes[cls], foreign_key) == value).all()
+            for obj in objs:
+                key = obj.__class__.__name__ + "." + obj.id
+                new_dict[key] = obj
+        return new_dict
+
 
     def save(self):
         """commit all changes of the current database session"""

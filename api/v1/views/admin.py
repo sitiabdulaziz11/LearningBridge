@@ -15,8 +15,8 @@ from flask_login import login_required, current_user, login_user
 
 @app_views.route("/administrators", methods=["POST"], strict_slashes=False)
 @swag_from('documentation/admin/create_admin.yml', methods=['POST'])
-@login_required
-@require_user_class('Administrator')
+# @login_required
+# @require_user_class('Administrator')
 def create_administrator():
     required_fields = [
         "firstname",
@@ -82,7 +82,7 @@ def administrator_login():
                  strict_slashes=False)
 # @swag_from('documentation/teacher/get_teacher.yml', methods=['GET'])
 @login_required
-@require_user_class("Administrator")
+@require_user_class("Teacher")
 def get_administrator(admin_id):
     """Retrieves an Admin"""
     admin = storage.get(Administrator, admin_id)
@@ -95,7 +95,7 @@ def get_administrator(admin_id):
                  strict_slashes=False)
 # @swag_from('documentation/teacher/delete_teacher.yml', methods=['DELETE'])
 @login_required
-@require_user_class("Administrator")
+@require_user_class("Teacher")
 def delete_administrator(admin_id):
     """
     Deletes a teacher Object
@@ -115,7 +115,7 @@ def delete_administrator(admin_id):
                  strict_slashes=False)
 # @swag_from('documentation/teacher/update_teacher.yml', methods=['PUT'])
 @login_required
-@require_user_class("Administrator")
+@require_user_class("Teacher")
 def update_administrator(admin_id):
     """
     Updates a teacher profile
