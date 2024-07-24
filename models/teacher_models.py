@@ -32,7 +32,7 @@ class Teacher(BaseClass, Base, UserMixin):
     image_file = Column(String(50), nullable=False, unique=True, default="default.jpg")
     address = Column(String(100), nullable=False)
     grade = Column(String(60), nullable=False)
-    section = Column(String(150), nullable=True)
+    # section = Column(String(150), nullable=True)
     # subject = Column(String(150),
     # nullable=False) # Q?what subject does teacher teach?
     # Q? what section does teacher teach?
