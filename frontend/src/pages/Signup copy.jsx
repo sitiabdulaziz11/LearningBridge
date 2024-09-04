@@ -63,7 +63,7 @@ const Signup = () => {
     };
 
     try {
-      const response = await axios.post("http://localhost:5000/api/v1/students", userData);
+      const response = await axios.post("http://0.0.0.0:5000/api/v1/students", userData);
       if (response.status === 201) {
         setIsRegistered(true);
       }
