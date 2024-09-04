@@ -7,6 +7,7 @@ Flask-SQLAlchemy
 flask-swagger-ui
 flasgger
 gunicorn
+mysqlclient
 sqlalchemy
 flask-swagger
 python-dotenv
