@@ -34,6 +34,11 @@ class DBStorage:
         LB_HOST = os.getenv("LB_HOST")
         LB_DB = os.getenv("LB_DB")
         ENV = os.getenv("ENV")
+        
+        print("ENV:", ENV)
+        print("DB User:", LB_USER)
+        print("DB Host:", LB_HOST)
+        print("DB Name:", LB_DB)
 
         if ENV == 'production':
             self.__engine = create_engine(
@@ -54,7 +59,6 @@ class DBStorage:
                 "sqlite:///{}".format(LB_DB),
                 pool_pre_ping=True,
             )
-
     def all(self, cls=None):
         """query on the current database session"""
         new_dict = {}
