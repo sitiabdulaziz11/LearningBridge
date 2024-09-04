@@ -45,6 +45,7 @@ Jinja2
 jsonschema
 jsonschema-specifications
 jwt
+backports.zoneinfo;python_version<"3.9"
 MarkupSafe
 mistune
 mysql-connector-python
