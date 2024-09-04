@@ -75,7 +75,6 @@ svgwrite==1.4.3
 tomli==2.0.1
 Tree==0.2.4
 typing-extensions==4.9.0
-ufw==0.36
 urllib3==2.2.0
 werkzeug==3.0.1
 wrapt==1.16.0
