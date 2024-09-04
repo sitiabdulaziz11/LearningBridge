@@ -33,24 +33,27 @@ class DBStorage:
         LB_PWD = os.getenv("LB_PWD")
         LB_HOST = os.getenv("LB_HOST")
         LB_DB = os.getenv("LB_DB")
+        LB_PORT = '3306'
         ENV = os.getenv("ENV")
         
         print("ENV:", ENV)
         print("DB User:", LB_USER)
         print("DB Host:", LB_HOST)
         print("DB Name:", LB_DB)
+        print(f"Host: {LB_HOST}, Port: {LB_PORT}")
+
 
         if ENV == 'production':
             self.__engine = create_engine(
                 "postgresql://{}:{}@{}/{}".format(
-                    LB_USER, LB_PWD, LB_HOST, LB_DB  # 'mysql://username:password@localhost/dbname'
+                    LB_USER, LB_PWD, LB_HOST, LB_PORT, LB_DB  # 'mysql://username:password@localhost/dbname'
 
                 ),
                 pool_pre_ping=True,
             )
         elif ENV == 'development':
             self.__engine = create_engine(
-                "mysql+mysqldb://{}:{}@{}3306/{}".format(
+                "mysql+mysqldb://{}:{}@{}:{}/{}".format(
                     LB_USER, LB_PWD, LB_HOST, LB_DB
                 ),
                 pool_pre_ping=True,
