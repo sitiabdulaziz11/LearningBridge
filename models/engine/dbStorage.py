@@ -43,13 +43,14 @@ class DBStorage:
         if ENV == 'production':
             self.__engine = create_engine(
                 "postgresql://{}:{}@{}/{}".format(
-                    LB_USER, LB_PWD, LB_HOST, LB_DB
+                    LB_USER, LB_PWD, LB_HOST, LB_DB  # 'mysql://username:password@localhost/dbname'
+
                 ),
                 pool_pre_ping=True,
             )
         elif ENV == 'development':
             self.__engine = create_engine(
-                "mysql+mysqldb://{}:{}@{}/{}".format(
+                "mysql+mysqldb://{}:{}@{}3306/{}".format(
                     LB_USER, LB_PWD, LB_HOST, LB_DB
                 ),
                 pool_pre_ping=True,
