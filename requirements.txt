@@ -72,11 +72,10 @@ six
 SQLAlchemy
 sqlparse
 svgwrite
-tomli
 Tree
 typing-extensions
 urllib3
-wheels
+wheel
 werkzeug
 wrapt
 wtforms
