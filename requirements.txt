@@ -76,7 +76,7 @@ tomli
 Tree
 typing-extensions
 urllib3
-wheel
+wheels
 werkzeug
 wrapt
 wtforms
