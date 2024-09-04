@@ -10,6 +10,7 @@ gunicorn
 mysqlclient
 sqlalchemy
 flask-swagger
+jwt
 python-dotenv
 typing-extensions
 wheel
