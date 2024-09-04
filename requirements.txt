@@ -9,6 +9,7 @@ flasgger
 gunicorn
 sqlalchemy
 flask-swagger
+python-dotenv
 typing-extensions
 wheel
 werkzeug
