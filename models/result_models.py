@@ -13,7 +13,7 @@ class Result(Base, BaseClass, UserMixin):
     Total_score = Column(Float, nullable=False)
     Total_average = Column(Float, nullable=True)
     Rank = Column(Integer, nullable=True)
-    date = Column(DateTime, nullable=False, default=datetime.now().strftime("%d-%m-%Y"))
+    # date = Column(DateTime, nullable=False, default=datetime.now().strftime("%d-%m-%Y"))
     subject_id = Column(String(20), ForeignKey("subjects.id"), nullable=False)
     student_id = Column(String(20), ForeignKey("students.id"), nullable=False)
     # relation with other tables
