@@ -61,7 +61,7 @@ def create_app():
     def internal_error(e):
         return {"error": "Internal server error"}, 500
 
-    # Teardown
+    # Teardown.
     @app.teardown_appcontext
     def teardown_db(exception):
         storage.close()
