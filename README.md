@@ -1,4 +1,4 @@
-# Student Result Management System
+# Student Result Management System.
 
 ## Table of Contents
 
